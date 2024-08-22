@@ -13,7 +13,7 @@ public class PerformanceMonitorAspect {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PerformanceMonitorAspect.class);
 
-    @Around("execution(* org.alouastudios.easytagalogbackend.word.WordService.getWordById(..))")
+    @Around("execution(* org.alouastudios.easytagalogbackend.service.WordService.getWordById(..))")
     public Object monitorTime(ProceedingJoinPoint joinPoint) throws Throwable {
 
         long start = System.currentTimeMillis();

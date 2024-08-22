@@ -13,7 +13,7 @@ public class ValidationAspect {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ValidationAspect.class);
 
-    @Around("execution(* org.alouastudios.easytagalogbackend.word.WordService.getWordById(..)) && args(id)")
+    @Around("execution(* org.alouastudios.easytagalogbackend.service.WordService.getWordById(..)) && args(id)")
     public Object validateAndUpdate(ProceedingJoinPoint joinPoint, int id) throws Throwable {
 
         if (id < 0) {

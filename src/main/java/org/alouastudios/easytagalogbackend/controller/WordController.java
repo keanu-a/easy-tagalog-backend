@@ -1,5 +1,7 @@
-package org.alouastudios.easytagalogbackend.word;
+package org.alouastudios.easytagalogbackend.controller;
 
+import org.alouastudios.easytagalogbackend.model.word.Word;
+import org.alouastudios.easytagalogbackend.service.WordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,13 +14,13 @@ public class WordController {
     @Autowired
     private WordService wordService;
 
-    @GetMapping("/")
+    @GetMapping
     public List<Word> getAllWords() {
         return wordService.getAllWords();
     };
 
     @GetMapping("/{id}")
-    public Word getWordById(@PathVariable int id) {
+    public Word getWordById(@PathVariable Long id) {
         return wordService.getWordById(id);
     };
 
@@ -27,8 +29,8 @@ public class WordController {
         return wordService.getWordsBySearchQuery(searchQuery);
     }
 
-    @PostMapping("/")
-    public Word addWord(Word word) {
+    @PostMapping
+    public Word addWord(@RequestBody Word word) {
         return wordService.addWord(word);
     };
 
@@ -38,15 +40,13 @@ public class WordController {
     };
 
     @DeleteMapping("/{id}")
-    public String deleteWord(@PathVariable int id) {
+    public String deleteWord(@PathVariable Long id) {
         wordService.deleteWord(id);
         return "Deleted Job Id: " + id;
     };
 
     @GetMapping("/load")
     public String loadWords() {
-        wordService.load();
-
         return "Successfully Loaded Words";
     }
 }

@@ -1,4 +1,4 @@
-package org.alouastudios.easytagalogbackend.word;
+package org.alouastudios.easytagalogbackend.enums;
 
 public enum PartOfSpeech {
     NOUN,
