@@ -3,6 +3,7 @@ package org.alouastudios.easytagalogbackend.model.word;
 import jakarta.persistence.*;
 import lombok.*;
 import org.alouastudios.easytagalogbackend.enums.PartOfSpeech;
+import org.alouastudios.easytagalogbackend.model.phrase.Phrase;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -52,6 +53,9 @@ public class Word {
 
     @Column(unique = true)
     private String audioUrl;
+
+    @ManyToMany(mappedBy = "words") // two-way since implement phrases the word is used in later
+    private Set<Phrase> phrases = new HashSet<>();
 
     @Override
     public String toString() {

@@ -2,17 +2,20 @@ package org.alouastudios.easytagalogbackend.dto;
 
 import org.alouastudios.easytagalogbackend.enums.PartOfSpeech;
 import org.alouastudios.easytagalogbackend.model.word.Conjugation;
+import org.alouastudios.easytagalogbackend.model.word.English;
 
-import java.util.List;
+import java.util.Set;
 
 public record WordDTO (
         Long id,
         String tagalog,
+        Set<English> english,
         String root,
         String accents,
-        String audioUrl,
         PartOfSpeech partOfSpeech,
+        String alternateSpelling,
         Boolean isIrregularVerb,
-        List<Conjugation> conjugations
+        Set<Conjugation> conjugations,
+        String audioUrl
 ) {
 }
