@@ -1,9 +1,9 @@
 package org.alouastudios.easytagalogbackend.validator;
 
 import org.alouastudios.easytagalogbackend.enums.Tense;
-import org.alouastudios.easytagalogbackend.model.word.Conjugation;
-import org.alouastudios.easytagalogbackend.model.word.English;
-import org.alouastudios.easytagalogbackend.model.word.Word;
+import org.alouastudios.easytagalogbackend.model.words.Conjugation;
+import org.alouastudios.easytagalogbackend.model.words.English;
+import org.alouastudios.easytagalogbackend.model.words.Word;
 import org.alouastudios.easytagalogbackend.repository.EnglishRepository;
 import org.springframework.stereotype.Component;
 

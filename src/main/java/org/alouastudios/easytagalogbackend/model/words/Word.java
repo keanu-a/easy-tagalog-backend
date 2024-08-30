@@ -1,9 +1,10 @@
-package org.alouastudios.easytagalogbackend.model.word;
+package org.alouastudios.easytagalogbackend.model.words;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.alouastudios.easytagalogbackend.enums.PartOfSpeech;
-import org.alouastudios.easytagalogbackend.model.phrase.Phrase;
+import org.alouastudios.easytagalogbackend.model.phrases.Phrase;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -55,6 +56,7 @@ public class Word {
     private String audioUrl;
 
     @ManyToMany(mappedBy = "words") // two-way since implement phrases the word is used in later
+    @JsonIgnore
     private Set<Phrase> phrases = new HashSet<>();
 
     @Override

@@ -1,6 +1,6 @@
 package org.alouastudios.easytagalogbackend.repository;
 
-import org.alouastudios.easytagalogbackend.model.word.Word;
+import org.alouastudios.easytagalogbackend.model.words.Word;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface WordRepository extends JpaRepository<Word, Long> {
 
-    List<Word> findByTagalogOrRoot(String tagalog, String root);
+    List<Word> findAllByIdIn(List<Long> ids);
 
     @Query(
             "SELECT w from Word w " +

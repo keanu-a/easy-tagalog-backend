@@ -1,9 +1,9 @@
-package org.alouastudios.easytagalogbackend.model.phrase;
+package org.alouastudios.easytagalogbackend.model.phrases;
 
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.alouastudios.easytagalogbackend.model.word.Word;
+import org.alouastudios.easytagalogbackend.model.words.Word;
 
 import java.util.List;
 import java.util.Objects;
@@ -11,13 +11,14 @@ import java.util.Objects;
 @Data
 @NoArgsConstructor
 @Entity
+@Table(name = "phrases")
 public class Phrase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String tagalog;
 
     @Column(nullable = false)
@@ -30,6 +31,9 @@ public class Phrase {
             inverseJoinColumns = @JoinColumn(name = "word_id")
     )
     private List<Word> words;
+
+    @Column(nullable = false)
+    private String wordOrder; // ex: "0,1,2:PAST,0
 
     @Override
     public String toString() {

@@ -1,8 +1,7 @@
 package org.alouastudios.easytagalogbackend.controller;
 
-import org.alouastudios.easytagalogbackend.model.word.Word;
+import org.alouastudios.easytagalogbackend.model.words.Word;
 import org.alouastudios.easytagalogbackend.service.WordService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,8 +10,11 @@ import java.util.List;
 @RequestMapping(path = "/api/words")
 public class WordController {
 
-    @Autowired
-    private WordService wordService;
+    private final WordService wordService;
+
+    public WordController(WordService wordService) {
+        this.wordService = wordService;
+    }
 
     @GetMapping
     public List<Word> getAllWords() {

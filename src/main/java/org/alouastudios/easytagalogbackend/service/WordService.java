@@ -2,9 +2,9 @@ package org.alouastudios.easytagalogbackend.service;
 
 import lombok.RequiredArgsConstructor;
 import org.alouastudios.easytagalogbackend.enums.PartOfSpeech;
-import org.alouastudios.easytagalogbackend.model.word.Conjugation;
-import org.alouastudios.easytagalogbackend.model.word.English;
-import org.alouastudios.easytagalogbackend.model.word.Word;
+import org.alouastudios.easytagalogbackend.model.words.Conjugation;
+import org.alouastudios.easytagalogbackend.model.words.English;
+import org.alouastudios.easytagalogbackend.model.words.Word;
 import org.alouastudios.easytagalogbackend.repository.EnglishRepository;
 import org.alouastudios.easytagalogbackend.repository.WordRepository;
 import org.alouastudios.easytagalogbackend.validator.WordValidator;

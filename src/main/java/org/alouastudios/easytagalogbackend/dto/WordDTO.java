@@ -1,8 +1,8 @@
 package org.alouastudios.easytagalogbackend.dto;
 
 import org.alouastudios.easytagalogbackend.enums.PartOfSpeech;
-import org.alouastudios.easytagalogbackend.model.word.Conjugation;
-import org.alouastudios.easytagalogbackend.model.word.English;
+import org.alouastudios.easytagalogbackend.model.words.Conjugation;
+import org.alouastudios.easytagalogbackend.model.words.English;
 
 import java.util.Set;
 

@@ -1,4 +1,4 @@
-package org.alouastudios.easytagalogbackend.model.word;
+package org.alouastudios.easytagalogbackend.model.words;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
