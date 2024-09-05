@@ -1,9 +1,10 @@
 package org.alouastudios.easytagalogbackend.validator;
 
+import org.alouastudios.easytagalogbackend.dto.WordDTO;
 import org.alouastudios.easytagalogbackend.enums.Tense;
-import org.alouastudios.easytagalogbackend.model.word.Conjugation;
-import org.alouastudios.easytagalogbackend.model.word.English;
-import org.alouastudios.easytagalogbackend.model.word.Word;
+import org.alouastudios.easytagalogbackend.model.words.Conjugation;
+import org.alouastudios.easytagalogbackend.model.words.English;
+import org.alouastudios.easytagalogbackend.model.words.Word;
 import org.alouastudios.easytagalogbackend.repository.EnglishRepository;
 import org.springframework.stereotype.Component;
 
@@ -13,26 +14,26 @@ import java.util.Set;
 @Component
 public class WordValidator {
 
-    public void validateVerb(Word word) {
+    public void validateVerb(WordDTO word) {
 
         // Must provide isIrregularVerb field
-        if (word.getIsIrregularVerb() == null) {
+        if (word.isIrregularVerb() == null) {
             throw new RuntimeException("Verb must have isIrregularVerb");
         }
 
         // For verbs, check user gave conjugations field
-        if (word.getConjugations() == null || word.getConjugations().isEmpty()) {
+        if (word.conjugations() == null || word.conjugations().isEmpty()) {
             throw new RuntimeException("Verbs must have conjugations");
         }
 
         // Check user gave 3 conjugations
-        if (word.getConjugations().size() != 3) {
+        if (word.conjugations().size() != 3) {
             throw new RuntimeException("Verbs must have only 3 conjugations");
         }
 
         // Check user provided PAST, PRESENT, FUTURE tenses
         boolean past = false, present = false, future = false;
-        for (Conjugation c : word.getConjugations()) {
+        for (Conjugation c : word.conjugations()) {
             if (c.getTense() == Tense.PAST) past = true;
             if (c.getTense() == Tense.PRESENT) present = true;
             if (c.getTense() == Tense.FUTURE) future = true;
@@ -43,23 +44,23 @@ public class WordValidator {
         if (!future) throw new RuntimeException("Verb missing future conjugation");
     }
 
-    public Set<English> validateEnglish(Word word, EnglishRepository englishRepository) {
+    public Set<English> validateEnglish(WordDTO word, Word newWord, EnglishRepository englishRepository) {
 
         Set<English> englishSet = new HashSet<>();
 
         // Check for making sure no duplicate english meaning insertions
-        for (English english : word.getEnglish()) {
+        for (English english : word.english()) {
             English foundEnglish = englishRepository.findByMeaning(english.getMeaning());
 
             // If no english meaning doesn't exist, create it, else add it
             if (foundEnglish == null) {
 
-                english.getWords().add(word);
+                english.getWords().add(newWord);
                 englishSet.add(englishRepository.save(english));
 
             } else {
 
-                foundEnglish.getWords().add(word);
+                foundEnglish.getWords().add(newWord);
                 englishSet.add(foundEnglish);
 
             }

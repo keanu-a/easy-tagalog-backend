@@ -1,0 +1,322 @@
+[
+  {
+    "tagalog": "oo",
+    "english": [
+      {
+        "meaning": "yes"
+      }
+    ],
+    "root": "oo",
+    "accents": [0],
+    "partOfSpeech": "ADVERB"
+  },
+  {
+    "tagalog": "hindi",
+    "english": [
+      {
+        "meaning": "no"
+      }
+    ],
+    "root": "hindi",
+    "accents": [4],
+    "partOfSpeech": "ADVERB"
+  },
+  {
+    "tagalog": "ako",
+    "english": [
+      {
+        "meaning": "I"
+      },
+      {
+        "meaning": "me"
+      }
+    ],
+    "accents": [2],
+    "partOfSpeech": "PRONOUN",
+    "linkedWord": {
+      "tagalog": "akong"
+    }
+  },
+  {
+    "tagalog": "ikaw",
+    "english": [
+      {
+        "meaning": "you (familiar)"
+      }
+    ],
+    "accents": [2],
+    "partOfSpeech": "PRONOUN",
+    "note": "Used alone or beginning of sentence"
+  },
+  {
+    "tagalog": "ka",
+    "english": [
+      {
+        "meaning": "you (familiar)"
+      }
+    ],
+    "partOfSpeech": "PRONOUN",
+    "note": "Used in the middle of sentences after words"
+  },
+  {
+    "tagalog": "siya",
+    "english": [
+      {
+        "meaning": "he"
+      },
+      {
+        "meaning": "she"
+      },
+      {
+        "meaning": "it"
+      }
+    ],
+    "accents": [3],
+    "partOfSpeech": "PRONOUN",
+    "alternateSpelling": "sya",
+    "note": "Gender neutral pronoun",
+    "linkedWord": {
+      "tagalog": "siyang"
+    }
+  },
+  {
+    "tagalog": "kayo",
+    "english": [
+      {
+        "meaning": "you (plural)"
+      },
+      {
+        "meaning": "you (formal)"
+      }
+    ],
+    "accents": [3],
+    "partOfSpeech": "PRONOUN",
+    "note": "Used politely for single person, or english equivalent to 'you all'"
+  },
+  {
+    "tagalog": "sila",
+    "english": [
+      {
+        "meaning": "they"
+      }
+    ],
+    "accents": [3],
+    "partOfSpeech": "PRONOUN"
+  },
+  {
+    "tagalog": "kami",
+    "english": [
+      {
+        "meaning": "we (exclusive)"
+      }
+    ],
+    "accents": [3],
+    "partOfSpeech": "PRONOUN",
+    "note": "we excluding you (the listener)"
+  },
+  {
+    "tagalog": "tayo",
+    "english": [
+      {
+        "meaning": "we (inclusive)"
+      }
+    ],
+    "accents": [1],
+    "partOfSpeech": "PRONOUN",
+    "note": "we including you (the listener)"
+  },
+  {
+    "tagalog": "maganda",
+    "english": [
+      {
+        "meaning": "beautiful"
+      },
+      {
+        "meaning": "pretty"
+      },
+      {
+        "meaning": "good"
+      },
+      {
+        "meaning": "nice"
+      }
+    ],
+    "accents": [6],
+    "partOfSpeech": "ADJECTIVE",
+    "linkedWord": {
+      "tagalog": "magandang"
+    }
+  },
+  {
+    "tagalog": "umaga",
+    "english": [
+      {
+        "meaning": "morning"
+      }
+    ],
+    "accents": [2],
+    "partOfSpeech": "NOUN"
+  },
+  {
+    "tagalog": "tanghali",
+    "english": [
+      {
+        "meaning": "midday"
+      },
+      {
+        "meaning": "lunchtime"
+      },
+      {
+        "meaning": "noon"
+      }
+    ],
+    "accents": [5],
+    "partOfSpeech": "NOUN"
+  },
+  {
+    "tagalog": "hapon",
+    "english": [
+      {
+        "meaning": "afternoon"
+      }
+    ],
+    "accents": [1],
+    "partOfSpeech": "NOUN"
+  },
+  {
+    "tagalog": "gabi",
+    "english": [
+      {
+        "meaning": "night"
+      },
+      {
+        "meaning": "evening"
+      }
+    ],
+    "accents": [3],
+    "partOfSpeech": "NOUN"
+  },
+  {
+    "tagalog": "kumusta",
+    "english": [
+      {
+        "meaning": "how are you?"
+      },
+      {
+        "meaning": "how are..."
+      },
+      {
+        "meaning": "how is..."
+      }
+    ],
+    "accents": [6],
+    "partOfSpeech": "INTERROGATIVE",
+    "alternateSpelling": "kamusta"
+  },
+  {
+    "tagalog": "paalam",
+    "english": [
+      {
+        "english": "goodbye"
+      },
+      {
+        "english": "farewell"
+      }
+    ],
+    "accents": [2],
+    "partOfSpeech": "",
+    "note": "A little formal, people use the english 'bye' or 'ingat'"
+  },
+  {
+    "tagalog": "ano",
+    "english": [
+      {
+        "meaning": "what"
+      }
+    ],
+    "accents": [2],
+    "partOfSpeech": "INTERROGATIVE",
+    "linkedWord": {
+      "tagalog": "anong"
+    }
+  },
+  {
+    "tagalog": "bakit",
+    "english": [
+      {
+        "meaning": "why"
+      }
+    ],
+    "accents": [1],
+    "partOfSpeech": "INTERROGATIVE"
+  },
+  {
+    "tagalog": "si",
+    "english": [
+      {
+        "meaning": "Personal noun marker"
+      }
+    ],
+    "partOfSpeech": "ARTICLE",
+    "note": "No direct english translation"
+  },
+  {
+    "tagalog": "taga-",
+    "english": [
+      {
+        "meaning": "Denotes origin"
+      }
+    ],
+    "partOfSpeech": "PREFIX",
+    "note": "Basically english equivalent to 'from'"
+  },
+  {
+    "tagalog": "saan",
+    "english": [
+      {
+        "meaning": "where"
+      }
+    ],
+    "accents": [2],
+    "partOfSpeech": "INTERROGATIVE"
+  },
+  {
+    "tagalog": "ilan",
+    "english": [
+      {
+        "meaning": "how many"
+      }
+    ],
+    "accents": [2],
+    "partOfSpeech": "INTERROGATIVE",
+    "linkedWord": {
+      "tagalog": "ilang"
+    }
+  },
+  {
+    "tagalog": "taon",
+    "english": [
+      {
+        "meaning": "year"
+      }
+    ],
+    "accents": [2],
+    "partOfSpeech": "NOUN"
+  },
+  {
+    "tagalog": "na",
+    "english": [
+      {
+        "meaning": "now"
+      },
+      {
+        "meaning": "already"
+      },
+      {
+        "meaning": "Linker word (ligature)"
+      }
+    ],
+    "partOfSpeech": "ADVERB",
+    "note": "Can be used as linker word similar to 'ang' if following word that start with a consonant"
+  }
+]
