@@ -1,8 +1,10 @@
-package org.alouastudios.easytagalogbackend.model.word;
+package org.alouastudios.easytagalogbackend.model.words;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.alouastudios.easytagalogbackend.enums.PartOfSpeech;
+import org.alouastudios.easytagalogbackend.model.phrases.Phrase;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -47,11 +49,21 @@ public class Word {
 
     private Boolean isIrregularVerb;
 
-    @OneToMany(mappedBy = "word", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Conjugation> conjugations;
+    private String note;
 
     @Column(unique = true)
     private String audioUrl;
+
+    @OneToMany(mappedBy = "word", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Conjugation> conjugations;
+
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "linked_word_id", referencedColumnName = "id")
+    private LinkedWord linkedWord;  // For added ligatures, ex: magandang -- ONLY +ng or +g
+
+    @ManyToMany(mappedBy = "words") // two-way since implement phrases the word is used in later
+    @JsonIgnore
+    private Set<Phrase> phrases = new HashSet<>();
 
     @Override
     public String toString() {
@@ -63,6 +75,7 @@ public class Word {
                 ", partOfSpeech=" + partOfSpeech +
                 ", alternateSpelling='" + alternateSpelling + '\'' +
                 ", isIrregularVerb=" + isIrregularVerb +
+                ", note='" + note + '\'' +
                 ", audioUrl='" + audioUrl + '\'' +
                 '}';
     }
@@ -72,11 +85,19 @@ public class Word {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Word word = (Word) o;
-        return Objects.equals(id, word.id) && Objects.equals(tagalog, word.tagalog) && Objects.equals(root, word.root) && Objects.equals(accents, word.accents) && partOfSpeech == word.partOfSpeech && Objects.equals(alternateSpelling, word.alternateSpelling) && Objects.equals(isIrregularVerb, word.isIrregularVerb) && Objects.equals(audioUrl, word.audioUrl);
+        return Objects.equals(id, word.id) &&
+                Objects.equals(tagalog, word.tagalog) &&
+                Objects.equals(root, word.root) &&
+                Objects.equals(accents, word.accents) &&
+                partOfSpeech == word.partOfSpeech &&
+                Objects.equals(alternateSpelling, word.alternateSpelling) &&
+                Objects.equals(isIrregularVerb, word.isIrregularVerb) &&
+                Objects.equals(note, word.note) &&
+                Objects.equals(audioUrl, word.audioUrl);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, tagalog, root, accents, partOfSpeech, alternateSpelling, isIrregularVerb, audioUrl);
+        return Objects.hash(id, tagalog, root, accents, partOfSpeech, alternateSpelling, isIrregularVerb, note, audioUrl);
     }
 }

@@ -11,5 +11,6 @@ public enum PartOfSpeech {
     INTERJECTION,
     INTERROGATIVE,
     ARTICLE,
-    PARTICLE
+    PARTICLE,
+    PREFIX
 }
