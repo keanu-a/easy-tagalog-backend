@@ -1,5 +1,6 @@
 package org.alouastudios.easytagalogbackend.controller;
 
+import org.alouastudios.easytagalogbackend.dto.WordDTO;
 import org.alouastudios.easytagalogbackend.model.words.Word;
 import org.alouastudios.easytagalogbackend.service.WordService;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +33,7 @@ public class WordController {
     }
 
     @PostMapping
-    public Word addWord(@RequestBody Word word) {
+    public Word addWord(@RequestBody WordDTO word) {
         return wordService.addWord(word);
     };
 

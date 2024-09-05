@@ -5,6 +5,8 @@ import org.alouastudios.easytagalogbackend.model.phrases.Phrase;
 import org.alouastudios.easytagalogbackend.model.words.Word;
 import org.alouastudios.easytagalogbackend.repository.PhraseRepository;
 import org.alouastudios.easytagalogbackend.repository.WordRepository;
+import org.alouastudios.easytagalogbackend.util.ServiceUtil;
+import org.alouastudios.easytagalogbackend.validator.PhraseValidator;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,9 +18,12 @@ public class PhraseService {
 
     private final WordRepository wordRepository;
 
-    public PhraseService(PhraseRepository phraseRepository, WordRepository wordRepository) {
+    private final PhraseValidator phraseValidator;
+
+    public PhraseService(PhraseRepository phraseRepository, WordRepository wordRepository, PhraseValidator phraseValidator) {
         this.phraseRepository = phraseRepository;
         this.wordRepository = wordRepository;
+        this.phraseValidator = phraseValidator;
     }
 
     public List<Phrase> getAllPhrases() {
@@ -33,11 +38,17 @@ public class PhraseService {
 
         Phrase newPhrase = new Phrase();
         newPhrase.setTagalog(phrase.tagalog());
-        newPhrase.setWordOrder(phrase.wordOrder());
         newPhrase.setEnglish(phrase.english());
 
-        List<Word> words = wordRepository.findAllByIdIn(phrase.wordIds());
+        // Validates notation
+        phraseValidator.validateWordIdMeaningConjugationOrder(phrase.wordIdMeaningConjugationOrder());
 
+        // If validation passed, convert to string to store into database
+        String wordOrder = ServiceUtil.convertOrderArrayToString(phrase.wordIdMeaningConjugationOrder());
+        newPhrase.setWordIdMeaningConjugationOrder(wordOrder);
+
+        // Validates Word IDs
+        List<Word> words = wordRepository.findAllByIdIn(phrase.wordIds());
         if (words.size() != phrase.wordIds().size()) {
             throw new RuntimeException("Some Word IDs do not exists");
         }

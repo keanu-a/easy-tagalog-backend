@@ -32,8 +32,8 @@ public class Phrase {
     )
     private List<Word> words;
 
-    @Column(nullable = false)
-    private String wordOrder; // ex: "0,1,2:PAST,0
+    @Column(nullable = false, unique = true)
+    private String wordIdMeaningConjugationOrder; // ex: "3:moon:,5::,2::PAST,3::
 
     @Override
     public String toString() {
