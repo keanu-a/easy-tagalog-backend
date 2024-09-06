@@ -37,6 +37,11 @@ public class WordController {
         return wordService.addWord(word);
     };
 
+    @PostMapping("/batch")
+    public List<Word> addWords(@RequestBody List<WordDTO> words) {
+        return wordService.addWords(words);
+    }
+
     @PutMapping("/{id}")
     public Word updateWord(Word word) {
         return wordService.updateWord(word);

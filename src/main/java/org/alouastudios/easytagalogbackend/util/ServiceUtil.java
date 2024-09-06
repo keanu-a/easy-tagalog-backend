@@ -42,7 +42,7 @@ public class ServiceUtil {
         return false;
     }
 
-    public static String createAudioString(String tagalog) {
+    public static String createWordAudioString(String tagalog) {
         return tagalog.concat(".mp3");
     }
 }
