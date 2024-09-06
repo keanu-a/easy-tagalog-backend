@@ -31,6 +31,7 @@
         "meaning": "me"
       }
     ],
+    "root": "ako",
     "accents": [2],
     "partOfSpeech": "PRONOUN",
     "linkedWord": {
@@ -44,6 +45,7 @@
         "meaning": "you (familiar)"
       }
     ],
+    "root": "ikaw",
     "accents": [2],
     "partOfSpeech": "PRONOUN",
     "note": "Used alone or beginning of sentence"
@@ -55,6 +57,7 @@
         "meaning": "you (familiar)"
       }
     ],
+    "root": "ka",
     "partOfSpeech": "PRONOUN",
     "note": "Used in the middle of sentences after words"
   },
@@ -71,6 +74,7 @@
         "meaning": "it"
       }
     ],
+    "root": "siya",
     "accents": [3],
     "partOfSpeech": "PRONOUN",
     "alternateSpelling": "sya",
@@ -89,6 +93,7 @@
         "meaning": "you (formal)"
       }
     ],
+    "root": "kayo",
     "accents": [3],
     "partOfSpeech": "PRONOUN",
     "note": "Used politely for single person, or english equivalent to 'you all'"
@@ -100,6 +105,7 @@
         "meaning": "they"
       }
     ],
+    "root": "sila",
     "accents": [3],
     "partOfSpeech": "PRONOUN"
   },
@@ -110,6 +116,7 @@
         "meaning": "we (exclusive)"
       }
     ],
+    "root": "kami",
     "accents": [3],
     "partOfSpeech": "PRONOUN",
     "note": "we excluding you (the listener)"
@@ -121,6 +128,7 @@
         "meaning": "we (inclusive)"
       }
     ],
+    "root": "tayo",
     "accents": [1],
     "partOfSpeech": "PRONOUN",
     "note": "we including you (the listener)"
@@ -141,6 +149,7 @@
         "meaning": "nice"
       }
     ],
+    "root": "maganda",
     "accents": [6],
     "partOfSpeech": "ADJECTIVE",
     "linkedWord": {
@@ -154,6 +163,7 @@
         "meaning": "morning"
       }
     ],
+    "root": "umaga",
     "accents": [2],
     "partOfSpeech": "NOUN"
   },
@@ -170,6 +180,7 @@
         "meaning": "noon"
       }
     ],
+    "root": "tanghali",
     "accents": [5],
     "partOfSpeech": "NOUN"
   },
@@ -180,6 +191,7 @@
         "meaning": "afternoon"
       }
     ],
+    "root": "hapon",
     "accents": [1],
     "partOfSpeech": "NOUN"
   },
@@ -193,6 +205,7 @@
         "meaning": "evening"
       }
     ],
+    "root": "gabi",
     "accents": [3],
     "partOfSpeech": "NOUN"
   },
@@ -209,6 +222,7 @@
         "meaning": "how is..."
       }
     ],
+    "root": "kumusta",
     "accents": [6],
     "partOfSpeech": "INTERROGATIVE",
     "alternateSpelling": "kamusta"
@@ -217,14 +231,15 @@
     "tagalog": "paalam",
     "english": [
       {
-        "english": "goodbye"
+        "meaning": "goodbye"
       },
       {
-        "english": "farewell"
+        "meaning": "farewell"
       }
     ],
+    "root": "paalam",
     "accents": [2],
-    "partOfSpeech": "",
+    "partOfSpeech": "INTERJECTION",
     "note": "A little formal, people use the english 'bye' or 'ingat'"
   },
   {
@@ -234,6 +249,7 @@
         "meaning": "what"
       }
     ],
+    "root": "ano",
     "accents": [2],
     "partOfSpeech": "INTERROGATIVE",
     "linkedWord": {
@@ -247,6 +263,7 @@
         "meaning": "why"
       }
     ],
+    "root": "bakit",
     "accents": [1],
     "partOfSpeech": "INTERROGATIVE"
   },
@@ -257,6 +274,7 @@
         "meaning": "Personal noun marker"
       }
     ],
+    "root": "si",
     "partOfSpeech": "ARTICLE",
     "note": "No direct english translation"
   },
@@ -267,6 +285,7 @@
         "meaning": "Denotes origin"
       }
     ],
+    "root": "taga",
     "partOfSpeech": "PREFIX",
     "note": "Basically english equivalent to 'from'"
   },
@@ -277,6 +296,7 @@
         "meaning": "where"
       }
     ],
+    "root": "saan",
     "accents": [2],
     "partOfSpeech": "INTERROGATIVE"
   },
@@ -287,6 +307,7 @@
         "meaning": "how many"
       }
     ],
+    "root": "ilan",
     "accents": [2],
     "partOfSpeech": "INTERROGATIVE",
     "linkedWord": {
@@ -300,6 +321,7 @@
         "meaning": "year"
       }
     ],
+    "root": "taon",
     "accents": [2],
     "partOfSpeech": "NOUN"
   },
@@ -316,6 +338,7 @@
         "meaning": "Linker word (ligature)"
       }
     ],
+    "root": "na",
     "partOfSpeech": "ADVERB",
     "note": "Can be used as linker word similar to 'ang' if following word that start with a consonant"
   }

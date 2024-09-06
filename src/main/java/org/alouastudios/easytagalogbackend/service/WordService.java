@@ -1,5 +1,6 @@
 package org.alouastudios.easytagalogbackend.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.alouastudios.easytagalogbackend.dto.WordDTO;
 import org.alouastudios.easytagalogbackend.enums.PartOfSpeech;
@@ -13,6 +14,7 @@ import org.alouastudios.easytagalogbackend.util.ServiceUtil;
 import org.alouastudios.easytagalogbackend.validator.WordValidator;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -59,11 +61,17 @@ public class WordService {
         newWord.setIsIrregularVerb(word.isIrregularVerb());
         newWord.setNote(word.note());
 
-        // Create audio url
-        newWord.setAudioUrl(ServiceUtil.createAudioString(word.tagalog()));
+        // Create or set audio url
+        if (word.audioUrl() == null) {
+            newWord.setAudioUrl(ServiceUtil.createWordAudioString(word.tagalog()));
+        } else {
+            newWord.setAudioUrl(word.audioUrl());
+        }
 
         // Change accents array to string
-        newWord.setAccents(ServiceUtil.convertAccentArrayToString(word.accents()));
+        if (word.accents() != null) {
+            newWord.setAccents(ServiceUtil.convertAccentArrayToString(word.accents()));
+        }
 
         // Validate checks for verbs
         if (word.partOfSpeech() == PartOfSpeech.VERB) {
@@ -77,12 +85,26 @@ public class WordService {
         }
 
         // Setting the linked word's word field
-        LinkedWord newLinkedWord = word.linkedWord();
-        newLinkedWord.setWord(newWord);
-        newLinkedWord.setAudioUrl(ServiceUtil.createAudioString(newLinkedWord.getTagalog()));
-        newWord.setLinkedWord(newLinkedWord);
+        if (word.linkedWord() != null) {
+            LinkedWord newLinkedWord = word.linkedWord();
+            newLinkedWord.setWord(newWord);
+            newLinkedWord.setAudioUrl(ServiceUtil.createWordAudioString(newLinkedWord.getTagalog()));
+            newWord.setLinkedWord(newLinkedWord);
+        }
 
         return wordRepository.save(newWord);
+    }
+
+    @Transactional
+    public List<Word> addWords(List<WordDTO> words) {
+
+        List<Word> newWords = new ArrayList<>();
+
+        for (WordDTO wordDTO : words) {
+            newWords.add(addWord(wordDTO));
+        }
+
+        return newWords;
     }
 
     public Word updateWord(Word word) {
