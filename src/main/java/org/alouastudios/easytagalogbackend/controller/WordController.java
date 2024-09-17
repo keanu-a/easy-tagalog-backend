@@ -52,9 +52,4 @@ public class WordController {
         wordService.deleteWord(id);
         return "Deleted Job Id: " + id;
     };
-
-    @GetMapping("/load")
-    public String loadWords() {
-        return "Successfully Loaded Words";
-    }
 }
