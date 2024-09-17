@@ -340,6 +340,183 @@
     ],
     "root": "na",
     "partOfSpeech": "ADVERB",
-    "note": "Can be used as linker word similar to 'ang' if following word that start with a consonant"
+    "note": "Also used as linker word like 'ang' if following word starts with a consonant",
+  },
+  {
+    "tagalog": "po",
+    "english": [
+      {
+        "meaning": "No direct translation - shows respect"
+      }
+    ],
+    "root": "po",
+    "partOfSpeech": "PARTICLE",
+    "note": "Used for elderly, people in authority, or if being polite",
+    "linkedWord": {
+      "tagalog": "pong"
+    }
+  },
+  {
+    "tagalog": "mabuti",
+    "english": [
+      {
+        "meaning": "good"
+      },
+      {
+        "meaning": "well"
+      }
+    ],
+    "root": "buti",
+    "accents": [3],
+    "partOfSpeech": "ADJECTIVE",
+    "linkedWord": {
+      "tagalog": "mabuting"
+    }
+  },
+  {
+    "tagalog": "ayos",
+    "english": [
+      {
+        "meaning": "ok"
+      },
+      {
+        "meaning": "okay"
+      },
+      {
+        "meaning": "order"
+      },
+      {
+        "meaning": "arrangement"
+      },
+      {
+        "meaning": "tidiness"
+      }
+    ],
+    "root": "ayos",
+    "accents": [2],
+    "partOfSpeech": "ADJECTIVE"
+  },
+  {
+    "tagalog": "naman",
+    "english": [
+      {
+        "meaning": "also"
+      },
+      {
+        "meaning": "too"
+      },
+      {
+        "meaning": "really"
+      },
+      {
+        "meaning": "please"
+      }
+    ],
+    "root": "naman",
+    "accents": [3],
+    "partOfSpeech": "ADVERB",
+    "note": "Used for emphasis on subject of a sentence",
+    "linkedWord": {
+      "tagalog": "namang"
+    }
+  },
+  {
+    "tagalog": "lang",
+    "english": [
+      {
+        "meaning": "just"
+      },
+      {
+        "meaning": "only"
+      }
+    ],
+    "root": "lang",
+    "partOfSpeech": "ADVERB"
+  },
+  {
+    "tagalog": "pangalan",
+    "english": [
+      {
+        "meaning": "name"
+      }
+    ],
+    "root": "ngalan",
+    "accents": [4],
+    "partOfSpeech": "NOUN"
+  },
+  {
+    "tagalog": "mo",
+    "english": [
+      {
+        "meaning": "your"
+      },
+      {
+        "meaning": "yours"
+      },
+      {
+        "meaning": "you (for transitive verbs)"
+      }
+    ],
+    "root": "mo",
+    "partOfSpeech": "PRONOUN"
+  },
+  {
+    "tagalog": "ang",
+    "english": [
+      {
+        "meaning": "the"
+      },
+      {
+        "meaning": "so"
+      }
+    ],
+    "root": "ang",
+    "partOfSpeech": "ARTICLE",
+    "note": "Topic marker for nouns or adds emphasis for adjectives"
+  },
+  {
+    "tagalog": "lalaki",
+    "english": [
+      {
+        "meaning": "man"
+      },
+      {
+        "meaning": "male"
+      }
+    ],
+    "accents": [3],
+    "root": "lalaki",
+    "partOfSpeech": "NOUN"
+  },
+  {
+    "tagalog": "babae",
+    "english": [
+      {
+        "meaning": "woman"
+      },
+      {
+        "meaning": "girl"
+      },
+      {
+        "meaning": "female"
+      }
+    ],
+    "accents": [3],
+    "root": "babae",
+    "partOfSpeech": "NOUN"
+  },
+  {
+    "tagalog": "ay",
+    "english": [
+      {
+        "meaning": "is"
+      },
+      {
+        "meaning": "was"
+      }
+    ],
+    "root": "ay",
+    "partOfSpeech": "PARTICLE",
+    "note": "Inversion marker to signal non-initial predicate"
   }
 ]

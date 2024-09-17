@@ -31,4 +31,17 @@ public class PhraseController {
     public Phrase addPhrase(@RequestBody PhraseDTO phrase) {
         return phraseService.addPhrase(phrase);
     }
+
+    @PostMapping("/batch")
+    public List<Phrase> addPhraseBatch(@RequestBody List<PhraseDTO> phrases) {
+        return phraseService.addPhrases(phrases);
+    }
+
+    // TODO: PUT request
+
+    @DeleteMapping("/{id}")
+    public String deletePhraseById(@PathVariable long id) {
+        phraseService.deletePhraseById(id);
+        return "Deleted Phrase Id: " + id;
+    }
 }
