@@ -24,6 +24,9 @@ public class Phrase {
     @Column(nullable = false)
     private String english;
 
+    @Column(nullable = false)
+    private Boolean isQuestion;
+
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "phrase_words",
@@ -33,7 +36,7 @@ public class Phrase {
     private List<Word> words;
 
     @Column(nullable = false, unique = true)
-    private String wordIdMeaningConjugationOrder; // ex: "3:moon:,5::,2::PAST,3::
+    private String wordIdLinkedMeaningConjugationOrder; // ex: "3:-:moon:-,5:+:-:-,2:-:-:PAST,3:+:-:-
 
     @Override
     public String toString() {
@@ -41,6 +44,8 @@ public class Phrase {
                 "id=" + id +
                 ", tagalog='" + tagalog + '\'' +
                 ", english='" + english + '\'' +
+                ", isQuestion=" + isQuestion +
+                ", wordIdLinkedMeaningConjugationOrder='" + wordIdLinkedMeaningConjugationOrder + '\'' +
                 '}';
     }
 
@@ -49,11 +54,11 @@ public class Phrase {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Phrase phrase = (Phrase) o;
-        return Objects.equals(id, phrase.id) && Objects.equals(tagalog, phrase.tagalog) && Objects.equals(english, phrase.english);
+        return Objects.equals(id, phrase.id) && Objects.equals(tagalog, phrase.tagalog) && Objects.equals(english, phrase.english) && Objects.equals(isQuestion, phrase.isQuestion) && Objects.equals(wordIdLinkedMeaningConjugationOrder, phrase.wordIdLinkedMeaningConjugationOrder);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, tagalog, english);
+        return Objects.hash(id, tagalog, english, isQuestion, wordIdLinkedMeaningConjugationOrder);
     }
 }
