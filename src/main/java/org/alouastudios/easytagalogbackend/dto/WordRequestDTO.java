@@ -8,8 +8,7 @@ import org.alouastudios.easytagalogbackend.model.words.LinkedWord;
 import java.util.List;
 import java.util.Set;
 
-public record WordDTO (
-        Long id,
+public record WordRequestDTO(
         String tagalog,
         Set<English> english,
         String root,

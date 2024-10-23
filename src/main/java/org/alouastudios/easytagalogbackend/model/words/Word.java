@@ -26,7 +26,7 @@ public class Word {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private UUID uuid;
+    private UUID uuid; // Use this ID if need to expose to the frontend
 
     @Column(length = 30, nullable = false)
     private String tagalog;
@@ -58,7 +58,7 @@ public class Word {
     private String audioUrl;
 
     @OneToMany(mappedBy = "word", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Conjugation> conjugations;
+    private Set<Conjugation> conjugations = new HashSet<>();
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "linked_word_id", referencedColumnName = "id")

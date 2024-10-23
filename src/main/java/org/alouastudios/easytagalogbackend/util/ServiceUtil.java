@@ -20,6 +20,17 @@ public class ServiceUtil {
         return String.join(",", accentStrings);
     }
 
+    public static List<Integer> convertStringToAccentArray(String string) {
+        String[] accentStrings = string.split(",");
+
+        List<Integer> accentIntegers = new ArrayList<>();
+        for (String accentString : accentStrings) {
+            accentIntegers.add(Integer.parseInt(accentString.trim()));
+        }
+
+        return accentIntegers;
+    }
+
     public static String convertOrderArrayToString(List<String> wordOrder) {
         return String.join(",", wordOrder);
     }
