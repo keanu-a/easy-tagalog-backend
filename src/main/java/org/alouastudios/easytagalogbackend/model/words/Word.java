@@ -9,6 +9,7 @@ import org.alouastudios.easytagalogbackend.model.phrases.Phrase;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.UUID;
 
 // @Data annotation includes getters, setters, tostring, equals, and hashcode
 
@@ -24,6 +25,8 @@ public class Word {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private UUID uuid; // Use this ID if need to expose to the frontend
 
     @Column(length = 30, nullable = false)
     private String tagalog;
@@ -55,7 +58,7 @@ public class Word {
     private String audioUrl;
 
     @OneToMany(mappedBy = "word", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Conjugation> conjugations;
+    private Set<Conjugation> conjugations = new HashSet<>();
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "linked_word_id", referencedColumnName = "id")
@@ -65,10 +68,18 @@ public class Word {
     @JsonIgnore
     private Set<Phrase> phrases = new HashSet<>();
 
+    @PrePersist
+    public void generateUUID() {
+        if (uuid == null) {
+            uuid = UUID.randomUUID();
+        }
+    }
+
     @Override
     public String toString() {
         return "Word{" +
                 "id=" + id +
+                ", uuid='" + uuid + '\'' +
                 ", tagalog='" + tagalog + '\'' +
                 ", root='" + root + '\'' +
                 ", accents='" + accents + '\'' +
@@ -86,6 +97,7 @@ public class Word {
         if (o == null || getClass() != o.getClass()) return false;
         Word word = (Word) o;
         return Objects.equals(id, word.id) &&
+                Objects.equals(uuid, word.uuid) &&
                 Objects.equals(tagalog, word.tagalog) &&
                 Objects.equals(root, word.root) &&
                 Objects.equals(accents, word.accents) &&
@@ -98,6 +110,6 @@ public class Word {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, tagalog, root, accents, partOfSpeech, alternateSpelling, isIrregularVerb, note, audioUrl);
+        return Objects.hash(id, uuid, tagalog, root, accents, partOfSpeech, alternateSpelling, isIrregularVerb, note, audioUrl);
     }
 }

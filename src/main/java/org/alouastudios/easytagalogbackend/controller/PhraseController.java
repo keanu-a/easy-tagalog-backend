@@ -38,6 +38,10 @@ public class PhraseController {
     }
 
     // TODO: PUT request
+    @PutMapping("/{id}")
+    public Phrase updatePhrase(@PathVariable long id, @RequestBody PhraseDTO phrase) {
+        return phraseService.updatePhrase(id, phrase);
+    }
 
     @DeleteMapping("/{id}")
     public String deletePhraseById(@PathVariable long id) {
