@@ -15,7 +15,7 @@ public interface WordRepository extends JpaRepository<Word, Long> {
 
     Optional<Word> findByUuid(UUID uuid);
 
-    List<Word> findAllByIdIn(List<Long> ids);
+    List<Word> findAllByUuidIn(List<UUID> uuids);
 
     @Query(
             "SELECT w from Word w " +

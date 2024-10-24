@@ -1,9 +1,8 @@
 package org.alouastudios.easytagalogbackend.service;
 
 import jakarta.transaction.Transactional;
-import org.alouastudios.easytagalogbackend.dto.PhraseDTO;
+import org.alouastudios.easytagalogbackend.dto.PhraseRequestDTO;
 import org.alouastudios.easytagalogbackend.model.phrases.Phrase;
-import org.alouastudios.easytagalogbackend.model.words.Word;
 import org.alouastudios.easytagalogbackend.repository.PhraseRepository;
 import org.alouastudios.easytagalogbackend.repository.WordRepository;
 import org.alouastudios.easytagalogbackend.util.ServiceUtil;
@@ -36,7 +35,9 @@ public class PhraseService {
         return phraseRepository.findById(id).orElse(null);
     }
 
-    public Phrase addPhrase(PhraseDTO phrase) {
+    public Phrase addPhrase(PhraseRequestDTO phrase) {
+
+        // TODO 10/23: Fix PhraseDTOs logic
 
         Phrase newPhrase = new Phrase();
         newPhrase.setTagalog(phrase.tagalog());
@@ -45,11 +46,11 @@ public class PhraseService {
         newPhrase.setIsQuestion(phrase.isQuestion() != null && phrase.isQuestion());
 
         // Validates notation
-        phraseValidator.validateWordIdLinkedMeaningConjugationOrder(phrase.wordIdLinkedMeaningConjugationOrder());
+        phraseValidator.validateWordIdLinkedMeaningConjugationOrder(phrase.phraseWordOrder());
 
         // If validation passed, convert to string to store into database
-        String wordOrder = ServiceUtil.convertOrderArrayToString(phrase.wordIdLinkedMeaningConjugationOrder());
-        newPhrase.setWordIdLinkedMeaningConjugationOrder(wordOrder);
+        String wordOrder = ServiceUtil.convertOrderArrayToString(phrase.phraseWordOrder());
+        newPhrase.setPhraseWordOrder(wordOrder);
 
         // Validates Word IDs
 //        List<Word> words = wordRepository.findAllByIdIn(phrase.wordIds());
@@ -71,35 +72,35 @@ public class PhraseService {
     }
 
     @Transactional
-    public List<Phrase> addPhrases(List<PhraseDTO> phrases) {
+    public List<Phrase> addPhrases(List<PhraseRequestDTO> phrases) {
 
         List<Phrase> newPhrases = new ArrayList<Phrase>();
 
-        for (PhraseDTO phraseDTO : phrases) {
-            newPhrases.add(addPhrase(phraseDTO));
+        for (PhraseRequestDTO phraseRequestDTO : phrases) {
+            newPhrases.add(addPhrase(phraseRequestDTO));
         }
 
         return newPhrases;
     }
 
-    public Phrase updatePhrase(long id, PhraseDTO phraseDTO) {
+    public Phrase updatePhrase(long id, PhraseRequestDTO phraseRequestDTO) {
         Phrase phrase = phraseRepository.findById(id).orElse(null);
 
         if (phrase == null) {
             throw new RuntimeException("Phrase not found");
         }
 
-        phrase.setEnglish(phraseDTO.english());
-        phrase.setTagalog(phraseDTO.tagalog());
+        phrase.setEnglish(phraseRequestDTO.english());
+        phrase.setTagalog(phraseRequestDTO.tagalog());
 
-        phrase.setIsQuestion(phraseDTO.isQuestion() != null && phraseDTO.isQuestion());
+        phrase.setIsQuestion(phraseRequestDTO.isQuestion() != null && phraseRequestDTO.isQuestion());
 
         // Validates notation
-        phraseValidator.validateWordIdLinkedMeaningConjugationOrder(phraseDTO.wordIdLinkedMeaningConjugationOrder());
+        phraseValidator.validateWordIdLinkedMeaningConjugationOrder(phraseRequestDTO.phraseWordOrder());
 
         // If validation passed, convert to string to store into database
-        String wordOrder = ServiceUtil.convertOrderArrayToString(phraseDTO.wordIdLinkedMeaningConjugationOrder());
-        phrase.setWordIdLinkedMeaningConjugationOrder(wordOrder);
+        String wordOrder = ServiceUtil.convertOrderArrayToString(phraseRequestDTO.phraseWordOrder());
+        phrase.setPhraseWordOrder(wordOrder);
 
 //        // Validates Word IDs
 //        List<Word> words = wordRepository.findAllByIdIn(phraseDTO.wordIds());

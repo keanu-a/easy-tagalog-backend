@@ -1,6 +1,6 @@
 package org.alouastudios.easytagalogbackend.controller;
 
-import org.alouastudios.easytagalogbackend.dto.PhraseDTO;
+import org.alouastudios.easytagalogbackend.dto.PhraseRequestDTO;
 import org.alouastudios.easytagalogbackend.model.phrases.Phrase;
 import org.alouastudios.easytagalogbackend.service.PhraseService;
 import org.springframework.web.bind.annotation.*;
@@ -28,18 +28,18 @@ public class PhraseController {
     }
 
     @PostMapping
-    public Phrase addPhrase(@RequestBody PhraseDTO phrase) {
+    public Phrase addPhrase(@RequestBody PhraseRequestDTO phrase) {
         return phraseService.addPhrase(phrase);
     }
 
     @PostMapping("/batch")
-    public List<Phrase> addPhraseBatch(@RequestBody List<PhraseDTO> phrases) {
+    public List<Phrase> addPhraseBatch(@RequestBody List<PhraseRequestDTO> phrases) {
         return phraseService.addPhrases(phrases);
     }
 
     // TODO: PUT request
     @PutMapping("/{id}")
-    public Phrase updatePhrase(@PathVariable long id, @RequestBody PhraseDTO phrase) {
+    public Phrase updatePhrase(@PathVariable long id, @RequestBody PhraseRequestDTO phrase) {
         return phraseService.updatePhrase(id, phrase);
     }
 

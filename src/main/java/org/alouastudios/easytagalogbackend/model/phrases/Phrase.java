@@ -45,7 +45,7 @@ public class Phrase {
     // Fourth: Conjugation ENUM (- none / PAST,PRESENT,FUTURE)
 
     @Column(nullable = false, unique = true)
-    private String wordIdLinkedMeaningConjugationOrder; // ex: "3:-:moon:-,5:+:-:-,2:-:-:PAST,3:+:-:-
+    private String phraseWordOrder; // ex: "3:-:moon:-,5:+:-:-,2:-:-:PAST,3:+:-:-
 
     @PrePersist
     public void generateUUID() {
@@ -62,7 +62,7 @@ public class Phrase {
                 ", tagalog='" + tagalog + '\'' +
                 ", english='" + english + '\'' +
                 ", isQuestion=" + isQuestion +
-                ", wordIdLinkedMeaningConjugationOrder='" + wordIdLinkedMeaningConjugationOrder + '\'' +
+                ", phraseWordOrder='" + phraseWordOrder + '\'' +
                 '}';
     }
 
@@ -71,11 +71,16 @@ public class Phrase {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Phrase phrase = (Phrase) o;
-        return Objects.equals(id, phrase.id) && Objects.equals(uuid, phrase.uuid) && Objects.equals(tagalog, phrase.tagalog) && Objects.equals(english, phrase.english) && Objects.equals(isQuestion, phrase.isQuestion) && Objects.equals(wordIdLinkedMeaningConjugationOrder, phrase.wordIdLinkedMeaningConjugationOrder);
+        return Objects.equals(id, phrase.id) &&
+                Objects.equals(uuid, phrase.uuid) &&
+                Objects.equals(tagalog, phrase.tagalog) &&
+                Objects.equals(english, phrase.english) &&
+                Objects.equals(isQuestion, phrase.isQuestion) &&
+                Objects.equals(phraseWordOrder, phrase.phraseWordOrder);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, uuid, tagalog, english, isQuestion, wordIdLinkedMeaningConjugationOrder);
+        return Objects.hash(id, uuid, tagalog, english, isQuestion, phraseWordOrder);
     }
 }
