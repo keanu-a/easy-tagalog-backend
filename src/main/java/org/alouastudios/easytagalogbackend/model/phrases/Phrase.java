@@ -5,8 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.alouastudios.easytagalogbackend.model.words.Word;
 
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 
 @Data
@@ -36,7 +36,13 @@ public class Phrase {
             joinColumns = @JoinColumn(name = "phrase_id"),
             inverseJoinColumns = @JoinColumn(name = "word_id")
     )
-    private List<Word> words;
+    private Set<Word> words;
+
+    // wordIdLinkedMeaningConjugationOrder - MEANING
+    // First: Word UUID
+    // Second: Using linked word (- no / + yes)
+    // Third: English UUID
+    // Fourth: Conjugation ENUM (- none / PAST,PRESENT,FUTURE)
 
     @Column(nullable = false, unique = true)
     private String wordIdLinkedMeaningConjugationOrder; // ex: "3:-:moon:-,5:+:-:-,2:-:-:PAST,3:+:-:-

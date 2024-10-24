@@ -137,12 +137,15 @@ public class WordService {
         // Validate checks for verbs
         if (word.partOfSpeech() == PartOfSpeech.VERB) {
 
-            wordValidator.validateVerb(word);
+            // Verbs NEED conjugations
+            Set<Conjugation> conjugationSet = wordValidator.validateVerb(word);
 
             // If passed all checks, set conjugation to word
-            for (Conjugation c : word.conjugations()) {
+            for (Conjugation c : conjugationSet) {
                 c.setWord(wordEntity);
             }
+
+            wordEntity.setConjugations(conjugationSet);
         }
 
         // Setting the linked word's word field

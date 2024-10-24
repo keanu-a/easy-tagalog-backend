@@ -14,7 +14,7 @@ import java.util.Set;
 @Component
 public class WordValidator {
 
-    public void validateVerb(WordRequestDTO word) {
+    public Set<Conjugation> validateVerb(WordRequestDTO word) {
 
         // Must provide isIrregularVerb field
         if (word.isIrregularVerb() == null) {
@@ -32,6 +32,7 @@ public class WordValidator {
         }
 
         // Check user provided PAST, PRESENT, FUTURE tenses
+
         boolean past = false, present = false, future = false;
         for (Conjugation c : word.conjugations()) {
             if (c.getTense() == Tense.PAST) past = true;
@@ -42,6 +43,8 @@ public class WordValidator {
         if (!past) throw new RuntimeException("Verb missing past conjugation");
         if (!present) throw new RuntimeException("Verb missing present conjugation");
         if (!future) throw new RuntimeException("Verb missing future conjugation");
+
+        return word.conjugations();
     }
 
     public Set<English> validateEnglish(WordRequestDTO word, Word newWord, EnglishRepository englishRepository) {
