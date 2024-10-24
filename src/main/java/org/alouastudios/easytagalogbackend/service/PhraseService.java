@@ -52,20 +52,20 @@ public class PhraseService {
         newPhrase.setWordIdLinkedMeaningConjugationOrder(wordOrder);
 
         // Validates Word IDs
-        List<Word> words = wordRepository.findAllByIdIn(phrase.wordIds());
+//        List<Word> words = wordRepository.findAllByIdIn(phrase.wordIds());
 
-        // Some phrases will have blanks (ex: <person-name>, <origin-name>, <age>, etc.)
-        List<Long> wordIdsWithoutBlanks = new ArrayList<>();
-        for (Long id : phrase.wordIds()) {
-            if (id != -1) wordIdsWithoutBlanks.add(id);
-        }
-
-        // Comparing found word ids with word ID array without blanks
-        if (words.size() != wordIdsWithoutBlanks.size()) {
-            throw new RuntimeException("Some Word IDs do not exists in " + phrase.tagalog());
-        }
-
-        newPhrase.setWords(words);
+//        // Some phrases will have blanks (ex: <person-name>, <origin-name>, <age>, etc.)
+//        List<Long> wordIdsWithoutBlanks = new ArrayList<>();
+//        for (Long id : phrase.wordIds()) {
+//            if (id != -1) wordIdsWithoutBlanks.add(id);
+//        }
+//
+//        // Comparing found word ids with word ID array without blanks
+//        if (words.size() != wordIdsWithoutBlanks.size()) {
+//            throw new RuntimeException("Some Word IDs do not exists in " + phrase.tagalog());
+//        }
+//
+//        newPhrase.setWords(words);
 
         return phraseRepository.save(newPhrase);
     }
@@ -80,6 +80,44 @@ public class PhraseService {
         }
 
         return newPhrases;
+    }
+
+    public Phrase updatePhrase(long id, PhraseDTO phraseDTO) {
+        Phrase phrase = phraseRepository.findById(id).orElse(null);
+
+        if (phrase == null) {
+            throw new RuntimeException("Phrase not found");
+        }
+
+        phrase.setEnglish(phraseDTO.english());
+        phrase.setTagalog(phraseDTO.tagalog());
+
+        phrase.setIsQuestion(phraseDTO.isQuestion() != null && phraseDTO.isQuestion());
+
+        // Validates notation
+        phraseValidator.validateWordIdLinkedMeaningConjugationOrder(phraseDTO.wordIdLinkedMeaningConjugationOrder());
+
+        // If validation passed, convert to string to store into database
+        String wordOrder = ServiceUtil.convertOrderArrayToString(phraseDTO.wordIdLinkedMeaningConjugationOrder());
+        phrase.setWordIdLinkedMeaningConjugationOrder(wordOrder);
+
+//        // Validates Word IDs
+//        List<Word> words = wordRepository.findAllByIdIn(phraseDTO.wordIds());
+//
+//        // Some phrases will have blanks (ex: <person-name>, <origin-name>, <age>, etc.)
+//        List<Long> wordIdsWithoutBlanks = new ArrayList<>();
+//        for (Long wordId : phraseDTO.wordIds()) {
+//            if (wordId != -1) wordIdsWithoutBlanks.add(wordId);
+//        }
+//
+//        // Comparing found word ids with word ID array without blanks
+//        if (words.size() != wordIdsWithoutBlanks.size()) {
+//            throw new RuntimeException("Some Word IDs do not exists in " + phraseDTO.tagalog());
+//        }
+//
+//        phrase.setWords(words);
+
+        return phraseRepository.save(phrase);
     }
 
     public void deletePhraseById(Long id) {

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
@@ -17,12 +18,21 @@ public class English {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    private UUID uuid;
+
     @Column(unique = true, nullable = false)
     private String meaning;
 
     @ManyToMany(mappedBy = "english")
     @JsonIgnore
     private Set<Word> words = new HashSet<Word>();
+
+    @PrePersist
+    public void generateUUID() {
+        if (uuid == null) {
+            uuid = UUID.randomUUID();
+        }
+    }
 
     @Override
     public String toString() {
