@@ -38,14 +38,16 @@ public class Phrase {
     )
     private Set<Word> words;
 
-    // wordIdLinkedMeaningConjugationOrder - MEANING
-    // First: Word UUID
-    // Second: Using linked word (- no / + yes)
-    // Third: English UUID
-    // Fourth: Conjugation ENUM (- none / PAST,PRESENT,FUTURE)
+//    // phraseWordOrder MEANING:
+//    // - First: Word UUID
+//    // - Second: Using linked word (- no / + yes)
+//    // - Third: English UUID
+//    // - Fourth: Conjugation ENUM (- none / PAST,PRESENT,FUTURE)
+//    @Column(nullable = false, unique = true)
+//    private String phraseWordOrder; // ex: "3:-:moon:-,5:+:-:-,2:-:-:PAST,3:+:-:-
 
     @Column(nullable = false, unique = true)
-    private String phraseWordOrder; // ex: "3:-:moon:-,5:+:-:-,2:-:-:PAST,3:+:-:-
+    private String phraseWordMeanings; // ex: "I,name marker,<name>"
 
     @PrePersist
     public void generateUUID() {
@@ -62,7 +64,7 @@ public class Phrase {
                 ", tagalog='" + tagalog + '\'' +
                 ", english='" + english + '\'' +
                 ", isQuestion=" + isQuestion +
-                ", phraseWordOrder='" + phraseWordOrder + '\'' +
+                ", phraseWordMeanings='" + phraseWordMeanings + '\'' +
                 '}';
     }
 
@@ -76,11 +78,11 @@ public class Phrase {
                 Objects.equals(tagalog, phrase.tagalog) &&
                 Objects.equals(english, phrase.english) &&
                 Objects.equals(isQuestion, phrase.isQuestion) &&
-                Objects.equals(phraseWordOrder, phrase.phraseWordOrder);
+                Objects.equals(phraseWordMeanings, phrase.phraseWordMeanings);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, uuid, tagalog, english, isQuestion, phraseWordOrder);
+        return Objects.hash(id, uuid, tagalog, english, isQuestion, phraseWordMeanings);
     }
 }

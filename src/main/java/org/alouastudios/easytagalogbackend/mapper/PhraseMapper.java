@@ -1,14 +1,17 @@
 package org.alouastudios.easytagalogbackend.mapper;
 
 import org.alouastudios.easytagalogbackend.dto.PhraseRequestDTO;
-import org.alouastudios.easytagalogbackend.dto.PhraseWordOrderDTO;
+import org.alouastudios.easytagalogbackend.model.phrases.PhraseWordMeaning;
 import org.alouastudios.easytagalogbackend.dto.response.PhraseResponseDTO;
 import org.alouastudios.easytagalogbackend.model.phrases.Phrase;
+import org.alouastudios.easytagalogbackend.model.words.Word;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+import java.util.Set;
 
+@Component
 public class PhraseMapper {
 
     public PhraseResponseDTO toResponseDTO(Phrase phrase, String[] phraseWordMeanings) {
@@ -20,17 +23,18 @@ public class PhraseMapper {
         );
     }
 
-    public Phrase toEntity(PhraseRequestDTO phraseRequestDTO) {
+    public Phrase toEntity(PhraseRequestDTO phraseRequestDTO, Set<Word> phraseWords, List<String> phraseWordMeanings) {
 
         Phrase phrase = new Phrase();
 
         phrase.setTagalog(phraseRequestDTO.tagalog());
         phrase.setEnglish(phraseRequestDTO.english());
         phrase.setIsQuestion(phraseRequestDTO.isQuestion());
+        phrase.setWords(phraseWords);
 
-        // Maps DTO to a string to concat
+        // Maps DTO to a ":" separated string consisting of 4 values
         List<String> phraseWordOrder = new ArrayList<>();
-        for (PhraseWordOrderDTO order : phraseRequestDTO.phraseWordOrder()) {
+        for (PhraseWordMeaning order : phraseRequestDTO.phraseWordOrder()) {
             String[] orderString = new String[4];
 
             orderString[0] = order.id().toString();
@@ -45,7 +49,7 @@ public class PhraseMapper {
         }
 
         // Comma separated string
-        phrase.setPhraseWordOrder(String.join(",", phraseWordOrder));
+        phrase.setPhraseWordMeanings(String.join(",", phraseWordOrder));
 
         return phrase;
     }

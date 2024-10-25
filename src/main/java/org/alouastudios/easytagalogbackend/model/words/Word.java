@@ -5,11 +5,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.alouastudios.easytagalogbackend.enums.PartOfSpeech;
 import org.alouastudios.easytagalogbackend.model.phrases.Phrase;
+import org.alouastudios.easytagalogbackend.util.ServiceUtil;
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 // @Data annotation includes getters, setters, tostring, equals, and hashcode
 

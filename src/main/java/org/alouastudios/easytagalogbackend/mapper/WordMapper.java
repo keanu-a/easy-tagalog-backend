@@ -30,7 +30,9 @@ public class WordMapper {
                 word.getAlternateSpelling(),
                 word.getIsIrregularVerb(),
                 word.getNote(),
-                word.getConjugations().stream().map(this::toConjugationDTO).collect(Collectors.toSet()),
+                !word.getConjugations().isEmpty()
+                        ? word.getConjugations().stream().map(this::toConjugationDTO).collect(Collectors.toSet())
+                        : null,
                 word.getLinkedWord() != null ? this.toLinkedWordDTO(word.getLinkedWord()) : null,
                 word.getAudioUrl()
         );

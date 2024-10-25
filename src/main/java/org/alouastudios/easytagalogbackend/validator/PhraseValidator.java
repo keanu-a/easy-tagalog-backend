@@ -9,7 +9,7 @@ import java.util.Objects;
 @Component
 public class PhraseValidator {
 
-    public void validateWordIdLinkedMeaningConjugationOrder(List<String> order) {
+    public void validatePhraseWordOrder(List<String> order) {
 
         // Examples of correct notation for wordIdMeaningConjugationOrder:
         // 1:+:-:-
