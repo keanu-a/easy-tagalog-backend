@@ -2,7 +2,7 @@ package org.alouastudios.easytagalogbackend.dto;
 
 import java.util.List;
 
-public record LessonDTO (
+public record LessonRequestDTO(
     String title,
-    List<QuestionDTO> questions
-) {}
+    List<QuestionRequestDTO> questions
+) { }

@@ -75,7 +75,11 @@ public class Question {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Question question = (Question) o;
-        return Objects.equals(id, question.id) && questionType == question.questionType && Objects.equals(correctAnswer, question.correctAnswer) && Objects.equals(correctAnswerOrder, question.correctAnswerOrder) && Objects.equals(helpInfo, question.helpInfo);
+        return Objects.equals(id, question.id) &&
+                questionType == question.questionType &&
+                Objects.equals(correctAnswer, question.correctAnswer) &&
+                Objects.equals(correctAnswerOrder, question.correctAnswerOrder) &&
+                Objects.equals(helpInfo, question.helpInfo);
     }
 
     @Override

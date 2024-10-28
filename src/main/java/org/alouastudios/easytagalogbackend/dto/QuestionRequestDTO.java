@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-public record QuestionDTO (
+public record QuestionRequestDTO(
       QuestionType questionType,
       UUID wordId,
       UUID phraseId,
@@ -15,4 +15,4 @@ public record QuestionDTO (
       UUID correctAnswer,
       List<UUID> correctAnswerOrder,
       String helpInfo
-) {}
+) { }
