@@ -7,7 +7,6 @@ import org.alouastudios.easytagalogbackend.enums.PartOfSpeech;
 import org.alouastudios.easytagalogbackend.enums.Tense;
 import org.alouastudios.easytagalogbackend.exception.ResourceNotFoundException;
 import org.alouastudios.easytagalogbackend.model.phrases.Phrase;
-import org.alouastudios.easytagalogbackend.util.ServiceUtil;
 
 import java.util.*;
 
@@ -26,7 +25,7 @@ public class Word {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private UUID uuid; // Use this ID if need to expose to the frontend
+    private UUID uuid; // Use this if need to expose to the frontend
 
     @Column(length = 30, nullable = false)
     private String tagalog;

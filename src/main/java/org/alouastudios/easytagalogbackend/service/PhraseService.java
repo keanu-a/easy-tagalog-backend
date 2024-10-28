@@ -1,6 +1,5 @@
 package org.alouastudios.easytagalogbackend.service;
 
-import com.fasterxml.jackson.databind.util.TypeKey;
 import jakarta.transaction.Transactional;
 import org.alouastudios.easytagalogbackend.dto.PhraseRequestDTO;
 import org.alouastudios.easytagalogbackend.dto.response.PhraseResponseDTO;

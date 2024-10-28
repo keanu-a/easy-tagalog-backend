@@ -1,7 +1,6 @@
 package org.alouastudios.easytagalogbackend.validator;
 
 import org.alouastudios.easytagalogbackend.dto.WordRequestDTO;
-import org.alouastudios.easytagalogbackend.enums.PartOfSpeech;
 import org.alouastudios.easytagalogbackend.enums.Tense;
 import org.alouastudios.easytagalogbackend.model.words.Conjugation;
 import org.alouastudios.easytagalogbackend.model.words.English;

@@ -13,6 +13,7 @@ import java.util.Set;
 @Component
 public class PhraseMapper {
 
+    // This maps a Phrase entity to the PhraseResponseDTO
     public PhraseResponseDTO toResponseDTO(Phrase phrase) {
 
         return new PhraseResponseDTO(
@@ -24,6 +25,7 @@ public class PhraseMapper {
         );
     }
 
+    // This maps the PhraseRequestDTO to a Phrase entity
     public void toEntity(
             Phrase phrase,
             PhraseRequestDTO phraseRequest,
