@@ -31,26 +31,8 @@ public class ServiceUtil {
         return accentIntegers;
     }
 
-    public static String convertOrderArrayToString(List<String> wordOrder) {
-        return String.join(",", wordOrder);
-    }
-
-    public static List<String> convertOrderStringToArray(String wordOrder) {
-        return Arrays.asList(wordOrder.split(","));
-    }
-
     public static boolean isNumber(String numberString) {
         return numberString.matches("-?\\d+(\\.\\d+)?");
-    }
-
-    public static boolean isTense(String tenseString) {
-        for (Tense tense : Tense.values()) {
-            if (tenseString.equals(tense.name())) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     public static String createWordAudioString(String tagalog) {

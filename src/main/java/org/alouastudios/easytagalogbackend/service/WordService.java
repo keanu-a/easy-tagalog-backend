@@ -17,10 +17,7 @@ import org.alouastudios.easytagalogbackend.util.ServiceUtil;
 import org.alouastudios.easytagalogbackend.validator.WordValidator;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -67,19 +64,18 @@ public class WordService {
         return wordMapper.toResponseDTO(foundWord);
     }
 
-    public WordResponseDTO addWord(WordRequestDTO word) {
+    @Transactional
+    public WordResponseDTO addWord(WordRequestDTO wordRequest) {
 
-        // Creates initial mapping of word
-        Word wordEntity = wordMapper.toEntity(word);
+        Word newWord = new Word();
 
-        // Check fields that NEED validation and map the rest
-        validateWordInput(word, wordEntity);
+        handleEntityChanges(newWord, wordRequest);
 
         // Insert new word into the database
-        wordRepository.save(wordEntity);
+        wordRepository.save(newWord);
 
         // Return mapped DTO
-        return wordMapper.toResponseDTO(wordEntity);
+        return wordMapper.toResponseDTO(newWord);
     }
 
     @Transactional
@@ -95,23 +91,16 @@ public class WordService {
     }
 
     // This function handles updating an existing word in the database
-    public WordResponseDTO updateWord(UUID uuid, WordRequestDTO word) {
+    public WordResponseDTO updateWord(UUID uuid, WordRequestDTO wordRequest) {
 
         Word foundWord = wordRepository
                 .findByUuid(uuid)
                 .orElseThrow(() -> new ResourceNotFoundException("Word not found"));
 
-        // Maps fields that NEED validation first
-        validateWordInput(word, foundWord);
+        handleEntityChanges(foundWord, wordRequest);
+        wordRepository.save(foundWord);
 
-        // Map the rest of the fields
-        wordMapper.updateEntityFromDTO(word, foundWord);
-
-        // Save word into database
-        Word updatedWord = wordRepository.save(foundWord);
-
-        // Return DTO of updated word
-        return wordMapper.toResponseDTO(updatedWord);
+        return wordMapper.toResponseDTO(foundWord);
     }
 
     public void deleteWord(UUID uuid) {
@@ -122,38 +111,76 @@ public class WordService {
         wordRepository.delete(foundWord);
     }
 
-    // This function checks fields that NEED to be validated
-    private void validateWordInput(WordRequestDTO word, Word wordEntity) {
+    // This function handles changes to a Word entity
+    private void handleEntityChanges(Word word, WordRequestDTO wordRequest) {
+
+        // First validate and set english
+        Set<English> newEnglishSet = getEnglishSet(word, wordRequest.english());
+
+        // Next validate if verb, and set conjugations
+        Set<Conjugation> newConjugationSet = null;
+        if (wordRequest.partOfSpeech().equals(PartOfSpeech.VERB)) {
+            wordValidator.validateVerb(wordRequest);
+            newConjugationSet = getConjugationSet(word, wordRequest.conjugations());
+        }
+
+        // Next set linkedWord if given
+        LinkedWord newLinkedWord = null;
+        if (wordRequest.linkedWord() != null) {
+            newLinkedWord = getLinkedWord(word, wordRequest.linkedWord());
+        }
+
+        // Creates initial mapping of word
+        wordMapper.toEntity(word, wordRequest, newEnglishSet, newConjugationSet, newLinkedWord);
+    }
+
+    // This function returns a new LinkedWord object with the linked word's word field set
+    private LinkedWord getLinkedWord(Word word, LinkedWord requestLinkedWord) {
+
+        LinkedWord newLinkedWord = new LinkedWord();
+        newLinkedWord.setTagalog(requestLinkedWord.getTagalog());
+        newLinkedWord.setWord(word);
+        newLinkedWord.setAudioUrl(ServiceUtil.createWordAudioString(newLinkedWord.getTagalog()));
+
+        return newLinkedWord;
+    }
+
+    // This function returns a new english set with english's word field set
+    private Set<English> getEnglishSet(Word word, Set<English> englishSet) {
 
         // Ensures english field is provided
-        if (word.english() == null || word.english().isEmpty()) {
+        if (englishSet == null || englishSet.isEmpty()) {
             throw new RuntimeException("Word must have english translations");
         }
 
-        // Validates english field
-        Set<English> englishSet = wordValidator.validateEnglish(word, wordEntity, englishRepository);
-        wordEntity.setEnglish(englishSet);
+        Set<English> newEnglishSet = new HashSet<>();
 
-        // Validate checks for verbs
-        if (word.partOfSpeech() == PartOfSpeech.VERB) {
+        // Goes through each english word and creates new English if it doesn't exist or adds current word to existing
+        for (English english : englishSet) {
+            English foundEnglish = englishRepository.findByMeaning(english.getMeaning());
 
-            // Verbs NEED conjugations
-            Set<Conjugation> conjugationSet = wordValidator.validateVerb(word);
-
-            // If passed all checks, set conjugation to word
-            for (Conjugation c : conjugationSet) {
-                c.setWord(wordEntity);
+            if (foundEnglish == null) {
+                english.getWords().add(word);
+                newEnglishSet.add(english);
+            } else {
+                foundEnglish.getWords().add(word);
+                newEnglishSet.add(foundEnglish);
             }
-
-            wordEntity.setConjugations(conjugationSet);
         }
 
-        // Setting the linked word's word field
-        if (word.linkedWord() != null) {
-            LinkedWord newLinkedWord = word.linkedWord();
-            newLinkedWord.setWord(wordEntity);
-            newLinkedWord.setAudioUrl(ServiceUtil.createWordAudioString(newLinkedWord.getTagalog()));
-            wordEntity.setLinkedWord(newLinkedWord);
+        return newEnglishSet;
+    }
+
+    // This function returns the new conjugation set with the conjugation's word field set
+    private Set<Conjugation> getConjugationSet(Word word, Set<Conjugation> conjugationSet) {
+
+        Set<Conjugation> newConjugationSet = new HashSet<>();
+
+        for (Conjugation conjugation : conjugationSet) {
+            conjugation.setWord(word);
+            newConjugationSet.add(conjugation);
         }
+
+        return newConjugationSet;
     }
 }

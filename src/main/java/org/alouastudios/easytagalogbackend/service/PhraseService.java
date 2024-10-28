@@ -1,17 +1,21 @@
 package org.alouastudios.easytagalogbackend.service;
 
 import jakarta.transaction.Transactional;
-import org.alouastudios.easytagalogbackend.dto.PhraseDTO;
+import org.alouastudios.easytagalogbackend.dto.PhraseRequestDTO;
+import org.alouastudios.easytagalogbackend.dto.response.PhraseResponseDTO;
+import org.alouastudios.easytagalogbackend.exception.ResourceNotFoundException;
+import org.alouastudios.easytagalogbackend.mapper.PhraseMapper;
 import org.alouastudios.easytagalogbackend.model.phrases.Phrase;
+import org.alouastudios.easytagalogbackend.model.phrases.PhraseWordGuide;
+import org.alouastudios.easytagalogbackend.model.words.Conjugation;
+import org.alouastudios.easytagalogbackend.model.words.English;
 import org.alouastudios.easytagalogbackend.model.words.Word;
 import org.alouastudios.easytagalogbackend.repository.PhraseRepository;
 import org.alouastudios.easytagalogbackend.repository.WordRepository;
-import org.alouastudios.easytagalogbackend.util.ServiceUtil;
 import org.alouastudios.easytagalogbackend.validator.PhraseValidator;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class PhraseService {
@@ -22,105 +26,146 @@ public class PhraseService {
 
     private final PhraseValidator phraseValidator;
 
-    public PhraseService(PhraseRepository phraseRepository, WordRepository wordRepository, PhraseValidator phraseValidator) {
+    private final PhraseMapper phraseMapper;
+
+    public PhraseService(
+            PhraseRepository phraseRepository,
+            WordRepository wordRepository,
+            PhraseValidator phraseValidator,
+            PhraseMapper phraseMapper
+    ) {
         this.phraseRepository = phraseRepository;
         this.wordRepository = wordRepository;
         this.phraseValidator = phraseValidator;
+        this.phraseMapper = phraseMapper;
     }
 
-    public List<Phrase> getAllPhrases() {
-        return phraseRepository.findAll();
+    public List<PhraseResponseDTO> getAllPhrases() {
+
+        List<Phrase> foundPhrases = phraseRepository.findAll();
+        List<PhraseResponseDTO> phrases = new ArrayList<>();
+
+        for (Phrase phrase : foundPhrases) {
+            phrases.add(phraseMapper.toResponseDTO(phrase));
+        }
+
+        return phrases;
     }
 
-    public Phrase getPhraseById(Long id) {
-        return phraseRepository.findById(id).orElse(null);
+    public PhraseResponseDTO getPhraseById(UUID uuid) {
+
+        Phrase foundPhrase = phraseRepository
+                .findByUuid(uuid)
+                .orElseThrow(() -> new ResourceNotFoundException("Phrase not found"));
+
+        return phraseMapper.toResponseDTO(foundPhrase);
     }
 
-    public Phrase addPhrase(PhraseDTO phrase) {
+    public PhraseResponseDTO addPhrase(PhraseRequestDTO phraseRequest) {
+
+        // First validate the request
+        phraseValidator.validatePhraseRequest(phraseRequest);
+
+        // Gets each Word object from the database needed for the phrase
+        Set<Word> phraseWords = getExistingWords(phraseRequest.wordUuids());
+
+        // Creating string list for the Phrase entity in the database
+        List<String> englishMeanings = getEnglishMeanings(phraseRequest.phraseWordGuides(), phraseWords);
 
         Phrase newPhrase = new Phrase();
-        newPhrase.setTagalog(phrase.tagalog());
-        newPhrase.setEnglish(phrase.english());
+        phraseMapper.toEntity(newPhrase, phraseRequest, phraseWords, englishMeanings);
+        phraseRepository.save(newPhrase);
 
-        newPhrase.setIsQuestion(phrase.isQuestion() != null && phrase.isQuestion());
-
-        // Validates notation
-        phraseValidator.validateWordIdLinkedMeaningConjugationOrder(phrase.wordIdLinkedMeaningConjugationOrder());
-
-        // If validation passed, convert to string to store into database
-        String wordOrder = ServiceUtil.convertOrderArrayToString(phrase.wordIdLinkedMeaningConjugationOrder());
-        newPhrase.setWordIdLinkedMeaningConjugationOrder(wordOrder);
-
-        // Validates Word IDs
-//        List<Word> words = wordRepository.findAllByIdIn(phrase.wordIds());
-
-//        // Some phrases will have blanks (ex: <person-name>, <origin-name>, <age>, etc.)
-//        List<Long> wordIdsWithoutBlanks = new ArrayList<>();
-//        for (Long id : phrase.wordIds()) {
-//            if (id != -1) wordIdsWithoutBlanks.add(id);
-//        }
-//
-//        // Comparing found word ids with word ID array without blanks
-//        if (words.size() != wordIdsWithoutBlanks.size()) {
-//            throw new RuntimeException("Some Word IDs do not exists in " + phrase.tagalog());
-//        }
-//
-//        newPhrase.setWords(words);
-
-        return phraseRepository.save(newPhrase);
+        // Map the new phrase entity into PhraseResponseDTO
+        return phraseMapper.toResponseDTO(newPhrase);
     }
 
     @Transactional
-    public List<Phrase> addPhrases(List<PhraseDTO> phrases) {
+    public List<PhraseResponseDTO> addPhrases(List<PhraseRequestDTO> phrases) {
 
-        List<Phrase> newPhrases = new ArrayList<Phrase>();
+        List<PhraseResponseDTO> newPhrases = new ArrayList<>();
 
-        for (PhraseDTO phraseDTO : phrases) {
-            newPhrases.add(addPhrase(phraseDTO));
+        for (PhraseRequestDTO phraseRequestDTO : phrases) {
+            newPhrases.add(addPhrase(phraseRequestDTO));
         }
 
         return newPhrases;
     }
 
-    public Phrase updatePhrase(long id, PhraseDTO phraseDTO) {
-        Phrase phrase = phraseRepository.findById(id).orElse(null);
+    public PhraseResponseDTO updatePhrase(UUID uuid, PhraseRequestDTO phraseRequest) {
 
-        if (phrase == null) {
-            throw new RuntimeException("Phrase not found");
-        }
+        phraseValidator.validatePhraseRequest(phraseRequest);
 
-        phrase.setEnglish(phraseDTO.english());
-        phrase.setTagalog(phraseDTO.tagalog());
+        Phrase foundPhrase = phraseRepository
+                .findByUuid(uuid)
+                .orElseThrow(() -> new ResourceNotFoundException("Phrase not found"));
 
-        phrase.setIsQuestion(phraseDTO.isQuestion() != null && phraseDTO.isQuestion());
+        Set<Word> foundWords = getExistingWords(phraseRequest.wordUuids());
+        List<String> foundEnglishMeanings = getEnglishMeanings(phraseRequest.phraseWordGuides(), foundWords);
 
-        // Validates notation
-        phraseValidator.validateWordIdLinkedMeaningConjugationOrder(phraseDTO.wordIdLinkedMeaningConjugationOrder());
+        phraseMapper.toEntity(foundPhrase, phraseRequest, foundWords, foundEnglishMeanings);
+        phraseRepository.save(foundPhrase);
 
-        // If validation passed, convert to string to store into database
-        String wordOrder = ServiceUtil.convertOrderArrayToString(phraseDTO.wordIdLinkedMeaningConjugationOrder());
-        phrase.setWordIdLinkedMeaningConjugationOrder(wordOrder);
-
-//        // Validates Word IDs
-//        List<Word> words = wordRepository.findAllByIdIn(phraseDTO.wordIds());
-//
-//        // Some phrases will have blanks (ex: <person-name>, <origin-name>, <age>, etc.)
-//        List<Long> wordIdsWithoutBlanks = new ArrayList<>();
-//        for (Long wordId : phraseDTO.wordIds()) {
-//            if (wordId != -1) wordIdsWithoutBlanks.add(wordId);
-//        }
-//
-//        // Comparing found word ids with word ID array without blanks
-//        if (words.size() != wordIdsWithoutBlanks.size()) {
-//            throw new RuntimeException("Some Word IDs do not exists in " + phraseDTO.tagalog());
-//        }
-//
-//        phrase.setWords(words);
-
-        return phraseRepository.save(phrase);
+        return phraseMapper.toResponseDTO(foundPhrase);
     }
 
-    public void deletePhraseById(Long id) {
-        phraseRepository.deleteById(id);
+    public void deletePhraseById(UUID uuid) {
+        Phrase foundPhrase = phraseRepository
+                .findByUuid(uuid)
+                .orElseThrow(() -> new ResourceNotFoundException("Phrase not found"));
+
+        phraseRepository.delete(foundPhrase);
+    }
+
+    // This function takes in a set of UUIDs from a phrase request object, and returns the set of word entities
+    private Set<Word> getExistingWords(Set<UUID> phraseWordUUIDs) {
+
+        Set<Word> phraseWords = new HashSet<>();
+        for (UUID uuid : phraseWordUUIDs) {
+            Word phraseWord = wordRepository
+                    .findByUuid(uuid)
+                    .orElseThrow(() -> new ResourceNotFoundException("Word with id '" + uuid + "' not found"));
+
+            phraseWords.add(phraseWord);
+        }
+
+        return phraseWords;
+    }
+
+    // This function gets all english meanings based off the request phrase word guides
+    private List<String> getEnglishMeanings(List<PhraseWordGuide> phraseWordGuides, Set<Word> phraseWords) {
+
+        // Turned phraseWords into a map for finding needed english meaning
+        HashMap<UUID, Word> phraseWordMap = new HashMap<>();
+        for (Word word : phraseWords) {
+            phraseWordMap.put(word.getUuid(), word);
+        }
+
+        // Creating string list for the Phrase entity in the database
+        List<String> englishMeanings = new ArrayList<>();
+
+        for (PhraseWordGuide wordGuide : phraseWordGuides) {
+
+            // First check if place/person name
+            if (wordGuide.nameType() != null) {
+                englishMeanings.add("<" + wordGuide.nameType().name() + ">");
+                continue;
+            }
+
+            Word usedWord = phraseWordMap.get(wordGuide.uuid());
+
+            // Adds english wordGuide of needed conjugation
+            if (wordGuide.tense() != null) {
+                Conjugation usedConjugation = usedWord.getConjugation(wordGuide.tense());
+                englishMeanings.add(usedConjugation.getEnglish());
+                continue;
+            }
+
+            // Else adds english wordGuide from the english list with matching uuid
+            English usedEnglish = usedWord.getEnglish(wordGuide.englishUuid());
+            englishMeanings.add(usedEnglish.getMeaning());
+        }
+
+        return englishMeanings;
     }
 }

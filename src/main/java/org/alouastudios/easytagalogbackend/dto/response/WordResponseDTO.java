@@ -19,4 +19,5 @@ public record WordResponseDTO (
         Set<ConjugationResponseDTO> conjugations,
         LinkedWordResponseDTO linkedWord,
         String audioUrl
-) { }
+) {
+}

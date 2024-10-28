@@ -1,0 +1,66 @@
+[
+  {
+    "tagalog": "matuto",
+    "english": [
+      {
+        "meaning": "to learn"
+      }
+    ],
+    "root": "tuto",
+    "accents": [3],
+    "audioUrl": "matuto.mp3",
+    "partOfSpeech": "VERB",
+    "isIrregularVerb": false,
+    "conjugations": [
+      {
+        "tagalog": "natuto",
+        "english": "learned",
+        "tense": "PAST",
+        "accents": "3",
+        "root": "tuto"
+      },
+      {
+        "tagalog": "natututo",
+        "english": "learning",
+        "tense": "PRESENT",
+        "accents": "5",
+        "root": "tuto"
+      },
+      {
+        "tagalog": "matututo",
+        "english": "will learn",
+        "tense": "FUTURE",
+        "accents": "5",
+        "root": "tuto"
+      }
+    ]
+  },
+  {
+    "tagalog": "ako",
+    "english": [
+      {
+        "meaning": "I"
+      },
+      {
+        "meaning": "me"
+      }
+    ],
+    "root": "ako",
+    "accents": [2],
+    "partOfSpeech": "PRONOUN",
+    "linkedWord": {
+      "tagalog": "akong"
+    }
+  },
+  {
+    "tagalog": "si",
+    "english": [
+      {
+        "meaning": "Personal noun marker"
+      }
+    ],
+    "root": "si",
+    "partOfSpeech": "ARTICLE",
+    "note": "No direct english translation"
+  }
+]

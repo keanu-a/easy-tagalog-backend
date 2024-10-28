@@ -4,12 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.alouastudios.easytagalogbackend.enums.PartOfSpeech;
+import org.alouastudios.easytagalogbackend.enums.Tense;
+import org.alouastudios.easytagalogbackend.exception.ResourceNotFoundException;
 import org.alouastudios.easytagalogbackend.model.phrases.Phrase;
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 // @Data annotation includes getters, setters, tostring, equals, and hashcode
 
@@ -26,7 +25,7 @@ public class Word {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private UUID uuid; // Use this ID if need to expose to the frontend
+    private UUID uuid; // Use this if need to expose to the frontend
 
     @Column(length = 30, nullable = false)
     private String tagalog;
@@ -73,6 +72,26 @@ public class Word {
         if (uuid == null) {
             uuid = UUID.randomUUID();
         }
+    }
+
+    @Transient
+    public Conjugation getConjugation(Tense tense) {
+        return conjugations.stream()
+                .filter(conjugation -> conjugation.getTense().equals(tense))
+                .findFirst()
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "No conjugation found for " + tagalog + " with tense: " + tense
+                ));
+    }
+
+    @Transient
+    public English getEnglish(UUID uuid) {
+        return english.stream()
+                .filter(english -> english.getUuid().equals(uuid))
+                .findFirst()
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "No english found for " + tagalog + " with uuid: " + uuid
+                ));
     }
 
     @Override

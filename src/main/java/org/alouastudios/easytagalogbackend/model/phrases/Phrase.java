@@ -28,9 +28,9 @@ public class Phrase {
     private String english;
 
     @Column(nullable = false)
-    private Boolean isQuestion;
+    private Boolean isQuestion = false;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "phrase_words",
             joinColumns = @JoinColumn(name = "phrase_id"),
@@ -38,14 +38,8 @@ public class Phrase {
     )
     private Set<Word> words;
 
-    // wordIdLinkedMeaningConjugationOrder - MEANING
-    // First: Word UUID
-    // Second: Using linked word (- no / + yes)
-    // Third: English UUID
-    // Fourth: Conjugation ENUM (- none / PAST,PRESENT,FUTURE)
-
     @Column(nullable = false, unique = true)
-    private String wordIdLinkedMeaningConjugationOrder; // ex: "3:-:moon:-,5:+:-:-,2:-:-:PAST,3:+:-:-
+    private String phraseWordMeanings; // ex: "I,name marker,<name>"
 
     @PrePersist
     public void generateUUID() {
@@ -62,7 +56,7 @@ public class Phrase {
                 ", tagalog='" + tagalog + '\'' +
                 ", english='" + english + '\'' +
                 ", isQuestion=" + isQuestion +
-                ", wordIdLinkedMeaningConjugationOrder='" + wordIdLinkedMeaningConjugationOrder + '\'' +
+                ", phraseWordMeanings='" + phraseWordMeanings + '\'' +
                 '}';
     }
 
@@ -71,11 +65,16 @@ public class Phrase {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Phrase phrase = (Phrase) o;
-        return Objects.equals(id, phrase.id) && Objects.equals(uuid, phrase.uuid) && Objects.equals(tagalog, phrase.tagalog) && Objects.equals(english, phrase.english) && Objects.equals(isQuestion, phrase.isQuestion) && Objects.equals(wordIdLinkedMeaningConjugationOrder, phrase.wordIdLinkedMeaningConjugationOrder);
+        return Objects.equals(id, phrase.id) &&
+                Objects.equals(uuid, phrase.uuid) &&
+                Objects.equals(tagalog, phrase.tagalog) &&
+                Objects.equals(english, phrase.english) &&
+                Objects.equals(isQuestion, phrase.isQuestion) &&
+                Objects.equals(phraseWordMeanings, phrase.phraseWordMeanings);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, uuid, tagalog, english, isQuestion, wordIdLinkedMeaningConjugationOrder);
+        return Objects.hash(id, uuid, tagalog, english, isQuestion, phraseWordMeanings);
     }
 }
