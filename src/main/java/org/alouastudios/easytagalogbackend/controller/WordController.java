@@ -2,7 +2,6 @@ package org.alouastudios.easytagalogbackend.controller;
 
 import org.alouastudios.easytagalogbackend.dto.WordRequestDTO;
 import org.alouastudios.easytagalogbackend.dto.response.WordResponseDTO;
-import org.alouastudios.easytagalogbackend.model.words.Word;
 import org.alouastudios.easytagalogbackend.service.WordService;
 import org.springframework.web.bind.annotation.*;
 

@@ -13,6 +13,7 @@ import org.alouastudios.easytagalogbackend.util.ServiceUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
@@ -30,53 +31,43 @@ public class WordMapper {
                 word.getAlternateSpelling(),
                 word.getIsIrregularVerb(),
                 word.getNote(),
-                word.getConjugations().stream().map(this::toConjugationDTO).collect(Collectors.toSet()),
+                !word.getConjugations().isEmpty()
+                        ? word.getConjugations().stream().map(this::toConjugationDTO).collect(Collectors.toSet())
+                        : null,
                 word.getLinkedWord() != null ? this.toLinkedWordDTO(word.getLinkedWord()) : null,
                 word.getAudioUrl()
         );
     }
 
     // Maps the WordRequestDTO to new Word Entity
-    public Word toEntity(WordRequestDTO wordRequestDTO) {
+    public void toEntity(
+            Word word,
+            WordRequestDTO wordRequestDTO,
+            Set<English> english,
+            Set<Conjugation> conjugations,
+            LinkedWord linkedWord) {
 
-        // This function only handles initial mapping NOT validation.
-        // Validation is done in the service.
-        // It excludes fields with entities that need validation:
-        //  - english
-        //  - conjugations
-        //  - linkedWord
+        word.setTagalog(wordRequestDTO.tagalog());
+        word.setRoot(wordRequestDTO.root());
+        word.setPartOfSpeech(wordRequestDTO.partOfSpeech());
+        word.setAlternateSpelling(wordRequestDTO.alternateSpelling());
+        word.setIsIrregularVerb(wordRequestDTO.isIrregularVerb());
+        word.setNote(wordRequestDTO.note());
 
-        Word newWord = new Word();
-
-        setNonValidatedFields(wordRequestDTO, newWord);
+        word.setEnglish(english);
+        if (conjugations != null) word.setConjugations(conjugations);
+        if (linkedWord != null) word.setLinkedWord(linkedWord);
 
         // Create or set audio url
         if (wordRequestDTO.audioUrl() == null) {
-            newWord.setAudioUrl(ServiceUtil.createWordAudioString(wordRequestDTO.tagalog()));
+            word.setAudioUrl(ServiceUtil.createWordAudioString(wordRequestDTO.tagalog()));
         } else {
-            newWord.setAudioUrl(wordRequestDTO.audioUrl());
+            word.setAudioUrl(wordRequestDTO.audioUrl());
         }
 
         // Change accents array to string
         if (wordRequestDTO.accents() != null) {
-            newWord.setAccents(ServiceUtil.convertAccentArrayToString(wordRequestDTO.accents()));
-        }
-
-        return newWord;
-    }
-
-    // This function handles mapping request body data into existing word
-    public void updateEntityFromDTO(WordRequestDTO wordRequestDTO, Word existingWord) {
-
-        setNonValidatedFields(wordRequestDTO, existingWord);
-
-        existingWord.setAudioUrl(wordRequestDTO.audioUrl());
-
-        // Change accents array to string
-        if (!wordRequestDTO.accents().isEmpty()) {
-            existingWord.setAccents(ServiceUtil.convertAccentArrayToString(wordRequestDTO.accents()));
-        } else {
-            existingWord.setAccents(null);
+            word.setAccents(ServiceUtil.convertAccentArrayToString(wordRequestDTO.accents()));
         }
     }
 
@@ -106,15 +97,5 @@ public class WordMapper {
                 linkedWord.getTagalog(),
                 linkedWord.getAudioUrl()
         );
-    }
-
-    // This function sets fields that have validation before insertion
-    private void setNonValidatedFields(WordRequestDTO wordRequestDTO, Word word) {
-        word.setTagalog(wordRequestDTO.tagalog());
-        word.setRoot(wordRequestDTO.root());
-        word.setPartOfSpeech(wordRequestDTO.partOfSpeech());
-        word.setAlternateSpelling(wordRequestDTO.alternateSpelling());
-        word.setIsIrregularVerb(wordRequestDTO.isIrregularVerb());
-        word.setNote(wordRequestDTO.note());
     }
 }
