@@ -1,12 +1,13 @@
 package org.alouastudios.easytagalogbackend.service;
 
+import com.fasterxml.jackson.databind.util.TypeKey;
 import jakarta.transaction.Transactional;
 import org.alouastudios.easytagalogbackend.dto.PhraseRequestDTO;
-import org.alouastudios.easytagalogbackend.enums.Tense;
+import org.alouastudios.easytagalogbackend.dto.response.PhraseResponseDTO;
 import org.alouastudios.easytagalogbackend.exception.ResourceNotFoundException;
 import org.alouastudios.easytagalogbackend.mapper.PhraseMapper;
 import org.alouastudios.easytagalogbackend.model.phrases.Phrase;
-import org.alouastudios.easytagalogbackend.model.phrases.PhraseWordMeaning;
+import org.alouastudios.easytagalogbackend.model.phrases.PhraseWordGuide;
 import org.alouastudios.easytagalogbackend.model.words.Conjugation;
 import org.alouastudios.easytagalogbackend.model.words.English;
 import org.alouastudios.easytagalogbackend.model.words.Word;
@@ -40,74 +41,51 @@ public class PhraseService {
         this.phraseMapper = phraseMapper;
     }
 
-    public List<Phrase> getAllPhrases() {
-        return phraseRepository.findAll();
-    }
+    public List<PhraseResponseDTO> getAllPhrases() {
 
-    public Phrase getPhraseById(Long id) {
-        return phraseRepository.findById(id).orElse(null);
-    }
+        List<Phrase> foundPhrases = phraseRepository.findAll();
+        List<PhraseResponseDTO> phrases = new ArrayList<>();
 
-    public Phrase addPhrase(PhraseRequestDTO phrase) {
-
-        // TODO 10/23: Fix PhraseDTOs logic
-
-        // There should be a meaning for each word of the phrase (even names)
-        if (phrase.tagalog().split(" ").length != phrase.phraseWordMeanings().size()) {
-            throw new RuntimeException("Phrase word order length doesn't match tagalog word length");
+        for (Phrase phrase : foundPhrases) {
+            phrases.add(phraseMapper.toResponseDTO(phrase));
         }
+
+        return phrases;
+    }
+
+    public PhraseResponseDTO getPhraseById(UUID uuid) {
+
+        Phrase foundPhrase = phraseRepository
+                .findByUuid(uuid)
+                .orElseThrow(() -> new ResourceNotFoundException("Phrase not found"));
+
+        return phraseMapper.toResponseDTO(foundPhrase);
+    }
+
+    public PhraseResponseDTO addPhrase(PhraseRequestDTO phraseRequest) {
+
+        // First validate the request
+        phraseValidator.validatePhraseRequest(phraseRequest);
 
         // Gets each Word object from the database needed for the phrase
-        Set<Word> phraseWords = fetchPhraseWords(phrase.wordIds());
-
-        // Turned phraseWords into a map for finding needed english meaning
-        HashMap<UUID, Word> phraseWordMap = new HashMap<>();
-        for (Word word : phraseWords) {
-            phraseWordMap.put(word.getUuid(), word);
-        }
+        Set<Word> phraseWords = fetchPhraseWords(phraseRequest.wordUuids());
 
         // Creating string list for the Phrase entity in the database
-        List<String> entityPhraseWordMeanings = new ArrayList<>();
-        for (PhraseWordMeaning meaning : phrase.phraseWordMeanings()) {
+        List<String> englishMeanings = getEnglishMeanings(phraseRequest.phraseWordGuides(), phraseWords);
 
-            if (meaning.nonDatabaseWord()) {
-                entityPhraseWordMeanings.add("<person-name>");
-                continue;
-            }
+        Phrase newPhrase = new Phrase();
+        phraseMapper.toEntity(newPhrase, phraseRequest, phraseWords, englishMeanings);
 
-            Word usedWord = phraseWordMap.get(meaning.id());
-
-            if (meaning.tense() != null) {
-                for (Conjugation conjugation : usedWord.getConjugations()) {
-                    if (meaning.tense() == conjugation.getTense()) {
-                        entityPhraseWordMeanings.add(conjugation.getEnglish());
-                        break;
-                    }
-                }
-                continue;
-            }
-
-            for (English english : usedWord.getEnglish()) {
-                if (meaning.englishId() == english.getUuid()) {
-                    entityPhraseWordMeanings.add(english.getMeaning());
-                    break;
-                }
-            }
-
-        }
-
-        // Changes DTO to entity so can be saved to the database
-        Phrase newPhrase = phraseMapper.toEntity(phrase, phraseWords);
+        phraseRepository.save(newPhrase);
 
         // Map the new phrase entity into PhraseResponseDTO
-
-        return phraseRepository.save(newPhrase);
+        return phraseMapper.toResponseDTO(newPhrase);
     }
 
     @Transactional
-    public List<Phrase> addPhrases(List<PhraseRequestDTO> phrases) {
+    public List<PhraseResponseDTO> addPhrases(List<PhraseRequestDTO> phrases) {
 
-        List<Phrase> newPhrases = new ArrayList<Phrase>();
+        List<PhraseResponseDTO> newPhrases = new ArrayList<>();
 
         for (PhraseRequestDTO phraseRequestDTO : phrases) {
             newPhrases.add(addPhrase(phraseRequestDTO));
@@ -116,46 +94,29 @@ public class PhraseService {
         return newPhrases;
     }
 
-    public Phrase updatePhrase(long id, PhraseRequestDTO phraseRequestDTO) {
-        Phrase phrase = phraseRepository.findById(id).orElse(null);
+    public PhraseResponseDTO updatePhrase(UUID uuid, PhraseRequestDTO phraseRequest) {
 
-        if (phrase == null) {
-            throw new RuntimeException("Phrase not found");
-        }
+        Phrase foundPhrase = phraseRepository
+                .findByUuid(uuid)
+                .orElseThrow(() -> new ResourceNotFoundException("Phrase not found"));
 
-        phrase.setEnglish(phraseRequestDTO.english());
-        phrase.setTagalog(phraseRequestDTO.tagalog());
+        phraseValidator.validatePhraseRequest(phraseRequest);
 
-        phrase.setIsQuestion(phraseRequestDTO.isQuestion() != null && phraseRequestDTO.isQuestion());
+        Set<Word> foundWords = fetchPhraseWords(phraseRequest.wordUuids());
+        List<String> foundEnglishMeanings = getEnglishMeanings(phraseRequest.phraseWordGuides(), foundWords);
 
-//        // Validates notation
-//        phraseValidator.validatePhraseWordOrder(phraseRequestDTO.phraseWordOrder());
-//
-//        // If validation passed, convert to string to store into database
-//        String wordOrder = ServiceUtil.convertOrderArrayToString(phraseRequestDTO.phraseWordOrder());
-//        phrase.setPhraseWordOrder(wordOrder);
+        phraseMapper.toEntity(foundPhrase, phraseRequest, foundWords, foundEnglishMeanings);
+        phraseRepository.save(foundPhrase);
 
-//        // Validates Word IDs
-//        List<Word> words = wordRepository.findAllByIdIn(phraseDTO.wordIds());
-//
-//        // Some phrases will have blanks (ex: <person-name>, <origin-name>, <age>, etc.)
-//        List<Long> wordIdsWithoutBlanks = new ArrayList<>();
-//        for (Long wordId : phraseDTO.wordIds()) {
-//            if (wordId != -1) wordIdsWithoutBlanks.add(wordId);
-//        }
-//
-//        // Comparing found word ids with word ID array without blanks
-//        if (words.size() != wordIdsWithoutBlanks.size()) {
-//            throw new RuntimeException("Some Word IDs do not exists in " + phraseDTO.tagalog());
-//        }
-//
-//        phrase.setWords(words);
-
-        return phraseRepository.save(phrase);
+        return phraseMapper.toResponseDTO(foundPhrase);
     }
 
-    public void deletePhraseById(Long id) {
-        phraseRepository.deleteById(id);
+    public void deletePhraseById(UUID uuid) {
+        Phrase foundPhrase = phraseRepository
+                .findByUuid(uuid)
+                .orElseThrow(() -> new ResourceNotFoundException("Phrase not found"));
+
+        phraseRepository.delete(foundPhrase);
     }
 
     // This function takes in a set of UUIDs from a phrase request object, and returns the set of word entities
@@ -171,5 +132,42 @@ public class PhraseService {
         }
 
         return phraseWords;
+    }
+
+    // This function gets all english meanings based off the request phrase word guides
+    private List<String> getEnglishMeanings(List<PhraseWordGuide> phraseWordGuides, Set<Word> phraseWords) {
+
+        // Turned phraseWords into a map for finding needed english meaning
+        HashMap<UUID, Word> phraseWordMap = new HashMap<>();
+        for (Word word : phraseWords) {
+            phraseWordMap.put(word.getUuid(), word);
+        }
+
+        // Creating string list for the Phrase entity in the database
+        List<String> englishMeanings = new ArrayList<>();
+
+        for (PhraseWordGuide wordGuide : phraseWordGuides) {
+
+            // First check if place/person name
+            if (wordGuide.nameType() != null) {
+                englishMeanings.add("<" + wordGuide.nameType().name() + ">");
+                continue;
+            }
+
+            Word usedWord = phraseWordMap.get(wordGuide.uuid());
+
+            // Adds english wordGuide of needed conjugation
+            if (wordGuide.tense() != null) {
+                Conjugation usedConjugation = usedWord.getConjugation(wordGuide.tense());
+                englishMeanings.add(usedConjugation.getEnglish());
+                continue;
+            }
+
+            // Else adds english wordGuide from the english list with matching uuid
+            English usedEnglish = usedWord.getEnglish(wordGuide.englishUuid());
+            englishMeanings.add(usedEnglish.getMeaning());
+        }
+
+        return englishMeanings;
     }
 }

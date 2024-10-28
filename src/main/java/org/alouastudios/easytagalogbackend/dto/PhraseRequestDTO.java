@@ -1,6 +1,6 @@
 package org.alouastudios.easytagalogbackend.dto;
 
-import org.alouastudios.easytagalogbackend.model.phrases.PhraseWordMeaning;
+import org.alouastudios.easytagalogbackend.model.phrases.PhraseWordGuide;
 
 import java.util.List;
 import java.util.Set;
@@ -10,7 +10,7 @@ public record PhraseRequestDTO(
         String tagalog,
         String english,
         Boolean isQuestion,
-        Set<UUID> wordIds,
-        List<PhraseWordMeaning> phraseWordMeanings
+        Set<UUID> wordUuids,
+        List<PhraseWordGuide> phraseWordGuides
 ) {
 }

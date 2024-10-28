@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.alouastudios.easytagalogbackend.enums.PartOfSpeech;
+import org.alouastudios.easytagalogbackend.enums.Tense;
+import org.alouastudios.easytagalogbackend.exception.ResourceNotFoundException;
 import org.alouastudios.easytagalogbackend.model.phrases.Phrase;
 import org.alouastudios.easytagalogbackend.util.ServiceUtil;
 
@@ -71,6 +73,26 @@ public class Word {
         if (uuid == null) {
             uuid = UUID.randomUUID();
         }
+    }
+
+    @Transient
+    public Conjugation getConjugation(Tense tense) {
+        return conjugations.stream()
+                .filter(conjugation -> conjugation.getTense().equals(tense))
+                .findFirst()
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "No conjugation found for " + tagalog + " with tense: " + tense
+                ));
+    }
+
+    @Transient
+    public English getEnglish(UUID uuid) {
+        return english.stream()
+                .filter(english -> english.getUuid().equals(uuid))
+                .findFirst()
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "No english found for " + tagalog + " with uuid: " + uuid
+                ));
     }
 
     @Override

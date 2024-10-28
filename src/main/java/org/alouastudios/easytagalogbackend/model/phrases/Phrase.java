@@ -28,23 +28,15 @@ public class Phrase {
     private String english;
 
     @Column(nullable = false)
-    private Boolean isQuestion;
+    private Boolean isQuestion = false;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "phrase_words",
             joinColumns = @JoinColumn(name = "phrase_id"),
             inverseJoinColumns = @JoinColumn(name = "word_id")
     )
     private Set<Word> words;
-
-//    // phraseWordOrder MEANING:
-//    // - First: Word UUID
-//    // - Second: Using linked word (- no / + yes)
-//    // - Third: English UUID
-//    // - Fourth: Conjugation ENUM (- none / PAST,PRESENT,FUTURE)
-//    @Column(nullable = false, unique = true)
-//    private String phraseWordOrder; // ex: "3:-:moon:-,5:+:-:-,2:-:-:PAST,3:+:-:-
 
     @Column(nullable = false, unique = true)
     private String phraseWordMeanings; // ex: "I,name marker,<name>"
