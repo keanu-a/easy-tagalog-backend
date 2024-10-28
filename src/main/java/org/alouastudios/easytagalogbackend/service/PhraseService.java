@@ -68,14 +68,13 @@ public class PhraseService {
         phraseValidator.validatePhraseRequest(phraseRequest);
 
         // Gets each Word object from the database needed for the phrase
-        Set<Word> phraseWords = fetchPhraseWords(phraseRequest.wordUuids());
+        Set<Word> phraseWords = getExistingWords(phraseRequest.wordUuids());
 
         // Creating string list for the Phrase entity in the database
         List<String> englishMeanings = getEnglishMeanings(phraseRequest.phraseWordGuides(), phraseWords);
 
         Phrase newPhrase = new Phrase();
         phraseMapper.toEntity(newPhrase, phraseRequest, phraseWords, englishMeanings);
-
         phraseRepository.save(newPhrase);
 
         // Map the new phrase entity into PhraseResponseDTO
@@ -96,13 +95,13 @@ public class PhraseService {
 
     public PhraseResponseDTO updatePhrase(UUID uuid, PhraseRequestDTO phraseRequest) {
 
+        phraseValidator.validatePhraseRequest(phraseRequest);
+
         Phrase foundPhrase = phraseRepository
                 .findByUuid(uuid)
                 .orElseThrow(() -> new ResourceNotFoundException("Phrase not found"));
 
-        phraseValidator.validatePhraseRequest(phraseRequest);
-
-        Set<Word> foundWords = fetchPhraseWords(phraseRequest.wordUuids());
+        Set<Word> foundWords = getExistingWords(phraseRequest.wordUuids());
         List<String> foundEnglishMeanings = getEnglishMeanings(phraseRequest.phraseWordGuides(), foundWords);
 
         phraseMapper.toEntity(foundPhrase, phraseRequest, foundWords, foundEnglishMeanings);
@@ -120,7 +119,7 @@ public class PhraseService {
     }
 
     // This function takes in a set of UUIDs from a phrase request object, and returns the set of word entities
-    private Set<Word> fetchPhraseWords(Set<UUID> phraseWordUUIDs) {
+    private Set<Word> getExistingWords(Set<UUID> phraseWordUUIDs) {
 
         Set<Word> phraseWords = new HashSet<>();
         for (UUID uuid : phraseWordUUIDs) {

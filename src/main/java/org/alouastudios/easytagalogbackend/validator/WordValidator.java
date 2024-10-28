@@ -1,6 +1,7 @@
 package org.alouastudios.easytagalogbackend.validator;
 
 import org.alouastudios.easytagalogbackend.dto.WordRequestDTO;
+import org.alouastudios.easytagalogbackend.enums.PartOfSpeech;
 import org.alouastudios.easytagalogbackend.enums.Tense;
 import org.alouastudios.easytagalogbackend.model.words.Conjugation;
 import org.alouastudios.easytagalogbackend.model.words.English;
@@ -14,7 +15,7 @@ import java.util.Set;
 @Component
 public class WordValidator {
 
-    public Set<Conjugation> validateVerb(WordRequestDTO word) {
+    public void validateVerb(WordRequestDTO word) {
 
         // Must provide isIrregularVerb field
         if (word.isIrregularVerb() == null) {
@@ -43,8 +44,6 @@ public class WordValidator {
         if (!past) throw new RuntimeException("Verb missing past conjugation");
         if (!present) throw new RuntimeException("Verb missing present conjugation");
         if (!future) throw new RuntimeException("Verb missing future conjugation");
-
-        return word.conjugations();
     }
 
     public Set<English> validateEnglish(WordRequestDTO word, Word newWord, EnglishRepository englishRepository) {
