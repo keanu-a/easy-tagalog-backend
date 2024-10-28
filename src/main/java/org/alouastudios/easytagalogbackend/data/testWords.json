@@ -34,5 +34,33 @@
         "root": "tuto"
       }
     ]
+  },
+  {
+    "tagalog": "ako",
+    "english": [
+      {
+        "meaning": "I"
+      },
+      {
+        "meaning": "me"
+      }
+    ],
+    "root": "ako",
+    "accents": [2],
+    "partOfSpeech": "PRONOUN",
+    "linkedWord": {
+      "tagalog": "akong"
+    }
+  },
+  {
+    "tagalog": "si",
+    "english": [
+      {
+        "meaning": "Personal noun marker"
+      }
+    ],
+    "root": "si",
+    "partOfSpeech": "ARTICLE",
+    "note": "No direct english translation"
   }
 ]
