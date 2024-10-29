@@ -1,8 +1,8 @@
 package org.alouastudios.easytagalogbackend.dto;
 
-import java.util.List;
+import java.util.Set;
 
 public record LessonRequestDTO(
     String title,
-    List<QuestionRequestDTO> questions
+    Set<QuestionRequestDTO> questions
 ) { }

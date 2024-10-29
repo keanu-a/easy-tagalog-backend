@@ -55,7 +55,9 @@ public class Lesson {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Lesson lesson = (Lesson) o;
-        return Objects.equals(id, lesson.id) && Objects.equals(uuid, lesson.uuid) && Objects.equals(title, lesson.title);
+        return Objects.equals(id, lesson.id) &&
+                Objects.equals(uuid, lesson.uuid) &&
+                Objects.equals(title, lesson.title);
     }
 
     @Override

@@ -1,0 +1,43 @@
+[
+  {
+    "tagalog": "Natututo ako",
+    "english": "I am learning",
+    "isQuestion": false,
+    "wordUuids": [
+      "1a77cd9f-7270-4c88-8c8e-e7bac298babe",
+      "cc3f6dde-8af2-4552-ae73-54b987ae6c20"
+    ],
+    "phraseWordGuides": [
+      {
+        "uuid": "1a77cd9f-7270-4c88-8c8e-e7bac298babe",
+        "tense": "PRESENT"
+      },
+      {
+        "uuid": "cc3f6dde-8af2-4552-ae73-54b987ae6c20",
+        "englishUuid": "701e6fc2-013e-47bc-8392-c146096599c4"
+      }
+    ]
+  },
+  {
+    "tagalog": "Ako si Keanu",
+    "english": "I am Keanu",
+    "isQuestion": false,
+    "wordUuids": [
+      "cc3f6dde-8af2-4552-ae73-54b987ae6c20",
+      "62ba8507-2923-42a4-98c5-1729ecf6400d"
+    ],
+    "phraseWordGuides": [
+      {
+        "uuid": "cc3f6dde-8af2-4552-ae73-54b987ae6c20",
+        "englishUuid": "701e6fc2-013e-47bc-8392-c146096599c4"
+      },
+      {
+        "uuid": "62ba8507-2923-42a4-98c5-1729ecf6400d",
+        "englishUuid": "40c97329-6095-4a7d-a7b7-934f6d3adb5e"
+      },
+      {
+        "nameType": "PERSON"
+      }
+    ]
+  }
+]

@@ -1,10 +1,10 @@
 package org.alouastudios.easytagalogbackend.mapper;
 
-import org.alouastudios.easytagalogbackend.dto.response.ConjugationResponseDTO;
-import org.alouastudios.easytagalogbackend.dto.response.EnglishResponseDTO;
-import org.alouastudios.easytagalogbackend.dto.response.LinkedWordResponseDTO;
+import org.alouastudios.easytagalogbackend.dto.response.wordResponse.ConjugationResponseDTO;
+import org.alouastudios.easytagalogbackend.dto.response.wordResponse.EnglishResponseDTO;
+import org.alouastudios.easytagalogbackend.dto.response.wordResponse.LinkedWordResponseDTO;
 import org.alouastudios.easytagalogbackend.dto.WordRequestDTO;
-import org.alouastudios.easytagalogbackend.dto.response.WordResponseDTO;
+import org.alouastudios.easytagalogbackend.dto.response.wordResponse.WordResponseDTO;
 import org.alouastudios.easytagalogbackend.model.words.Conjugation;
 import org.alouastudios.easytagalogbackend.model.words.English;
 import org.alouastudios.easytagalogbackend.model.words.LinkedWord;
@@ -26,7 +26,9 @@ public class WordMapper {
                 word.getTagalog(),
                 word.getEnglish().stream().map(this::toEnglishDTO).collect(Collectors.toSet()),
                 word.getRoot(),
-                word.getAccents() != null ? ServiceUtil.convertStringToAccentArray(word.getAccents()) : new ArrayList<>(),  // Null check for accents
+                word.getAccents() != null
+                        ? ServiceUtil.convertStringToAccentArray(word.getAccents())
+                        : new ArrayList<>(),  // Null check for accents
                 word.getPartOfSpeech(),
                 word.getAlternateSpelling(),
                 word.getIsIrregularVerb(),

@@ -3,7 +3,7 @@ package org.alouastudios.easytagalogbackend.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.alouastudios.easytagalogbackend.dto.WordRequestDTO;
-import org.alouastudios.easytagalogbackend.dto.response.WordResponseDTO;
+import org.alouastudios.easytagalogbackend.dto.response.wordResponse.WordResponseDTO;
 import org.alouastudios.easytagalogbackend.enums.PartOfSpeech;
 import org.alouastudios.easytagalogbackend.exception.ResourceNotFoundException;
 import org.alouastudios.easytagalogbackend.mapper.WordMapper;

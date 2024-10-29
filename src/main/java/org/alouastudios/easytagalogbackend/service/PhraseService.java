@@ -2,7 +2,7 @@ package org.alouastudios.easytagalogbackend.service;
 
 import jakarta.transaction.Transactional;
 import org.alouastudios.easytagalogbackend.dto.PhraseRequestDTO;
-import org.alouastudios.easytagalogbackend.dto.response.PhraseResponseDTO;
+import org.alouastudios.easytagalogbackend.dto.response.phraseResponse.PhraseResponseDTO;
 import org.alouastudios.easytagalogbackend.exception.ResourceNotFoundException;
 import org.alouastudios.easytagalogbackend.mapper.PhraseMapper;
 import org.alouastudios.easytagalogbackend.model.phrases.Phrase;

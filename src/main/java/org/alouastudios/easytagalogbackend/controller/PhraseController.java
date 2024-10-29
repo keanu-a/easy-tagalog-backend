@@ -2,7 +2,7 @@ package org.alouastudios.easytagalogbackend.controller;
 
 import jakarta.validation.Valid;
 import org.alouastudios.easytagalogbackend.dto.PhraseRequestDTO;
-import org.alouastudios.easytagalogbackend.dto.response.PhraseResponseDTO;
+import org.alouastudios.easytagalogbackend.dto.response.phraseResponse.PhraseResponseDTO;
 import org.alouastudios.easytagalogbackend.service.PhraseService;
 import org.springframework.web.bind.annotation.*;
 
