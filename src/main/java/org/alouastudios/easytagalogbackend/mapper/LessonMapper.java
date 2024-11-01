@@ -1,6 +1,7 @@
 package org.alouastudios.easytagalogbackend.mapper;
 
 import org.alouastudios.easytagalogbackend.dto.LessonRequestDTO;
+import org.alouastudios.easytagalogbackend.dto.QuestionRequestDTO;
 import org.alouastudios.easytagalogbackend.dto.response.lessonResponse.LessonPhraseResponseDTO;
 import org.alouastudios.easytagalogbackend.dto.response.lessonResponse.LessonResponseDTO;
 import org.alouastudios.easytagalogbackend.dto.response.lessonResponse.LessonWordResponseDTO;
@@ -25,8 +26,11 @@ public class LessonMapper {
     }
 
     // TODO 10/28: WORK ON LESSON DTO MAPPING TO ENTITY
-    public void toEntity(LessonRequestDTO lessonRequestDTO, Lesson lesson) {
+    public void toLessonEntity(LessonRequestDTO lessonRequestDTO, Lesson lesson) {
 
+    }
+
+    public void toQuestionEntity(QuestionRequestDTO questionRequestDTO, Question question) {
     }
 
     public QuestionResponseDTO toQuestionResponseDTO(Question question) {
