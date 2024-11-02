@@ -1,0 +1,25 @@
+{
+  "title": "Test",
+  "questions": [
+    {
+      "questionType": "TRANSLATE_WORD",
+      "wordId": "cc3f6dde-8af2-4552-ae73-54b987ae6c20",
+      "wordOptions": [
+        "cc3f6dde-8af2-4552-ae73-54b987ae6c20",
+        "1a77cd9f-7270-4c88-8c8e-e7bac298babe",
+        "62ba8507-2923-42a4-98c5-1729ecf6400d",
+        "b5690150-8a10-4d7d-b90c-b19f2ebf7784"
+      ],
+      "correctAnswer": "cc3f6dde-8af2-4552-ae73-54b987ae6c20"
+    },
+    {
+      "questionType": "TRANSLATE_PHRASE",
+      "phraseId": "267b35c9-b150-49b2-9093-f7363611296d",
+      "phraseOptions": [
+        "267b35c9-b150-49b2-9093-f7363611296d",
+        "94f6f689-ac62-446f-bbb2-777c2c077097"
+      ],
+      "correctAnswer": "267b35c9-b150-49b2-9093-f7363611296d"
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-package org.alouastudios.easytagalogbackend.dto.response;
+package org.alouastudios.easytagalogbackend.dto.response.wordResponse;
 
 import java.util.UUID;
 
