@@ -28,4 +28,10 @@ public class LessonController {
     public LessonResponseDTO addLesson(@RequestBody LessonRequestDTO lessonRequestDTO) {
         return lessonService.addLesson(lessonRequestDTO);
     }
+
+    @DeleteMapping("/{uuid}")
+    public String deleteLesson(@PathVariable UUID uuid) {
+        lessonService.deleteLessonByUuid(uuid);
+        return "Deleted Phrase UUID: " + uuid;
+    }
 }

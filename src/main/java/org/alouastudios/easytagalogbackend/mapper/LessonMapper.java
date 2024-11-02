@@ -12,6 +12,7 @@ import org.alouastudios.easytagalogbackend.model.phrases.Phrase;
 import org.alouastudios.easytagalogbackend.model.words.Word;
 import org.springframework.stereotype.Component;
 
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
@@ -25,12 +26,41 @@ public class LessonMapper {
         );
     }
 
-    // TODO 10/28: WORK ON LESSON DTO MAPPING TO ENTITY
-    public void toLessonEntity(LessonRequestDTO lessonRequestDTO, Lesson lesson) {
-
+    public void toLessonEntity(LessonRequestDTO lessonRequestDTO, Lesson lesson, Set<Question> questions) {
+        lesson.setTitle(lessonRequestDTO.title());
+        lesson.setQuestions(questions);
     }
 
-    public void toQuestionEntity(QuestionRequestDTO questionRequestDTO, Question question) {
+    // This entity mapper is for questions of type "TRANSLATE_WORD"
+    public void toQuestionEntity(
+            QuestionRequestDTO questionRequestDTO,
+            Question question,
+            Word word,
+            Set<Word> wordOptions) {
+
+        question.setQuestionType(questionRequestDTO.questionType());
+        question.setWord(word);
+        question.setWordOptions(wordOptions);
+        question.setCorrectAnswer(questionRequestDTO.correctAnswer());
+
+        if (questionRequestDTO.helpInfo() != null)
+            question.setHelpInfo(questionRequestDTO.helpInfo());
+    }
+
+    // This entity mapper is for questions of type "TRANSLATE_PHRASE"
+    public void toQuestionEntity(
+            QuestionRequestDTO questionRequestDTO,
+            Question question,
+            Phrase phrase,
+            Set<Phrase> phraseOptions) {
+
+        question.setQuestionType(questionRequestDTO.questionType());
+        question.setPhrase(phrase);
+        question.setPhraseOptions(phraseOptions);
+        question.setCorrectAnswer(questionRequestDTO.correctAnswer());
+
+        if (questionRequestDTO.helpInfo() != null)
+            question.setHelpInfo(questionRequestDTO.helpInfo());
     }
 
     public QuestionResponseDTO toQuestionResponseDTO(Question question) {

@@ -50,7 +50,7 @@ public class Question {
             joinColumns = @JoinColumn(name = "question_id"),
             inverseJoinColumns = @JoinColumn(name = "phrase_id")
     )
-    private List<Phrase> phraseOptions;
+    private Set<Phrase> phraseOptions;
 
     private UUID correctAnswer;
 
