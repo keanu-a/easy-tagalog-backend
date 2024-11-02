@@ -62,7 +62,13 @@ public class Conjugation {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Conjugation that = (Conjugation) o;
-        return Objects.equals(id, that.id) && Objects.equals(tagalog, that.tagalog) && Objects.equals(root, that.root) && Objects.equals(accents, that.accents) && Objects.equals(audioUrl, that.audioUrl) && Objects.equals(english, that.english) && tense == that.tense;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(tagalog, that.tagalog) &&
+                Objects.equals(root, that.root) &&
+                Objects.equals(accents, that.accents) &&
+                Objects.equals(audioUrl, that.audioUrl) &&
+                Objects.equals(english, that.english) &&
+                tense == that.tense;
     }
 
     @Override

@@ -62,5 +62,43 @@
     "root": "si",
     "partOfSpeech": "ARTICLE",
     "note": "No direct english translation"
+  },
+  {
+    "tagalog": "mag-aral",
+    "english": [
+      {
+        "meaning": "to study"
+      },
+      {
+        "meaning": "to learn"
+      }
+    ],
+    "root": "aral",
+    "accents": [4],
+    "partOfSpeech": "VERB",
+    "isIrregularVerb": false,
+    "conjugations": [
+      {
+        "tagalog": "nag-aral",
+        "root": "aral",
+        "accents": "4",
+        "english": "studied",
+        "tense": "PAST"
+      },
+      {
+        "tagalog": "nag-aaral",
+        "root": "aral",
+        "accents": "5",
+        "english": "studying",
+        "tense": "PRESENT"
+      },
+      {
+        "tagalog": "mag-aaral",
+        "root": "aral",
+        "accents": "5",
+        "english": "will study",
+        "tense": "FUTURE"
+      }
+    ]
   }
 ]
