@@ -56,7 +56,7 @@ public class LessonValidator {
     // - Correct Answer
     private void validateTranslateWordQuestionType(QuestionRequestDTO questionRequest) {
 
-        String exceptionPrefix = "Question of type " + questionRequest.questionType() + ": ";
+        String exceptionPrefix = "Question of type " + questionRequest.questionType() + " ";
 
         if (questionRequest.phraseId() != null || questionRequest.phraseOptions() != null) {
             throw new ValidationException(exceptionPrefix + "should not have any phrase fields set");
@@ -74,6 +74,10 @@ public class LessonValidator {
         if (questionRequest.correctAnswer() == null) {
             throw new ValidationException(exceptionPrefix + "must have a correct answer");
         }
+
+        if (!questionRequest.wordId().equals(questionRequest.correctAnswer())) {
+            throw new ValidationException(exceptionPrefix + "correct answer does not match");
+        }
     }
 
     // This function is to validate a question of QuestionType "TRANSLATE_PHRASE"
@@ -83,7 +87,7 @@ public class LessonValidator {
     // - Correct Answer
     private void validateTranslatePhraseQuestionType(QuestionRequestDTO questionRequest) {
 
-        String exceptionPrefix = "Question of type " + questionRequest.questionType() + ": ";
+        String exceptionPrefix = "Question of type " + questionRequest.questionType() + " ";
 
         if (questionRequest.wordId() != null || questionRequest.wordOptions() != null) {
             throw new ValidationException(exceptionPrefix + "should not have any word fields set");
@@ -100,6 +104,10 @@ public class LessonValidator {
         if (questionRequest.correctAnswer() == null) {
             throw new ValidationException(exceptionPrefix + "must have a correct answer");
         }
+
+        if (!questionRequest.phraseId().equals(questionRequest.correctAnswer())) {
+            throw new ValidationException(exceptionPrefix + "correct answer does not match");
+        }
     }
 
     // This function is to validate a question of QuestionType "TRANSLATE_PHRASE"
@@ -108,6 +116,6 @@ public class LessonValidator {
     // - Phrase Options
     // - Correct Answer Order
     private void validateBuildPhraseQuestionType(QuestionRequestDTO questionRequest) {
-        String exceptionPrefix = "Question of type " + questionRequest.questionType() + ": ";
+        String exceptionPrefix = "Question of type " + questionRequest.questionType() + " ";
     }
 }
