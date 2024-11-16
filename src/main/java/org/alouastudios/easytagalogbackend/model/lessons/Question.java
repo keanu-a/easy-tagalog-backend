@@ -31,6 +31,8 @@ public class Question {
     @JsonIgnore
     private Word word;
 
+    private UUID wordEnglishId; // Required for questionType of TRANSLATE_WORD
+
     @ManyToOne
     @JoinColumn(name = "phrase_id")
     @JsonIgnore

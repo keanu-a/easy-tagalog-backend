@@ -1,15 +1,16 @@
 package org.alouastudios.easytagalogbackend.service;
 
 import jakarta.transaction.Transactional;
-import org.alouastudios.easytagalogbackend.dto.LessonRequestDTO;
-import org.alouastudios.easytagalogbackend.dto.QuestionRequestDTO;
-import org.alouastudios.easytagalogbackend.dto.response.lessonResponse.LessonResponseDTO;
+import org.alouastudios.easytagalogbackend.dto.lesson.LessonRequestDTO;
+import org.alouastudios.easytagalogbackend.dto.lesson.QuestionRequestDTO;
+import org.alouastudios.easytagalogbackend.dto.lesson.LessonResponseDTO;
 import org.alouastudios.easytagalogbackend.enums.QuestionType;
 import org.alouastudios.easytagalogbackend.exception.ResourceNotFoundException;
 import org.alouastudios.easytagalogbackend.mapper.LessonMapper;
 import org.alouastudios.easytagalogbackend.model.lessons.Lesson;
 import org.alouastudios.easytagalogbackend.model.lessons.Question;
 import org.alouastudios.easytagalogbackend.model.phrases.Phrase;
+import org.alouastudios.easytagalogbackend.model.words.English;
 import org.alouastudios.easytagalogbackend.model.words.Word;
 import org.alouastudios.easytagalogbackend.repository.LessonRepository;
 import org.alouastudios.easytagalogbackend.repository.PhraseRepository;

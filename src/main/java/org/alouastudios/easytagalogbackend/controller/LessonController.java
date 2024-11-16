@@ -1,7 +1,7 @@
 package org.alouastudios.easytagalogbackend.controller;
 
-import org.alouastudios.easytagalogbackend.dto.LessonRequestDTO;
-import org.alouastudios.easytagalogbackend.dto.response.lessonResponse.LessonResponseDTO;
+import org.alouastudios.easytagalogbackend.dto.lesson.LessonRequestDTO;
+import org.alouastudios.easytagalogbackend.dto.lesson.LessonResponseDTO;
 import org.alouastudios.easytagalogbackend.service.LessonService;
 import org.springframework.web.bind.annotation.*;
 

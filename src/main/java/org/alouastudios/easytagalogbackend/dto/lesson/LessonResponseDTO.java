@@ -1,4 +1,4 @@
-package org.alouastudios.easytagalogbackend.dto.response.lessonResponse;
+package org.alouastudios.easytagalogbackend.dto.lesson;
 
 import java.util.Set;
 import java.util.UUID;

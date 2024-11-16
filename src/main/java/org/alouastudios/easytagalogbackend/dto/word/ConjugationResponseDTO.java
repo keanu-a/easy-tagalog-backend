@@ -1,4 +1,4 @@
-package org.alouastudios.easytagalogbackend.dto.response.wordResponse;
+package org.alouastudios.easytagalogbackend.dto.word;
 
 import org.alouastudios.easytagalogbackend.enums.Tense;
 

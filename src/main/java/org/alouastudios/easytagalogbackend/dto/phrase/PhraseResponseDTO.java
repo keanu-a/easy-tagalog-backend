@@ -1,4 +1,4 @@
-package org.alouastudios.easytagalogbackend.dto.response.phraseResponse;
+package org.alouastudios.easytagalogbackend.dto.phrase;
 
 
 import java.util.List;

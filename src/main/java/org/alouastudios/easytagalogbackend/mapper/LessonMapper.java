@@ -1,11 +1,11 @@
 package org.alouastudios.easytagalogbackend.mapper;
 
-import org.alouastudios.easytagalogbackend.dto.LessonRequestDTO;
-import org.alouastudios.easytagalogbackend.dto.QuestionRequestDTO;
-import org.alouastudios.easytagalogbackend.dto.response.lessonResponse.LessonPhraseResponseDTO;
-import org.alouastudios.easytagalogbackend.dto.response.lessonResponse.LessonResponseDTO;
-import org.alouastudios.easytagalogbackend.dto.response.lessonResponse.LessonWordResponseDTO;
-import org.alouastudios.easytagalogbackend.dto.response.lessonResponse.QuestionResponseDTO;
+import org.alouastudios.easytagalogbackend.dto.lesson.LessonRequestDTO;
+import org.alouastudios.easytagalogbackend.dto.lesson.QuestionRequestDTO;
+import org.alouastudios.easytagalogbackend.dto.lesson.LessonTagalogResponseDTO;
+import org.alouastudios.easytagalogbackend.dto.lesson.LessonResponseDTO;
+import org.alouastudios.easytagalogbackend.dto.lesson.LessonEnglishResponseDTO;
+import org.alouastudios.easytagalogbackend.dto.lesson.QuestionResponseDTO;
 import org.alouastudios.easytagalogbackend.model.lessons.Lesson;
 import org.alouastudios.easytagalogbackend.model.lessons.Question;
 import org.alouastudios.easytagalogbackend.model.phrases.Phrase;
@@ -13,6 +13,7 @@ import org.alouastudios.easytagalogbackend.model.words.Word;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Component
@@ -40,6 +41,7 @@ public class LessonMapper {
 
         question.setQuestionType(questionRequestDTO.questionType());
         question.setWord(word);
+        question.setWordEnglishId(questionRequestDTO.wordEnglishId());
         question.setWordOptions(wordOptions);
         question.setCorrectAnswer(questionRequestDTO.correctAnswer());
 
@@ -69,16 +71,16 @@ public class LessonMapper {
         return new QuestionResponseDTO(
                 question.getQuestionType(),
                 question.getWord() != null
-                        ? toLessonWordResponseDTO(question.getWord())
+                        ? toLessonEnglishResponseDTO(question.getWord(), question.getWordEnglishId())
                         : null,
                 question.getPhrase() != null
-                        ? toLessonPhraseResponseDTO(question.getPhrase())
+                        ? toLessonTagalogResponseDTO(question.getPhrase())
                         : null,
                 question.getWordOptions() != null
-                        ? question.getWordOptions().stream().map(this::toLessonWordResponseDTO).collect(Collectors.toSet())
+                        ? question.getWordOptions().stream().map(this::toLessonTagalogResponseDTO).collect(Collectors.toSet())
                         : null,
                 question.getPhraseOptions() != null
-                        ? question.getPhraseOptions().stream().map(this::toLessonPhraseResponseDTO).collect(Collectors.toSet())
+                        ? question.getPhraseOptions().stream().map(this::toLessonTagalogResponseDTO).collect(Collectors.toSet())
                         : null,
                 question.getCorrectAnswer() != null
                         ? question.getCorrectAnswer()
@@ -92,17 +94,33 @@ public class LessonMapper {
         );
     }
 
+    // Only needed for Question Type - TRANSLATE_WORD
+    public LessonEnglishResponseDTO toLessonEnglishResponseDTO(Word word, UUID wordEnglishId) {
+        return new LessonEnglishResponseDTO(
+                word.getUuid(),
+                word.getEnglish(wordEnglishId).getMeaning()
+        );
+    }
+
+    // Only needed for Question type - BUILD_PHRASE
+    public LessonEnglishResponseDTO toLessonEnglishResponseDTO(Phrase phrase) {
+        return new LessonEnglishResponseDTO(
+                phrase.getUuid(),
+                phrase.getEnglish()
+        );
+    }
+
     // Only needed info in lessons for Word in the frontend is the UUID and tagalog
-    public LessonWordResponseDTO toLessonWordResponseDTO(Word word) {
-        return new LessonWordResponseDTO(
+    public LessonTagalogResponseDTO toLessonTagalogResponseDTO(Word word) {
+        return new LessonTagalogResponseDTO(
                 word.getUuid(),
                 word.getTagalog()
         );
     }
 
     // Only needed info in lessons for Phrase in the frontend is the UUID and tagalog
-    public LessonPhraseResponseDTO toLessonPhraseResponseDTO(Phrase phrase) {
-        return new LessonPhraseResponseDTO(
+    public LessonTagalogResponseDTO toLessonTagalogResponseDTO(Phrase phrase) {
+        return new LessonTagalogResponseDTO(
                 phrase.getUuid(),
                 phrase.getTagalog()
         );

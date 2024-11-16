@@ -1,4 +1,4 @@
-package org.alouastudios.easytagalogbackend.dto.response.lessonResponse;
+package org.alouastudios.easytagalogbackend.dto.lesson;
 
 import org.alouastudios.easytagalogbackend.enums.QuestionType;
 
@@ -8,10 +8,10 @@ import java.util.UUID;
 
 public record QuestionResponseDTO(
         QuestionType questionType,
-        LessonWordResponseDTO word,
-        LessonPhraseResponseDTO phrase,
-        Set<LessonWordResponseDTO> wordOptions,
-        Set<LessonPhraseResponseDTO> phraseOptions,
+        LessonEnglishResponseDTO word,
+        LessonTagalogResponseDTO phrase,
+        Set<LessonTagalogResponseDTO> wordOptions,
+        Set<LessonTagalogResponseDTO> phraseOptions,
         UUID correctAnswer,
         List<UUID> correctAnswerOrder,
         String helpInfo

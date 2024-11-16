@@ -1,8 +1,8 @@
 package org.alouastudios.easytagalogbackend.validator;
 
 import jakarta.validation.ValidationException;
-import org.alouastudios.easytagalogbackend.dto.LessonRequestDTO;
-import org.alouastudios.easytagalogbackend.dto.QuestionRequestDTO;
+import org.alouastudios.easytagalogbackend.dto.lesson.LessonRequestDTO;
+import org.alouastudios.easytagalogbackend.dto.lesson.QuestionRequestDTO;
 import org.alouastudios.easytagalogbackend.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Component;
 
@@ -52,6 +52,7 @@ public class LessonValidator {
     // This function is to validate a question of QuestionType "TRANSLATE_WORD"
     // It should have the following:
     // - Word Id
+    // - Word English Id
     // - Word Options
     // - Correct Answer
     private void validateTranslateWordQuestionType(QuestionRequestDTO questionRequest) {
@@ -64,6 +65,10 @@ public class LessonValidator {
 
         if (questionRequest.wordId() == null) {
             throw new ValidationException(exceptionPrefix + "must have a word UUID");
+        }
+
+        if (questionRequest.wordEnglishId() == null) {
+            throw new ValidationException(exceptionPrefix + "must have a word english UUID");
         }
 
         if (questionRequest.wordOptions() == null ||
@@ -89,7 +94,10 @@ public class LessonValidator {
 
         String exceptionPrefix = "Question of type " + questionRequest.questionType() + " ";
 
-        if (questionRequest.wordId() != null || questionRequest.wordOptions() != null) {
+        if (questionRequest.wordId() != null ||
+                questionRequest.wordOptions() != null ||
+                questionRequest.wordEnglishId() != null
+        ) {
             throw new ValidationException(exceptionPrefix + "should not have any word fields set");
         }
 

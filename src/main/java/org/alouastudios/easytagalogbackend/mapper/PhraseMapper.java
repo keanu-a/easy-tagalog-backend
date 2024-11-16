@@ -1,7 +1,7 @@
 package org.alouastudios.easytagalogbackend.mapper;
 
-import org.alouastudios.easytagalogbackend.dto.PhraseRequestDTO;
-import org.alouastudios.easytagalogbackend.dto.response.phraseResponse.PhraseResponseDTO;
+import org.alouastudios.easytagalogbackend.dto.phrase.PhraseRequestDTO;
+import org.alouastudios.easytagalogbackend.dto.phrase.PhraseResponseDTO;
 import org.alouastudios.easytagalogbackend.model.phrases.Phrase;
 import org.alouastudios.easytagalogbackend.model.words.Word;
 import org.springframework.stereotype.Component;

@@ -1,4 +1,4 @@
-package org.alouastudios.easytagalogbackend.dto;
+package org.alouastudios.easytagalogbackend.dto.lesson;
 
 import java.util.Set;
 
