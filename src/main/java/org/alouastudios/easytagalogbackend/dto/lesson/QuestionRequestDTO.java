@@ -1,4 +1,4 @@
-package org.alouastudios.easytagalogbackend.dto;
+package org.alouastudios.easytagalogbackend.dto.lesson;
 
 import org.alouastudios.easytagalogbackend.enums.QuestionType;
 
@@ -8,7 +8,8 @@ import java.util.UUID;
 
 public record QuestionRequestDTO(
       QuestionType questionType,
-      UUID wordId,                          // Needs to be mapped
+      UUID  wordId,                          // Needs to be mapped
+      UUID wordEnglishId,
       UUID phraseId,                        // Needs to be mapped
       Set<UUID> wordOptions,                // Needs to be mapped
       Set<UUID> phraseOptions,              // Needs to be mapped

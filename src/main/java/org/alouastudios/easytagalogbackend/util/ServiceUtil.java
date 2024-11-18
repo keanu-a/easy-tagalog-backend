@@ -31,10 +31,6 @@ public class ServiceUtil {
         return accentIntegers;
     }
 
-    public static boolean isNumber(String numberString) {
-        return numberString.matches("-?\\d+(\\.\\d+)?");
-    }
-
     public static String createWordAudioString(String tagalog) {
         return tagalog.concat(".mp3");
     }

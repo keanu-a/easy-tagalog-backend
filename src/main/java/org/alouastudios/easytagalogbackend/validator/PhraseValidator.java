@@ -1,9 +1,8 @@
 package org.alouastudios.easytagalogbackend.validator;
 
-import org.alouastudios.easytagalogbackend.dto.PhraseRequestDTO;
+import org.alouastudios.easytagalogbackend.dto.phrase.PhraseRequestDTO;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.Objects;
 
 @Component

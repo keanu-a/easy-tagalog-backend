@@ -1,10 +1,10 @@
 package org.alouastudios.easytagalogbackend.mapper;
 
-import org.alouastudios.easytagalogbackend.dto.response.wordResponse.ConjugationResponseDTO;
-import org.alouastudios.easytagalogbackend.dto.response.wordResponse.EnglishResponseDTO;
-import org.alouastudios.easytagalogbackend.dto.response.wordResponse.LinkedWordResponseDTO;
-import org.alouastudios.easytagalogbackend.dto.WordRequestDTO;
-import org.alouastudios.easytagalogbackend.dto.response.wordResponse.WordResponseDTO;
+import org.alouastudios.easytagalogbackend.dto.word.ConjugationResponseDTO;
+import org.alouastudios.easytagalogbackend.dto.word.EnglishResponseDTO;
+import org.alouastudios.easytagalogbackend.dto.word.LinkedWordResponseDTO;
+import org.alouastudios.easytagalogbackend.dto.word.WordRequestDTO;
+import org.alouastudios.easytagalogbackend.dto.word.WordResponseDTO;
 import org.alouastudios.easytagalogbackend.model.words.Conjugation;
 import org.alouastudios.easytagalogbackend.model.words.English;
 import org.alouastudios.easytagalogbackend.model.words.LinkedWord;
