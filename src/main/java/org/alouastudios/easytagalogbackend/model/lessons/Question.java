@@ -31,6 +31,8 @@ public class Question {
     @JsonIgnore
     private Word word;
 
+    private UUID wordEnglishId; // Required for questionType of TRANSLATE_WORD
+
     @ManyToOne
     @JoinColumn(name = "phrase_id")
     @JsonIgnore
@@ -42,7 +44,7 @@ public class Question {
             joinColumns = @JoinColumn(name = "question_id"),
             inverseJoinColumns = @JoinColumn(name = "word_id")
     )
-    private Set<Word> wordOptions = new HashSet<>();
+    private Set<Word> wordOptions;
 
     @ManyToMany
     @JoinTable(

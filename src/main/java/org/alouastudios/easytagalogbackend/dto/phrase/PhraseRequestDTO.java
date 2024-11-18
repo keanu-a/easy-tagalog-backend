@@ -1,4 +1,4 @@
-package org.alouastudios.easytagalogbackend.dto;
+package org.alouastudios.easytagalogbackend.dto.phrase;
 
 import org.alouastudios.easytagalogbackend.model.phrases.PhraseWordGuide;
 

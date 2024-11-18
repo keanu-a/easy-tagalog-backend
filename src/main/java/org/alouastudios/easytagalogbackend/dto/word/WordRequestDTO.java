@@ -1,4 +1,4 @@
-package org.alouastudios.easytagalogbackend.dto;
+package org.alouastudios.easytagalogbackend.dto.word;
 
 import org.alouastudios.easytagalogbackend.enums.PartOfSpeech;
 import org.alouastudios.easytagalogbackend.model.words.Conjugation;
