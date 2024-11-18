@@ -44,7 +44,7 @@ public class Question {
             joinColumns = @JoinColumn(name = "question_id"),
             inverseJoinColumns = @JoinColumn(name = "word_id")
     )
-    private Set<Word> wordOptions = new HashSet<>();
+    private Set<Word> wordOptions;
 
     @ManyToMany
     @JoinTable(

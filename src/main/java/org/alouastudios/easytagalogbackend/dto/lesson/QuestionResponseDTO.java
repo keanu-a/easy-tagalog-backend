@@ -8,10 +8,8 @@ import java.util.UUID;
 
 public record QuestionResponseDTO(
         QuestionType questionType,
-        LessonEnglishResponseDTO word,
-        LessonTagalogResponseDTO phrase,
-        Set<LessonTagalogResponseDTO> wordOptions,
-        Set<LessonTagalogResponseDTO> phraseOptions,
+        LessonPromptResponseDTO prompt,
+        Set<LessonOptionResponseDTO> options,
         UUID correctAnswer,
         List<UUID> correctAnswerOrder,
         String helpInfo

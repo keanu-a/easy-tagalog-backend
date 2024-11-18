@@ -2,7 +2,7 @@ package org.alouastudios.easytagalogbackend.dto.lesson;
 
 import java.util.UUID;
 
-public record LessonTagalogResponseDTO(
+public record LessonOptionResponseDTO(
         UUID uuid,
         String tagalog
 ) {
