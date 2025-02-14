@@ -7,10 +7,7 @@ import org.alouastudios.easytagalogbackend.dto.word.WordResponseDTO;
 import org.alouastudios.easytagalogbackend.enums.PartOfSpeech;
 import org.alouastudios.easytagalogbackend.exception.ResourceNotFoundException;
 import org.alouastudios.easytagalogbackend.mapper.WordMapper;
-import org.alouastudios.easytagalogbackend.model.words.Conjugation;
-import org.alouastudios.easytagalogbackend.model.words.English;
-import org.alouastudios.easytagalogbackend.model.words.LinkedWord;
-import org.alouastudios.easytagalogbackend.model.words.Word;
+import org.alouastudios.easytagalogbackend.model.words.*;
 import org.alouastudios.easytagalogbackend.repository.EnglishRepository;
 import org.alouastudios.easytagalogbackend.repository.WordRepository;
 import org.alouastudios.easytagalogbackend.util.ServiceUtil;
@@ -113,9 +110,8 @@ public class WordService {
 
     // This function handles changes to a Word entity
     private void handleEntityChanges(Word word, WordRequestDTO wordRequest) {
-
-        // First validate and set english
-        Set<English> newEnglishSet = getEnglishSet(word, wordRequest.english());
+        // First validate and set translations
+        Set<Translation> newTranslationSet = getTranslationSet(word, wordRequest.translations());
 
         // Next validate if verb, and set conjugations
         Set<Conjugation> newConjugationSet = null;
@@ -131,7 +127,7 @@ public class WordService {
         }
 
         // Creates initial mapping of word
-        wordMapper.toEntity(word, wordRequest, newEnglishSet, newConjugationSet, newLinkedWord);
+        wordMapper.toEntity(word, wordRequest, newTranslationSet, newConjugationSet, newLinkedWord);
     }
 
     // This function returns a new LinkedWord object with the linked word's word field set
@@ -145,31 +141,67 @@ public class WordService {
         return newLinkedWord;
     }
 
-    // This function returns a new english set with english's word field set
-    private Set<English> getEnglishSet(Word word, Set<English> englishSet) {
+    // This function returns a new Translation set with the translation's word field set
+    private Set<Translation> getTranslationSet(Word word, Set<Translation> translationSet) {
 
-        // Ensures english field is provided
-        if (englishSet == null || englishSet.isEmpty()) {
-            throw new RuntimeException("Word must have english translations");
+        // Ensures translation field is provided
+        if (translationSet == null || translationSet.isEmpty()) {
+            throw new RuntimeException("Word must have translations");
         }
 
-        Set<English> newEnglishSet = new HashSet<>();
+        Set<Translation> newTranslationSet = new HashSet<>();
 
-        // Goes through each english word and creates new English if it doesn't exist or adds current word to existing
-        for (English english : englishSet) {
-            English foundEnglish = englishRepository.findByMeaning(english.getMeaning());
+        for (Translation translation : translationSet) {
+            Set<English> newEnglishSet = new HashSet<>();
 
-            if (foundEnglish == null) {
-                english.getWords().add(word);
-                newEnglishSet.add(english);
-            } else {
-                foundEnglish.getWords().add(word);
-                newEnglishSet.add(foundEnglish);
+            if (translation.getEnglishMeanings() == null || translation.getEnglishMeanings().isEmpty()) {
+                throw new RuntimeException("Translation must have english meanings");
             }
+
+            for (English english : translation.getEnglishMeanings()) {
+                English foundEnglish = englishRepository.findByMeaning(english.getMeaning());
+
+                if (foundEnglish == null) {
+                    english.getWords().add(word);
+                    newEnglishSet.add(english);
+                } else {
+                    foundEnglish.getWords().add(word);
+                    newEnglishSet.add(foundEnglish);
+                }
+            }
+
+            translation.setEnglishMeanings(newEnglishSet);
         }
 
-        return newEnglishSet;
+        return newTranslationSet;
     }
+
+    // TODO: DELETE WHEN ABSOLUTELY NOT NEEDED
+//    // This function returns a new english set with english's word field set
+//    private Set<English> getEnglishSet(Word word, Set<English> englishSet) {
+//
+//        // Ensures english field is provided
+//        if (englishSet == null || englishSet.isEmpty()) {
+//            throw new RuntimeException("Word must have english translations");
+//        }
+//
+//        Set<English> newEnglishSet = new HashSet<>();
+//
+//        // Goes through each english word and creates new English if it doesn't exist or adds current word to existing
+//        for (English english : englishSet) {
+//            English foundEnglish = englishRepository.findByMeaning(english.getMeaning());
+//
+//            if (foundEnglish == null) {
+//                english.getWords().add(word);
+//                newEnglishSet.add(english);
+//            } else {
+//                foundEnglish.getWords().add(word);
+//                newEnglishSet.add(foundEnglish);
+//            }
+//        }
+//
+//        return newEnglishSet;
+//    }
 
     // This function returns the new conjugation set with the conjugation's word field set
     private Set<Conjugation> getConjugationSet(Word word, Set<Conjugation> conjugationSet) {

@@ -81,6 +81,7 @@ public class Word {
                 ));
     }
 
+    // TODO: DELETE WHEN ABSOLUTELY NOT NEEDED
 //    @Transient
 //    public English getEnglish(UUID uuid) {
 //        return translations.english.stream()
