@@ -9,7 +9,7 @@ import java.util.UUID;
 public record WordResponseDTO (
         UUID uuid,
         String tagalog,
-        Set<EnglishResponseDTO> english,
+        Set<TranslationResponseDTO> translations,
         String root,
         List<Integer> accents,
         PartOfSpeech partOfSpeech,

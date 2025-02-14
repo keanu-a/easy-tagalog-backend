@@ -1,14 +1,7 @@
 package org.alouastudios.easytagalogbackend.mapper;
 
-import org.alouastudios.easytagalogbackend.dto.word.ConjugationResponseDTO;
-import org.alouastudios.easytagalogbackend.dto.word.EnglishResponseDTO;
-import org.alouastudios.easytagalogbackend.dto.word.LinkedWordResponseDTO;
-import org.alouastudios.easytagalogbackend.dto.word.WordRequestDTO;
-import org.alouastudios.easytagalogbackend.dto.word.WordResponseDTO;
-import org.alouastudios.easytagalogbackend.model.words.Conjugation;
-import org.alouastudios.easytagalogbackend.model.words.English;
-import org.alouastudios.easytagalogbackend.model.words.LinkedWord;
-import org.alouastudios.easytagalogbackend.model.words.Word;
+import org.alouastudios.easytagalogbackend.dto.word.*;
+import org.alouastudios.easytagalogbackend.model.words.*;
 import org.alouastudios.easytagalogbackend.util.ServiceUtil;
 import org.springframework.stereotype.Component;
 
@@ -24,7 +17,9 @@ public class WordMapper {
         return new WordResponseDTO(
                 word.getUuid(),
                 word.getTagalog(),
-                word.getEnglish().stream().map(this::toEnglishDTO).collect(Collectors.toSet()),
+                word.getTranslations().stream()
+                        .map(this::toTranslationResponseDTO)
+                        .collect(Collectors.toSet()),
                 word.getRoot(),
                 word.getAccents() != null
                         ? ServiceUtil.convertStringToAccentArray(word.getAccents())
@@ -45,7 +40,7 @@ public class WordMapper {
     public void toEntity(
             Word word,
             WordRequestDTO wordRequestDTO,
-            Set<English> english,
+            Set<Translation> translations,
             Set<Conjugation> conjugations,
             LinkedWord linkedWord) {
 
@@ -56,7 +51,7 @@ public class WordMapper {
         word.setIsIrregularVerb(wordRequestDTO.isIrregularVerb());
         word.setNote(wordRequestDTO.note());
 
-        word.setEnglish(english);
+        word.setTranslations(translations);
         if (conjugations != null) word.setConjugations(conjugations);
         if (linkedWord != null) word.setLinkedWord(linkedWord);
 
@@ -71,6 +66,16 @@ public class WordMapper {
         if (wordRequestDTO.accents() != null) {
             word.setAccents(ServiceUtil.convertAccentArrayToString(wordRequestDTO.accents()));
         }
+    }
+
+    // Maps Translation entity to TranslationDTO
+    public TranslationResponseDTO toTranslationResponseDTO(Translation translation) {
+        return new TranslationResponseDTO(
+                translation.getPartOfSpeech(),
+                translation.getEnglishMeanings().stream()
+                        .map(this::toEnglishDTO)
+                        .collect(Collectors.toSet())
+        );
     }
 
     // Maps English entity to EnglishDTO

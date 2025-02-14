@@ -17,7 +17,9 @@ import java.util.*;
 @Entity
 @Table(
         name = "words",
-        uniqueConstraints = {@UniqueConstraint(name = "UniqueWordAndAccents", columnNames = {"tagalog", "accents"})}
+        uniqueConstraints = {
+                @UniqueConstraint(name = "UniqueWordAndAccents", columnNames = {"tagalog", "accents"})
+        }
 )
 public class Word {
 
@@ -30,13 +32,8 @@ public class Word {
     @Column(length = 30, nullable = false)
     private String tagalog;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(
-            name = "word_english",
-            joinColumns = @JoinColumn(name = "word_id"),
-            inverseJoinColumns = @JoinColumn(name = "english_id")
-    )
-    private Set<English> english = new HashSet<>();
+    @OneToMany(mappedBy = "word", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Translation> translations = new HashSet<>();
 
     @Column(nullable = false)
     private String root;
@@ -84,15 +81,15 @@ public class Word {
                 ));
     }
 
-    @Transient
-    public English getEnglish(UUID uuid) {
-        return english.stream()
-                .filter(english -> english.getUuid().equals(uuid))
-                .findFirst()
-                .orElseThrow(() -> new ResourceNotFoundException(
-                        "No english found for " + tagalog + " with uuid: " + uuid
-                ));
-    }
+//    @Transient
+//    public English getEnglish(UUID uuid) {
+//        return translations.english.stream()
+//                .filter(english -> english.getUuid().equals(uuid))
+//                .findFirst()
+//                .orElseThrow(() -> new ResourceNotFoundException(
+//                        "No english found for " + tagalog + " with uuid: " + uuid
+//                ));
+//    }
 
     @Override
     public String toString() {
@@ -129,6 +126,8 @@ public class Word {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, uuid, tagalog, root, accents, partOfSpeech, alternateSpelling, isIrregularVerb, note, audioUrl);
+        return Objects.hash(
+                id, uuid, tagalog, root, accents, partOfSpeech, alternateSpelling, isIrregularVerb, note, audioUrl
+        );
     }
 }
