@@ -24,7 +24,6 @@ public class WordMapper {
                 word.getAccents() != null
                         ? ServiceUtil.convertStringToAccentArray(word.getAccents())
                         : new ArrayList<>(),  // Null check for accents
-                word.getPartOfSpeech(),
                 word.getAlternateSpelling(),
                 word.getIsIrregularVerb(),
                 word.getNote(),
@@ -46,7 +45,6 @@ public class WordMapper {
 
         word.setTagalog(wordRequestDTO.tagalog());
         word.setRoot(wordRequestDTO.root());
-        word.setPartOfSpeech(wordRequestDTO.partOfSpeech());
         word.setAlternateSpelling(wordRequestDTO.alternateSpelling());
         word.setIsIrregularVerb(wordRequestDTO.isIrregularVerb());
         word.setNote(wordRequestDTO.note());

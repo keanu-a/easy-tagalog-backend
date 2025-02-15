@@ -1,8 +1,6 @@
 package org.alouastudios.easytagalogbackend.dto.word;
 
-import org.alouastudios.easytagalogbackend.enums.PartOfSpeech;
 import org.alouastudios.easytagalogbackend.model.words.Conjugation;
-import org.alouastudios.easytagalogbackend.model.words.English;
 import org.alouastudios.easytagalogbackend.model.words.LinkedWord;
 import org.alouastudios.easytagalogbackend.model.words.Translation;
 
@@ -14,7 +12,6 @@ public record WordRequestDTO(
         Set<Translation> translations,
         String root,
         List<Integer> accents,
-        PartOfSpeech partOfSpeech,
         String alternateSpelling,
         Boolean isIrregularVerb,
         String note,

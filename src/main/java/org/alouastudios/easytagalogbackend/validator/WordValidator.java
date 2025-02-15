@@ -45,28 +45,29 @@ public class WordValidator {
         if (!future) throw new RuntimeException("Verb missing future conjugation");
     }
 
-    public Set<English> validateEnglish(WordRequestDTO word, Word newWord, EnglishRepository englishRepository) {
-
-        Set<English> englishSet = new HashSet<>();
-
-        // Check for making sure no duplicate english meaning insertions
-        for (English english : word.english()) {
-            English foundEnglish = englishRepository.findByMeaning(english.getMeaning());
-
-            // If no english meaning doesn't exist, create it, else add it
-            if (foundEnglish == null) {
-
-                english.getWords().add(newWord);
-                englishSet.add(englishRepository.save(english));
-
-            } else {
-
-                foundEnglish.getWords().add(newWord);
-                englishSet.add(foundEnglish);
-
-            }
-        }
-
-        return englishSet;
-    }
+    // TODO: DELETE WHEN ABSOLUTELY DONT NEED
+//    public Set<English> validateEnglish(WordRequestDTO word, Word newWord, EnglishRepository englishRepository) {
+//
+//        Set<English> englishSet = new HashSet<>();
+//
+//        // Check for making sure no duplicate english meaning insertions
+//        for (English english : word.english()) {
+//            English foundEnglish = englishRepository.findByMeaning(english.getMeaning());
+//
+//            // If no english meaning doesn't exist, create it, else add it
+//            if (foundEnglish == null) {
+//
+//                english.getWords().add(newWord);
+//                englishSet.add(englishRepository.save(english));
+//
+//            } else {
+//
+//                foundEnglish.getWords().add(newWord);
+//                englishSet.add(foundEnglish);
+//
+//            }
+//        }
+//
+//        return englishSet;
+//    }
 }

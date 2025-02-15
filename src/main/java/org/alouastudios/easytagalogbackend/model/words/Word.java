@@ -40,10 +40,6 @@ public class Word {
 
     private String accents; // Comma-separated, ex: "1,3,5"
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private PartOfSpeech partOfSpeech;
-
     private String alternateSpelling; // ex: siya could be sya
 
     private Boolean isIrregularVerb;
@@ -81,54 +77,13 @@ public class Word {
                 ));
     }
 
-    // TODO: DELETE WHEN ABSOLUTELY NOT NEEDED
-//    @Transient
-//    public English getEnglish(UUID uuid) {
-//        return translations.english.stream()
-//                .filter(english -> english.getUuid().equals(uuid))
-//                .findFirst()
-//                .orElseThrow(() -> new ResourceNotFoundException(
-//                        "No english found for " + tagalog + " with uuid: " + uuid
-//                ));
-//    }
-
-    @Override
-    public String toString() {
-        return "Word{" +
-                "id=" + id +
-                ", uuid='" + uuid + '\'' +
-                ", tagalog='" + tagalog + '\'' +
-                ", root='" + root + '\'' +
-                ", accents='" + accents + '\'' +
-                ", partOfSpeech=" + partOfSpeech +
-                ", alternateSpelling='" + alternateSpelling + '\'' +
-                ", isIrregularVerb=" + isIrregularVerb +
-                ", note='" + note + '\'' +
-                ", audioUrl='" + audioUrl + '\'' +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Word word = (Word) o;
-        return Objects.equals(id, word.id) &&
-                Objects.equals(uuid, word.uuid) &&
-                Objects.equals(tagalog, word.tagalog) &&
-                Objects.equals(root, word.root) &&
-                Objects.equals(accents, word.accents) &&
-                partOfSpeech == word.partOfSpeech &&
-                Objects.equals(alternateSpelling, word.alternateSpelling) &&
-                Objects.equals(isIrregularVerb, word.isIrregularVerb) &&
-                Objects.equals(note, word.note) &&
-                Objects.equals(audioUrl, word.audioUrl);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(
-                id, uuid, tagalog, root, accents, partOfSpeech, alternateSpelling, isIrregularVerb, note, audioUrl
-        );
+    @Transient
+    public boolean isVerb() {
+        for (Translation translation : translations) {
+            if (translation.getPartOfSpeech() == PartOfSpeech.VERB) {
+                return true;
+            }
+        }
+        return false;
     }
 }

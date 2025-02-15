@@ -1,12 +1,14 @@
 package org.alouastudios.easytagalogbackend.model.words;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.alouastudios.easytagalogbackend.enums.PartOfSpeech;
 
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -22,6 +24,8 @@ import java.util.UUID;
                 )
         }
 )
+@ToString(exclude = "word")
+@EqualsAndHashCode(exclude = "word")
 public class Translation {
 
     @Id
@@ -42,25 +46,15 @@ public class Translation {
     )
     private Set<English> englishMeanings = new HashSet<>();
 
-    @Override
-    public String toString() {
-        return "Translation{" +
-                "partOfSpeech=" + partOfSpeech +
-                ", uuid=" + uuid +
-                ", id=" + id +
-                '}';
-    }
+    @ManyToOne
+    @JoinColumn(name = "word_id")
+    @JsonIgnore
+    private Word word;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Translation that = (Translation) o;
-        return id == that.id && Objects.equals(uuid, that.uuid) && partOfSpeech == that.partOfSpeech;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, uuid, partOfSpeech);
+    @PrePersist
+    public void generateUUID() {
+        if (uuid == null) {
+            uuid = UUID.randomUUID();
+        }
     }
 }

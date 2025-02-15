@@ -15,6 +15,8 @@ import org.alouastudios.easytagalogbackend.validator.WordValidator;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -29,27 +31,17 @@ public class WordService {
     private final WordMapper wordMapper;
 
     public List<WordResponseDTO> getAllWords() {
-
-        List<Word> foundWords = wordRepository.findAll();
-        List<WordResponseDTO> words = new ArrayList<>();
-
-        for (Word word : foundWords) {
-            words.add(wordMapper.toResponseDTO(word));
-        }
-
-        return words;
+        return wordRepository.findAll()
+                .stream()
+                .map(wordMapper::toResponseDTO)
+                .toList();
     }
 
     public List<WordResponseDTO> getWordsBySearchQuery(String searchQuery) {
-
-        List<Word> foundWords = wordRepository.findWordsBySearchQuery(searchQuery);
-        List<WordResponseDTO> words = new ArrayList<>();
-
-        for (Word word : foundWords) {
-            words.add(wordMapper.toResponseDTO(word));
-        }
-
-        return words;
+        return wordRepository.findWordsBySearchQuery(searchQuery)
+                .stream()
+                .map(wordMapper::toResponseDTO)
+                .toList();
     }
 
     public WordResponseDTO getWordByUUID(UUID uuid) {
@@ -78,13 +70,19 @@ public class WordService {
     @Transactional
     public List<WordResponseDTO> addWords(List<WordRequestDTO> words) {
 
-        List<WordResponseDTO> newWords = new ArrayList<>();
+        List<Word> newWords = words.stream()
+                .map(word -> {
+                    Word newWord = new Word();
+                    handleEntityChanges(newWord, word);
+                    return newWord;
+                })
+                .toList();
 
-        for (WordRequestDTO wordRequestDTO : words) {
-            newWords.add(addWord(wordRequestDTO));
-        }
+        wordRepository.saveAll(newWords);
 
-        return newWords;
+        return newWords.stream()
+                .map(wordMapper::toResponseDTO)
+                .toList();
     }
 
     // This function handles updating an existing word in the database
@@ -110,15 +108,17 @@ public class WordService {
 
     // This function handles changes to a Word entity
     private void handleEntityChanges(Word word, WordRequestDTO wordRequest) {
-        // First validate and set translations
-        Set<Translation> newTranslationSet = getTranslationSet(word, wordRequest.translations());
 
-        // Next validate if verb, and set conjugations
+        // First validate if verb, and set conjugations
         Set<Conjugation> newConjugationSet = null;
-        if (wordRequest.partOfSpeech().equals(PartOfSpeech.VERB)) {
+        boolean isVerb = wordRequest.translations().stream().anyMatch(t -> t.getPartOfSpeech() == PartOfSpeech.VERB);
+        if (isVerb) {
             wordValidator.validateVerb(wordRequest);
             newConjugationSet = getConjugationSet(word, wordRequest.conjugations());
         }
+
+        // Next validate and set translations
+        Set<Translation> newTranslationSet = getTranslationSet(word, wordRequest.translations());
 
         // Next set linkedWord if given
         LinkedWord newLinkedWord = null;
@@ -151,6 +151,16 @@ public class WordService {
 
         Set<Translation> newTranslationSet = new HashSet<>();
 
+        // Creates a set of string english meanings
+        Set<String> meanings = translationSet.stream()
+                .flatMap(t -> t.getEnglishMeanings().stream().map(English::getMeaning))
+                .collect(Collectors.toSet());
+
+        // Queries for all English with those meanings
+        Map<String, English> existingEnglishMap = englishRepository.findByMeaningIn(meanings)
+                .stream().collect(Collectors.toMap(English::getMeaning, Function.identity()));
+
+        // Iterates through translation set and sets the bidirectional relationship between Translation and English
         for (Translation translation : translationSet) {
             Set<English> newEnglishSet = new HashSet<>();
 
@@ -159,60 +169,29 @@ public class WordService {
             }
 
             for (English english : translation.getEnglishMeanings()) {
-                English foundEnglish = englishRepository.findByMeaning(english.getMeaning());
+                English foundEnglish = existingEnglishMap.get(english.getMeaning());
 
                 if (foundEnglish == null) {
-                    english.getWords().add(word);
+                    english.getTranslations().add(translation);
                     newEnglishSet.add(english);
                 } else {
-                    foundEnglish.getWords().add(word);
+                    foundEnglish.getTranslations().add(translation);
                     newEnglishSet.add(foundEnglish);
                 }
             }
 
             translation.setEnglishMeanings(newEnglishSet);
+            translation.setWord(word);
+            newTranslationSet.add(translation);
         }
 
         return newTranslationSet;
     }
 
-    // TODO: DELETE WHEN ABSOLUTELY NOT NEEDED
-//    // This function returns a new english set with english's word field set
-//    private Set<English> getEnglishSet(Word word, Set<English> englishSet) {
-//
-//        // Ensures english field is provided
-//        if (englishSet == null || englishSet.isEmpty()) {
-//            throw new RuntimeException("Word must have english translations");
-//        }
-//
-//        Set<English> newEnglishSet = new HashSet<>();
-//
-//        // Goes through each english word and creates new English if it doesn't exist or adds current word to existing
-//        for (English english : englishSet) {
-//            English foundEnglish = englishRepository.findByMeaning(english.getMeaning());
-//
-//            if (foundEnglish == null) {
-//                english.getWords().add(word);
-//                newEnglishSet.add(english);
-//            } else {
-//                foundEnglish.getWords().add(word);
-//                newEnglishSet.add(foundEnglish);
-//            }
-//        }
-//
-//        return newEnglishSet;
-//    }
-
     // This function returns the new conjugation set with the conjugation's word field set
     private Set<Conjugation> getConjugationSet(Word word, Set<Conjugation> conjugationSet) {
-
-        Set<Conjugation> newConjugationSet = new HashSet<>();
-
-        for (Conjugation conjugation : conjugationSet) {
-            conjugation.setWord(word);
-            newConjugationSet.add(conjugation);
-        }
-
-        return newConjugationSet;
+        return conjugationSet.stream()
+                .peek(conjugation -> conjugation.setWord(word))
+                .collect(Collectors.toSet());
     }
 }

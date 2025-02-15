@@ -17,11 +17,20 @@ public interface WordRepository extends JpaRepository<Word, Long> {
 
     List<Word> findAllByUuidIn(List<UUID> uuids);
 
-    @Query(
-            "SELECT w from Word w " +
-            "WHERE w.tagalog LIKE %:searchQuery% " +
-            "OR w.root LIKE %:searchQuery% " +
-            "OR EXISTS (SELECT e FROM w.english e WHERE e.meaning LIKE %:searchQuery%)"
-    )
+    // TODO: DELETE WHEN ABSOLUTELY DONT NEED
+//    @Query(
+//            "SELECT w from Word w " +
+//            "WHERE w.tagalog LIKE %:searchQuery% " +
+//            "OR w.root LIKE %:searchQuery% " +
+//            "OR EXISTS (SELECT e FROM w.english e WHERE e.meaning LIKE %:searchQuery%)"
+//    )
+    @Query("""
+        SELECT DISTINCT w FROM Word w
+        JOIN w.translations t
+        JOIN t.englishMeanings e
+        WHERE LOWER(w.tagalog) LIKE LOWER(CONCAT('%', :searchQuery, '%'))
+        OR LOWER(w.root) LIKE LOWER(CONCAT('%', :searchQuery, '%'))
+        OR LOWER(e.meaning) LIKE LOWER(CONCAT('%', :searchQuery, '%'))
+    """)
     List<Word> findWordsBySearchQuery(@Param("searchQuery") String searchQuery);
 }

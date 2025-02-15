@@ -1,7 +1,5 @@
 package org.alouastudios.easytagalogbackend.dto.word;
 
-import org.alouastudios.easytagalogbackend.enums.PartOfSpeech;
-
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -12,7 +10,6 @@ public record WordResponseDTO (
         Set<TranslationResponseDTO> translations,
         String root,
         List<Integer> accents,
-        PartOfSpeech partOfSpeech,
         String alternateSpelling,
         Boolean isIrregularVerb,
         String note,
