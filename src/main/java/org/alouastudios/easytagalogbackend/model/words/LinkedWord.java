@@ -5,8 +5,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Objects;
-
 @Data
 @NoArgsConstructor
 @Entity
@@ -26,26 +24,4 @@ public class LinkedWord {
     @OneToOne(mappedBy = "linkedWord")
     @JsonIgnore
     private Word word;
-
-    @Override
-    public String toString() {
-        return "LinkedWord{" +
-                "id=" + id +
-                ", tagalog='" + tagalog + '\'' +
-                ", audioUrl='" + audioUrl + '\'' +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        LinkedWord that = (LinkedWord) o;
-        return Objects.equals(id, that.id) && Objects.equals(tagalog, that.tagalog) && Objects.equals(audioUrl, that.audioUrl);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, tagalog, audioUrl);
-    }
 }
