@@ -56,10 +56,6 @@ public class Word {
     @JoinColumn(name = "linked_word_id", referencedColumnName = "id")
     private LinkedWord linkedWord;  // For added ligatures, ex: magandang -- ONLY +ng or +g
 
-    @ManyToMany(mappedBy = "words") // two-way since implement phrases the word is used in later
-    @JsonIgnore
-    private Set<Phrase> phrases = new HashSet<>();
-
     @PrePersist
     public void generateUUID() {
         if (uuid == null) {
