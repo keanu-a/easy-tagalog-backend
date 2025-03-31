@@ -1,6 +1,7 @@
 package org.alouastudios.easytagalogbackend.validator;
 
 import org.alouastudios.easytagalogbackend.dto.phrase.PhraseRequestDTO;
+import org.alouastudios.easytagalogbackend.dto.phrase.PhraseWordRequestDTO;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
@@ -21,16 +22,12 @@ public class PhraseValidator {
             throw new RuntimeException("English cannot be null");
         }
 
-        if (phrase.wordUuids() == null || phrase.wordUuids().isEmpty()) {
+        if (phrase.phraseWords() == null || phrase.phraseWords().isEmpty()) {
             throw new RuntimeException("WordIds cannot be null or empty");
         }
 
-        if (Objects.isNull(phrase.phraseWordGuides())) {
-            throw new RuntimeException("Phrase word guides cannot be null");
-        }
-
         // There should be a meaning for each word of the phrase (even names)
-        if (phrase.tagalog().split(" ").length != phrase.phraseWordGuides().size()) {
+        if (phrase.tagalog().split(" ").length != phrase.phraseWords().size()) {
             throw new RuntimeException("Phrase word guide length doesn't match the number of words in the phrase");
         }
     }
