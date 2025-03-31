@@ -3,11 +3,8 @@ package org.alouastudios.easytagalogbackend.model.phrases;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.alouastudios.easytagalogbackend.model.words.Word;
 
-import java.util.Objects;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Data
 @NoArgsConstructor
@@ -30,16 +27,9 @@ public class Phrase {
     @Column(nullable = false)
     private Boolean isQuestion = false;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(
-            name = "phrase_words",
-            joinColumns = @JoinColumn(name = "phrase_id"),
-            inverseJoinColumns = @JoinColumn(name = "word_id")
-    )
-    private Set<Word> words;
-
-    @Column(nullable = false, unique = true)
-    private String phraseWordMeanings; // ex: "I,name marker,<name>"
+    @OneToMany(mappedBy = "phrase", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderBy("position ASC")
+    private List<PhraseWord> phraseWords = new ArrayList<>();
 
     @PrePersist
     public void generateUUID() {
@@ -56,7 +46,6 @@ public class Phrase {
                 ", tagalog='" + tagalog + '\'' +
                 ", english='" + english + '\'' +
                 ", isQuestion=" + isQuestion +
-                ", phraseWordMeanings='" + phraseWordMeanings + '\'' +
                 '}';
     }
 
@@ -69,12 +58,11 @@ public class Phrase {
                 Objects.equals(uuid, phrase.uuid) &&
                 Objects.equals(tagalog, phrase.tagalog) &&
                 Objects.equals(english, phrase.english) &&
-                Objects.equals(isQuestion, phrase.isQuestion) &&
-                Objects.equals(phraseWordMeanings, phrase.phraseWordMeanings);
+                Objects.equals(isQuestion, phrase.isQuestion);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, uuid, tagalog, english, isQuestion, phraseWordMeanings);
+        return Objects.hash(id, uuid, tagalog, english, isQuestion);
     }
 }
