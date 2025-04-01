@@ -42,7 +42,6 @@ public class WordMapper {
             Set<Translation> translations,
             Set<Conjugation> conjugations,
             LinkedWord linkedWord) {
-
         word.setTagalog(wordRequestDTO.tagalog());
         word.setRoot(wordRequestDTO.root());
         word.setAlternateSpelling(wordRequestDTO.alternateSpelling());

@@ -26,7 +26,7 @@ public class PhraseController {
 
     @GetMapping("/{uuid}")
     public PhraseResponseDTO getPhraseById(@PathVariable UUID uuid) {
-        return phraseService.getPhraseById(uuid);
+        return phraseService.getPhraseByUUID(uuid);
     }
 
     @PostMapping
