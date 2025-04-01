@@ -37,15 +37,7 @@ public class WordService {
                 .toList();
     }
 
-    public List<WordResponseDTO> getWordsBySearchQuery(String searchQuery) {
-        return wordRepository.findWordsBySearchQuery(searchQuery)
-                .stream()
-                .map(wordMapper::toResponseDTO)
-                .toList();
-    }
-
     public WordResponseDTO getWordByUUID(UUID uuid) {
-
         Word foundWord = wordRepository
                 .findByUuid(uuid)
                 .orElseThrow(() -> new ResourceNotFoundException("Word not found"));
@@ -58,7 +50,7 @@ public class WordService {
 
         Word newWord = new Word();
 
-        handleEntityChanges(newWord, wordRequest);
+        handleWordChanges(newWord, wordRequest);
 
         // Insert new word into the database
         wordRepository.save(newWord);
@@ -73,7 +65,7 @@ public class WordService {
         List<Word> newWords = words.stream()
                 .map(word -> {
                     Word newWord = new Word();
-                    handleEntityChanges(newWord, word);
+                    handleWordChanges(newWord, word);
                     return newWord;
                 })
                 .toList();
@@ -92,7 +84,9 @@ public class WordService {
                 .findByUuid(uuid)
                 .orElseThrow(() -> new ResourceNotFoundException("Word not found"));
 
-        handleEntityChanges(foundWord, wordRequest);
+        handleWordChanges(foundWord, wordRequest);
+
+        // Save updated word to the database
         wordRepository.save(foundWord);
 
         return wordMapper.toResponseDTO(foundWord);
@@ -106,21 +100,29 @@ public class WordService {
         wordRepository.delete(foundWord);
     }
 
-    // This function handles changes to a Word entity
-    private void handleEntityChanges(Word word, WordRequestDTO wordRequest) {
+    public List<WordResponseDTO> getWordsBySearchQuery(String searchQuery) {
+        return wordRepository.findWordsBySearchQuery(searchQuery)
+                .stream()
+                .map(wordMapper::toResponseDTO)
+                .toList();
+    }
+
+    private void handleWordChanges(Word word, WordRequestDTO wordRequest) {
+        // Check if word is a verb by checking its translations
+        boolean isVerb = wordRequest.translations().stream()
+                .anyMatch(translation -> translation.getPartOfSpeech() == PartOfSpeech.VERB);
 
         // First validate if verb, and set conjugations
         Set<Conjugation> newConjugationSet = null;
-        boolean isVerb = wordRequest.translations().stream().anyMatch(t -> t.getPartOfSpeech() == PartOfSpeech.VERB);
         if (isVerb) {
             wordValidator.validateVerb(wordRequest);
             newConjugationSet = getConjugationSet(word, wordRequest.conjugations());
         }
 
-        // Next validate and set translations
+        // Process and set translations
         Set<Translation> newTranslationSet = getTranslationSet(word, wordRequest.translations());
 
-        // Next set linkedWord if given
+        // Process and set linked word if provided
         LinkedWord newLinkedWord = null;
         if (wordRequest.linkedWord() != null) {
             newLinkedWord = getLinkedWord(word, wordRequest.linkedWord());
