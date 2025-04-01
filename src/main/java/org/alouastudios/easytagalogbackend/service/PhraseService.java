@@ -1,6 +1,7 @@
 package org.alouastudios.easytagalogbackend.service;
 
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.alouastudios.easytagalogbackend.dto.phrase.PhraseRequestDTO;
 import org.alouastudios.easytagalogbackend.dto.phrase.PhraseResponseDTO;
 import org.alouastudios.easytagalogbackend.exception.ResourceNotFoundException;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class PhraseService {
 
     private final PhraseRepository phraseRepository;
@@ -26,32 +28,14 @@ public class PhraseService {
 
     private final PhraseMapper phraseMapper;
 
-    public PhraseService(
-            PhraseRepository phraseRepository,
-            WordRepository wordRepository,
-            PhraseValidator phraseValidator,
-            PhraseMapper phraseMapper
-    ) {
-        this.phraseRepository = phraseRepository;
-        this.wordRepository = wordRepository;
-        this.phraseValidator = phraseValidator;
-        this.phraseMapper = phraseMapper;
-    }
-
     public List<PhraseResponseDTO> getAllPhrases() {
-
-        List<Phrase> foundPhrases = phraseRepository.findAll();
-        List<PhraseResponseDTO> phrases = new ArrayList<>();
-
-        for (Phrase phrase : foundPhrases) {
-            phrases.add(phraseMapper.toResponseDTO(phrase));
-        }
-
-        return phrases;
+        return phraseRepository.findAll()
+                .stream()
+                .map(phraseMapper::toResponseDTO)
+                .toList();
     }
 
-    public PhraseResponseDTO getPhraseById(UUID uuid) {
-
+    public PhraseResponseDTO getPhraseByUUID(UUID uuid) {
         Phrase foundPhrase = phraseRepository
                 .findByUuid(uuid)
                 .orElseThrow(() -> new ResourceNotFoundException("Phrase not found"));
@@ -59,40 +43,13 @@ public class PhraseService {
         return phraseMapper.toResponseDTO(foundPhrase);
     }
 
+    @Transactional
     public PhraseResponseDTO addPhrase(PhraseRequestDTO phraseRequest) {
-
-        // First validate the request
-        phraseValidator.validatePhraseRequest(phraseRequest);
-
         // Create Phrase entity
         Phrase newPhrase = new Phrase();
-        newPhrase.setTagalog(phraseRequest.tagalog());
-        newPhrase.setEnglish(phraseRequest.english());
-        newPhrase.setIsQuestion(phraseRequest.isQuestion());
 
-        // Convert PhraseWordRequestDTOs to PhraseWord entities
-        List<PhraseWord> phraseWords = phraseRequest.phraseWords().stream()
-                .map(pw -> {
-                    PhraseWord phraseWord = new PhraseWord();
+        handlePhraseChanges(newPhrase, phraseRequest);
 
-                    phraseWord.setPosition(pw.position());
-                    phraseWord.setIsProperNoun(Boolean.TRUE.equals(pw.isProperNoun()));
-
-                    if (!Boolean.TRUE.equals(pw.isProperNoun())) {
-                        Word word = wordRepository.findByUuid(pw.wordUuid())
-                                .orElseThrow(() -> new ResourceNotFoundException("Word not found"));
-                        phraseWord.setWord(word);
-                        phraseWord.setEnglishMeaning(pw.englishMeaning());
-                        phraseWord.setNote(pw.note());
-                    }
-
-                    phraseWord.setPhrase(newPhrase);
-                    return phraseWord;
-                })
-                .sorted(Comparator.comparingInt(PhraseWord::getPosition))
-                .toList();
-
-        newPhrase.setPhraseWords(phraseWords);
         phraseRepository.save(newPhrase);
 
         // Map the new phrase entity into PhraseResponseDTO
@@ -101,7 +58,6 @@ public class PhraseService {
 
     @Transactional
     public List<PhraseResponseDTO> addPhrases(List<PhraseRequestDTO> phrases) {
-
         List<PhraseResponseDTO> newPhrases = new ArrayList<>();
 
         for (PhraseRequestDTO phraseRequestDTO : phrases) {
@@ -112,42 +68,13 @@ public class PhraseService {
     }
 
     public PhraseResponseDTO updatePhrase(UUID uuid, PhraseRequestDTO phraseRequest) {
-
-        phraseValidator.validatePhraseRequest(phraseRequest);
-
+        // Ensure phrase exists in the database
         Phrase foundPhrase = phraseRepository
                 .findByUuid(uuid)
                 .orElseThrow(() -> new ResourceNotFoundException("Phrase not found"));
 
+        handlePhraseChanges(foundPhrase, phraseRequest);
 
-        foundPhrase.setTagalog(phraseRequest.tagalog());
-        foundPhrase.setEnglish(phraseRequest.english());
-        foundPhrase.setIsQuestion(phraseRequest.isQuestion());
-
-        foundPhrase.getPhraseWords().clear();
-
-        List<PhraseWord> phraseWords = phraseRequest.phraseWords().stream()
-                .map(pw -> {
-                    PhraseWord phraseWord = new PhraseWord();
-
-                    phraseWord.setPosition(pw.position());
-                    phraseWord.setIsProperNoun(Boolean.TRUE.equals(pw.isProperNoun()));
-
-                    if (!Boolean.TRUE.equals(pw.isProperNoun())) {
-                        Word word = wordRepository.findByUuid(pw.wordUuid())
-                                .orElseThrow(() -> new ResourceNotFoundException("Word not found"));
-                        phraseWord.setWord(word);
-                        phraseWord.setEnglishMeaning(pw.englishMeaning());
-                        phraseWord.setNote(pw.note());
-                    }
-
-                    phraseWord.setPhrase(foundPhrase);
-                    return phraseWord;
-                })
-                .sorted(Comparator.comparingInt(PhraseWord::getPosition))
-                .toList();
-
-        foundPhrase.setPhraseWords(phraseWords);
         phraseRepository.save(foundPhrase);
 
         return phraseMapper.toResponseDTO(foundPhrase);
@@ -159,5 +86,33 @@ public class PhraseService {
                 .orElseThrow(() -> new ResourceNotFoundException("Phrase not found"));
 
         phraseRepository.delete(foundPhrase);
+    }
+
+    private void handlePhraseChanges(Phrase phrase, PhraseRequestDTO phraseRequest) {
+
+        phraseValidator.validatePhraseRequest(phraseRequest);
+
+        List<PhraseWord> phraseWords = phraseRequest.phraseWords().stream()
+                .map(pw -> {
+                    PhraseWord phraseWord = new PhraseWord();
+
+                    phraseWord.setPosition(pw.position());
+                    phraseWord.setIsProperNoun(Boolean.TRUE.equals(pw.isProperNoun()));
+
+                    if (!Boolean.TRUE.equals(pw.isProperNoun())) {
+                        Word word = wordRepository.findByUuid(pw.wordUuid())
+                                .orElseThrow(() -> new ResourceNotFoundException("Word not found"));
+                        phraseWord.setWord(word);
+                        phraseWord.setEnglishMeaning(pw.englishMeaning());
+                        phraseWord.setNote(pw.note());
+                    }
+
+                    phraseWord.setPhrase(phrase);
+                    return phraseWord;
+                })
+                .sorted(Comparator.comparingInt(PhraseWord::getPosition))
+                .toList();
+
+        phraseMapper.toEntity(phrase, phraseRequest, phraseWords);
     }
 }
