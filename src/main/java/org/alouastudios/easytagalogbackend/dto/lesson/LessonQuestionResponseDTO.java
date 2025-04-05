@@ -17,7 +17,10 @@ import lombok.Setter;
 })
 @Getter
 @Setter
-@NoArgsConstructor
 public abstract class LessonQuestionResponseDTO {
     protected String prompt;
+
+    public LessonQuestionResponseDTO(String prompt) {
+        this.prompt = prompt;
+    }
 }
