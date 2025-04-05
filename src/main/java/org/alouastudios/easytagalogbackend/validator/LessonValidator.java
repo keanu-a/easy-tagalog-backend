@@ -2,7 +2,6 @@ package org.alouastudios.easytagalogbackend.validator;
 
 import jakarta.validation.ValidationException;
 import org.alouastudios.easytagalogbackend.dto.lesson.LessonRequestDTO;
-import org.alouastudios.easytagalogbackend.dto.lesson.QuestionRequestDTO;
 import org.alouastudios.easytagalogbackend.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Component;
 
