@@ -116,11 +116,11 @@ public class WordService {
         Set<Conjugation> newConjugationSet = null;
         if (isVerb) {
             wordValidator.validateVerb(wordRequest);
-            newConjugationSet = getConjugationSet(word, wordRequest.conjugations());
+            newConjugationSet = getConjugations(word, wordRequest.conjugations());
         }
 
         // Process and set translations
-        Set<Translation> newTranslationSet = getTranslationSet(word, wordRequest.translations());
+        Set<Translation> newTranslationSet = getTranslations(word, wordRequest.translations());
 
         // Process and set linked word if provided
         LinkedWord newLinkedWord = null;
@@ -144,7 +144,7 @@ public class WordService {
     }
 
     // This function returns a new Translation set with the translation's word field set
-    private Set<Translation> getTranslationSet(Word word, Set<Translation> translationSet) {
+    private Set<Translation> getTranslations(Word word, Set<Translation> translationSet) {
 
         // Ensures translation field is provided
         if (translationSet == null || translationSet.isEmpty()) {
@@ -191,7 +191,7 @@ public class WordService {
     }
 
     // This function returns the new conjugation set with the conjugation's word field set
-    private Set<Conjugation> getConjugationSet(Word word, Set<Conjugation> conjugationSet) {
+    private Set<Conjugation> getConjugations(Word word, Set<Conjugation> conjugationSet) {
         return conjugationSet.stream()
                 .peek(conjugation -> conjugation.setWord(word))
                 .collect(Collectors.toSet());
