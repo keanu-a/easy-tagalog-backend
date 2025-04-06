@@ -10,7 +10,6 @@ import org.alouastudios.easytagalogbackend.mapper.WordMapper;
 import org.alouastudios.easytagalogbackend.model.words.*;
 import org.alouastudios.easytagalogbackend.repository.EnglishRepository;
 import org.alouastudios.easytagalogbackend.repository.WordRepository;
-import org.alouastudios.easytagalogbackend.util.ServiceUtil;
 import org.alouastudios.easytagalogbackend.validator.WordValidator;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +22,6 @@ import java.util.stream.Collectors;
 public class WordService {
 
     private final WordRepository wordRepository;
-
     private final EnglishRepository englishRepository;
 
     private final WordValidator wordValidator;
@@ -62,19 +60,13 @@ public class WordService {
     @Transactional
     public List<WordResponseDTO> addWords(List<WordRequestDTO> words) {
 
-        List<Word> newWords = words.stream()
-                .map(word -> {
-                    Word newWord = new Word();
-                    handleWordChanges(newWord, word);
-                    return newWord;
-                })
-                .toList();
+        List<WordResponseDTO> newWords = new ArrayList<>();
 
-        wordRepository.saveAll(newWords);
+        for (WordRequestDTO wordRequest : words) {
+            newWords.add(addWord(wordRequest));
+        }
 
-        return newWords.stream()
-                .map(wordMapper::toResponseDTO)
-                .toList();
+        return newWords;
     }
 
     // This function handles updating an existing word in the database
@@ -107,6 +99,10 @@ public class WordService {
                 .toList();
     }
 
+    /**
+     * Handles the process of transforming a WordRequestDTO into an updated Word entity.
+     * Includes verb validation, linked word resolution, and setting all core fields.
+     */
     private void handleWordChanges(Word word, WordRequestDTO wordRequest) {
         // Check if word is a verb by checking its translations
         boolean isVerb = wordRequest.translations().stream()
@@ -116,7 +112,7 @@ public class WordService {
         Set<Conjugation> newConjugationSet = null;
         if (isVerb) {
             wordValidator.validateVerb(wordRequest);
-            newConjugationSet = getConjugations(word, wordRequest.conjugations());
+            newConjugationSet = wordMapper.toConjugationEntity(word, wordRequest.conjugations());
         }
 
         // Process and set translations
@@ -125,22 +121,16 @@ public class WordService {
         // Process and set linked word if provided
         LinkedWord newLinkedWord = null;
         if (wordRequest.linkedWord() != null) {
-            newLinkedWord = getLinkedWord(word, wordRequest.linkedWord());
+            // If the word already has a linked word, update that instance
+            LinkedWord linkedWordEntity = word.getLinkedWord() != null
+                    ? word.getLinkedWord()
+                    : new LinkedWord(); // for POSTs (new words)
+
+            newLinkedWord = wordMapper.toLinkedWordEntity(word, wordRequest.linkedWord(), linkedWordEntity);
         }
 
         // Creates initial mapping of word
         wordMapper.toEntity(word, wordRequest, newTranslationSet, newConjugationSet, newLinkedWord);
-    }
-
-    // This function returns a new LinkedWord object with the linked word's word field set
-    private LinkedWord getLinkedWord(Word word, LinkedWord requestLinkedWord) {
-
-        LinkedWord newLinkedWord = new LinkedWord();
-        newLinkedWord.setTagalog(requestLinkedWord.getTagalog());
-        newLinkedWord.setWord(word);
-        newLinkedWord.setAudioUrl(ServiceUtil.createWordAudioString(newLinkedWord.getTagalog()));
-
-        return newLinkedWord;
     }
 
     // This function returns a new Translation set with the translation's word field set
@@ -155,12 +145,13 @@ public class WordService {
 
         // Creates a set of string english meanings
         Set<String> meanings = translationSet.stream()
-                .flatMap(t -> t.getEnglishMeanings().stream().map(English::getMeaning))
+                .flatMap(t -> t.getEnglishMeanings().stream().map(e -> e.getMeaning().toLowerCase()))
                 .collect(Collectors.toSet());
 
         // Queries for all English with those meanings
         Map<String, English> existingEnglishMap = englishRepository.findByMeaningIn(meanings)
-                .stream().collect(Collectors.toMap(English::getMeaning, Function.identity()));
+                .stream()
+                .collect(Collectors.toMap(e -> e.getMeaning().toLowerCase(), Function.identity()));
 
         // Iterates through translation set and sets the bidirectional relationship between Translation and English
         for (Translation translation : translationSet) {
@@ -171,11 +162,14 @@ public class WordService {
             }
 
             for (English english : translation.getEnglishMeanings()) {
-                English foundEnglish = existingEnglishMap.get(english.getMeaning());
+                String meaningLower = english.getMeaning().toLowerCase();
+                English foundEnglish = existingEnglishMap.get(meaningLower);
 
                 if (foundEnglish == null) {
-                    english.getTranslations().add(translation);
-                    newEnglishSet.add(english);
+                    English newEnglish = new English();
+                    newEnglish.setMeaning(meaningLower);
+                    newEnglish.getTranslations().add(translation);
+                    newEnglishSet.add(newEnglish);
                 } else {
                     foundEnglish.getTranslations().add(translation);
                     newEnglishSet.add(foundEnglish);
@@ -188,12 +182,5 @@ public class WordService {
         }
 
         return newTranslationSet;
-    }
-
-    // This function returns the new conjugation set with the conjugation's word field set
-    private Set<Conjugation> getConjugations(Word word, Set<Conjugation> conjugationSet) {
-        return conjugationSet.stream()
-                .peek(conjugation -> conjugation.setWord(word))
-                .collect(Collectors.toSet());
     }
 }

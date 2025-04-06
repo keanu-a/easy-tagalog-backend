@@ -15,8 +15,8 @@ public record WordRequestDTO(
         String alternateSpelling,
         Boolean isIrregularVerb,
         String note,
-        Set<Conjugation> conjugations,
-        LinkedWord linkedWord,
+        Set<ConjugationRequestDTO> conjugations,
+        LinkedWordDTO linkedWord,
         String audioUrl
 ) {
 }

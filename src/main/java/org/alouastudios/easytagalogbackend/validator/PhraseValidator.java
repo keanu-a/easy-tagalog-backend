@@ -23,7 +23,7 @@ public class PhraseValidator {
         }
 
         if (phrase.phraseWords() == null || phrase.phraseWords().isEmpty()) {
-            throw new RuntimeException("WordIds cannot be null or empty");
+            throw new RuntimeException("phraseWords cannot be null or empty");
         }
 
         // There should be a meaning for each word of the phrase (even names)
