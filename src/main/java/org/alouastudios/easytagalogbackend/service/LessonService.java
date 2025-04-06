@@ -90,6 +90,8 @@ public class LessonService {
 
     private void handleLessonChanges(Lesson lesson, LessonRequestDTO lessonRequestDTO) {
 
+        lessonValidator.validateLessonRequest(lessonRequestDTO);
+
         List<LessonQuestion> questions = new ArrayList<>();
 
         for (LessonQuestionRequestDTO questionDTO : lessonRequestDTO.questions()) {

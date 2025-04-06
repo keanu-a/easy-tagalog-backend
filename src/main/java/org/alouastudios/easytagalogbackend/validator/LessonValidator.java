@@ -1,8 +1,10 @@
 package org.alouastudios.easytagalogbackend.validator;
 
 import jakarta.validation.ValidationException;
+import org.alouastudios.easytagalogbackend.dto.lesson.LessonQuestionRequestDTO;
 import org.alouastudios.easytagalogbackend.dto.lesson.LessonRequestDTO;
-import org.alouastudios.easytagalogbackend.exception.ResourceNotFoundException;
+import org.alouastudios.easytagalogbackend.dto.lesson.TranslatePhraseQuestionRequestDTO;
+import org.alouastudios.easytagalogbackend.dto.lesson.TranslateWordQuestionRequestDTO;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
@@ -10,41 +12,54 @@ import java.util.Set;
 @Component
 public class LessonValidator {
 
-//    // This function validates the request object
-//    // First it makes sure there is a "title" field
-//    // Then it checks the questions field and goes through each question
-//    public void validateLessonRequest(LessonRequestDTO lessonRequest) {
-//
-//        if (lessonRequest.title() == null || lessonRequest.title().isEmpty()) {
-//            throw new ValidationException("Title is required");
-//        }
-//
-//        Set<QuestionRequestDTO> questions = lessonRequest.questions();
-//
-//        if (questions.isEmpty()) {
-//            throw new ValidationException("Lesson must have at least one question");
-//        }
-//
-//        // Goes through each question to make sure it has all required fields based on the question type
-//        for (QuestionRequestDTO question : questions) {
-//
-//            switch (question.questionType()) {
-//
-//                case TRANSLATE_WORD:
-//                    validateTranslateWordQuestionType(question);
-//                    break;
-//
-//                case TRANSLATE_PHRASE:
-//                    validateTranslatePhraseQuestionType(question);
-//                    break;
-//
-//                case BUILD_PHRASE:
-//                    validateBuildPhraseQuestionType(question);
-//                    break;
-//
-//                default:
-//                    throw new ResourceNotFoundException("No question type was provided");
-//            }
-//        }
-//    }
+    public void validateLessonRequest(LessonRequestDTO lessonRequest) {
+        if (lessonRequest.title() == null || lessonRequest.title().isBlank()) {
+            throw new ValidationException("Lessons must have a title");
+        }
+
+        if (lessonRequest.questions() == null || lessonRequest.questions().isEmpty()) {
+            throw new ValidationException("Lesson must have at least one question");
+        }
+
+        for (LessonQuestionRequestDTO question: lessonRequest.questions()) {
+
+            if (question instanceof TranslateWordQuestionRequestDTO translateWordQuestion) {
+                validateTranslateWordQuestion(translateWordQuestion);
+
+            } else if (question instanceof TranslatePhraseQuestionRequestDTO translatePhraseQuestion) {
+                validateTranslatePhraseQuestion(translatePhraseQuestion);
+
+            } else {
+                throw new ValidationException("Question is of invalid type");
+            }
+        }
+    }
+
+    private void validateTranslateWordQuestion(TranslateWordQuestionRequestDTO translateWordQuestion) {
+        if (translateWordQuestion.getOptions() == null || translateWordQuestion.getOptions().isEmpty()) {
+            throw new ValidationException("Translate word question must have at least one option");
+        }
+
+        if (translateWordQuestion.getOptions().size() < 2) {
+            throw new ValidationException("Translate word question must have at least two options");
+        }
+
+        if (translateWordQuestion.getAnswer() == null) {
+            throw new ValidationException("Translate word question must have an answer");
+        }
+    }
+
+    private void validateTranslatePhraseQuestion(TranslatePhraseQuestionRequestDTO translatePhraseQuestion) {
+        if (translatePhraseQuestion.getOptions() == null || translatePhraseQuestion.getOptions().isEmpty()) {
+            throw new ValidationException("Translate phrase question must have at least one option");
+        }
+
+        if (translatePhraseQuestion.getOptions().size() < 2) {
+            throw new ValidationException("Translate phrase question must have at least two options");
+        }
+
+        if (translatePhraseQuestion.getAnswer() == null) {
+            throw new ValidationException("Translate phrase question must have an answer");
+        }
+    }
 }
