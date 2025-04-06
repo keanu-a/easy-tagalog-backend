@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
 public class PhraseService {
 
     private final PhraseRepository phraseRepository;
-
     private final WordRepository wordRepository;
 
     private final PhraseValidator phraseValidator;
