@@ -43,6 +43,7 @@ public class LessonMapper {
                     options,
                     translateWordQuestion.getAnswer()
             );
+
         } else if (lessonQuestion instanceof TranslatePhraseQuestion translatePhraseQuestion) {
             List<PhraseResponseDTO> options = translatePhraseQuestion.getOptions()
                     .stream()
@@ -54,6 +55,7 @@ public class LessonMapper {
                     options,
                     translatePhraseQuestion.getAnswer()
             );
+
         } else {
             throw new IllegalArgumentException("Unknown question type: " + lessonQuestion.getClass());
         }
