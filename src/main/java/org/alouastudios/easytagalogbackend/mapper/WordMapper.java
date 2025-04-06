@@ -65,6 +65,23 @@ public class WordMapper {
         }
     }
 
+    public Set<Conjugation> toConjugationEntity(Word word, Set<ConjugationRequestDTO> conjugations) {
+        return conjugations.stream()
+                .map(c -> {
+                    Conjugation conjugation = new Conjugation();
+
+                    conjugation.setRoot(c.root());
+                    conjugation.setTagalog(c.tagalog());
+                    conjugation.setEnglish(c.english());
+                    conjugation.setAccents(ServiceUtil.convertAccentArrayToString(c.accents()));
+                    conjugation.setTense(c.tense());
+                    conjugation.setAudioUrl(c.audioUrl());
+                    conjugation.setWord(word);
+                    return conjugation;
+                })
+                .collect(Collectors.toSet());
+    }
+
     // Maps Translation entity to TranslationDTO
     public TranslationResponseDTO toTranslationResponseDTO(Translation translation) {
         return new TranslationResponseDTO(
