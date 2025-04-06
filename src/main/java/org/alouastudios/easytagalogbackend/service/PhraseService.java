@@ -115,4 +115,6 @@ public class PhraseService {
 
         phraseMapper.toEntity(phrase, phraseRequest, phraseWords);
     }
+
+    // TODO: Create getPhraseWords function for the handlePhraseChanges to use
 }

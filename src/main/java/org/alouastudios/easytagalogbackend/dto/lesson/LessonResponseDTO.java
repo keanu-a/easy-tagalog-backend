@@ -6,6 +6,6 @@ import java.util.UUID;
 public record LessonResponseDTO(
         UUID uuid,
         String title,
-        Set<QuestionResponseDTO> questions
+        Set<LessonQuestionResponseDTO> questions
 ) {
 }
