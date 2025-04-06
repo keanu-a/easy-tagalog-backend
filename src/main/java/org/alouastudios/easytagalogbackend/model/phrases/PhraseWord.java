@@ -18,7 +18,7 @@ public class PhraseWord {
 
     private Integer position;
 
-    private String englishMeaning;
+    private String english;
 
     private String note;
 

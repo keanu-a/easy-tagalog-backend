@@ -21,6 +21,10 @@ public class ServiceUtil {
     }
 
     public static List<Integer> convertStringToAccentArray(String string) {
+        if (string == null || string.trim().isEmpty()) {
+            return new ArrayList<>();
+        }
+
         String[] accentStrings = string.split(",");
 
         List<Integer> accentIntegers = new ArrayList<>();

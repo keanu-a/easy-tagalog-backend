@@ -2,7 +2,7 @@ package org.alouastudios.easytagalogbackend.dto.phrase;
 
 public record PhraseWordResponseDTO(
         Integer position,
-        String englishMeaning,
+        String english,
         String note,
         Boolean isProperNoun
 ) {
