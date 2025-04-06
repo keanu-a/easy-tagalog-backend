@@ -1,0 +1,79 @@
+[
+  {
+    "tagalog": "Ako si __NAME__",
+    "words": [
+      { "position": 0, "wordUuid": "word-uuid-ako", "englishMeaning": "I", "isProperNoun": false },
+      { "position": 1, "wordUuid": "word-uuid-si", "englishMeaning": "[name marker]", "isProperNoun": false },
+      { "position": 2, "wordUuid": null, "englishMeaning": "__NAME__", "isProperNoun": true }
+    ]
+  },
+  {
+    "tagalog": "Ikaw si __NAME__",
+    "words": [
+      { "position": 0, "wordUuid": "word-uuid-ikaw", "englishMeaning": "you", "isProperNoun": false },
+      { "position": 1, "wordUuid": "word-uuid-si", "englishMeaning": "[name marker]", "isProperNoun": false },
+      { "position": 2, "wordUuid": null, "englishMeaning": "__NAME__", "isProperNoun": true }
+    ]
+  },
+  {
+    "tagalog": "Kumusta?",
+    "words": [
+      { "position": 0, "wordUuid": "word-uuid-kumusta", "englishMeaning": "hello", "isProperNoun": false }
+    ]
+  },
+  {
+    "tagalog": "Kumusta ka?",
+    "words": [
+      { "position": 0, "wordUuid": "word-uuid-kumusta", "englishMeaning": "how are", "isProperNoun": false },
+      { "position": 1, "wordUuid": "word-uuid-ka", "englishMeaning": "you", "isProperNoun": false }
+    ]
+  },
+  {
+    "tagalog": "Magandang umaga",
+    "words": [
+      { "position": 0, "wordUuid": "word-uuid-maganda", "englishMeaning": "good", "isProperNoun": false },
+      { "position": 1, "wordUuid": "word-uuid-umaga", "englishMeaning": "morning", "isProperNoun": false }
+    ]
+  },
+  {
+    "tagalog": "Magandang gabi",
+    "words": [
+      { "position": 0, "wordUuid": "word-uuid-maganda", "englishMeaning": "good", "isProperNoun": false },
+      { "position": 1, "wordUuid": "word-uuid-gabi", "englishMeaning": "evening", "isProperNoun": false }
+    ]
+  },
+  {
+    "tagalog": "Gutom ako",
+    "words": [
+      { "position": 0, "wordUuid": "word-uuid-gutom", "englishMeaning": "hungry", "isProperNoun": false },
+      { "position": 1, "wordUuid": "word-uuid-ako", "englishMeaning": "I", "isProperNoun": false }
+    ]
+  },
+  {
+    "tagalog": "Nag-aaral ako ng Tagalog",
+    "words": [
+      { "position": 0, "wordUuid": "conj-uuid-nag-aaral", "englishMeaning": "studying", "isProperNoun": false },
+      { "position": 1, "wordUuid": "word-uuid-ako", "englishMeaning": "I", "isProperNoun": false },
+      { "position": 2, "wordUuid": "word-uuid-ng", "englishMeaning": "of", "isProperNoun": false },
+      { "position": 3, "wordUuid": null, "englishMeaning": "Tagalog", "isProperNoun": true }
+    ]
+  },
+  {
+    "tagalog": "Mag-aaral ako ng Tagalog",
+    "words": [
+      { "position": 0, "wordUuid": "conj-uuid-mag-aaral", "englishMeaning": "will study", "isProperNoun": false },
+      { "position": 1, "wordUuid": "word-uuid-ako", "englishMeaning": "I", "isProperNoun": false },
+      { "position": 2, "wordUuid": "word-uuid-ng", "englishMeaning": "of", "isProperNoun": false },
+      { "position": 3, "wordUuid": null, "englishMeaning": "Tagalog", "isProperNoun": true }
+    ]
+  },
+  {
+    "tagalog": "Nag-aral ako ng Tagalog",
+    "words": [
+      { "position": 0, "wordUuid": "conj-uuid-nag-aral", "englishMeaning": "studied", "isProperNoun": false },
+      { "position": 1, "wordUuid": "word-uuid-ako", "englishMeaning": "I", "isProperNoun": false },
+      { "position": 2, "wordUuid": "word-uuid-ng", "englishMeaning": "of", "isProperNoun": false },
+      { "position": 3, "wordUuid": null, "englishMeaning": "Tagalog", "isProperNoun": true }
+    ]
+  }
+]

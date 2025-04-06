@@ -48,8 +48,15 @@ public class WordMapper {
         word.setIsIrregularVerb(wordRequestDTO.isIrregularVerb());
         word.setNote(wordRequestDTO.note());
 
-        word.setTranslations(translations);
-        if (conjugations != null) word.setConjugations(conjugations);
+        word.getTranslations().clear();
+        word.getTranslations().addAll(translations);
+
+        // Clearing and adding in case of update
+        if (conjugations != null) {
+            word.getConjugations().clear();
+            word.getConjugations().addAll(conjugations);
+        }
+
         if (linkedWord != null) word.setLinkedWord(linkedWord);
 
         // Create or set audio url
@@ -80,6 +87,15 @@ public class WordMapper {
                     return conjugation;
                 })
                 .collect(Collectors.toSet());
+    }
+
+    public LinkedWord toLinkedWordEntity(Word word, LinkedWordDTO dto, LinkedWord linkedWord) {
+        linkedWord.setTagalog(dto.tagalog());
+        linkedWord.setAudioUrl(dto.audioUrl() != null
+                ? dto.audioUrl()
+                : ServiceUtil.createWordAudioString(dto.tagalog()));
+        linkedWord.setWord(word);
+        return linkedWord;
     }
 
     // Maps Translation entity to TranslationDTO
@@ -113,8 +129,8 @@ public class WordMapper {
     }
 
     // Maps LinkedWord entity to LinkedWordDTO
-    public LinkedWordResponseDTO toLinkedWordDTO(LinkedWord linkedWord) {
-        return new LinkedWordResponseDTO(
+    public LinkedWordDTO toLinkedWordDTO(LinkedWord linkedWord) {
+        return new LinkedWordDTO(
                 linkedWord.getTagalog(),
                 linkedWord.getAudioUrl()
         );
