@@ -106,7 +106,7 @@ public class LessonService {
             }
         }
 
-        lesson.setQuestions(questions);
+        lessonMapper.toEntity(lesson, lessonRequestDTO, questions);
     }
 
     // This function returns a TranslateWordQuestion
