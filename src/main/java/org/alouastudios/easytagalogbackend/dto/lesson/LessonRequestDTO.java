@@ -4,5 +4,7 @@ import java.util.Set;
 
 public record LessonRequestDTO(
     String title,
-    Set<QuestionRequestDTO> questions
-) { }
+    Set<LessonQuestionRequestDTO> questions
+) {
+
+}
