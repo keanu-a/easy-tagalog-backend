@@ -2,7 +2,6 @@ package org.alouastudios.easytagalogbackend.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.alouastudios.easytagalogbackend.dto.word.ConjugationRequestDTO;
 import org.alouastudios.easytagalogbackend.dto.word.WordRequestDTO;
 import org.alouastudios.easytagalogbackend.dto.word.WordResponseDTO;
 import org.alouastudios.easytagalogbackend.enums.PartOfSpeech;
@@ -11,7 +10,6 @@ import org.alouastudios.easytagalogbackend.mapper.WordMapper;
 import org.alouastudios.easytagalogbackend.model.words.*;
 import org.alouastudios.easytagalogbackend.repository.EnglishRepository;
 import org.alouastudios.easytagalogbackend.repository.WordRepository;
-import org.alouastudios.easytagalogbackend.util.ServiceUtil;
 import org.alouastudios.easytagalogbackend.validator.WordValidator;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +22,6 @@ import java.util.stream.Collectors;
 public class WordService {
 
     private final WordRepository wordRepository;
-
     private final EnglishRepository englishRepository;
 
     private final WordValidator wordValidator;
@@ -124,22 +121,16 @@ public class WordService {
         // Process and set linked word if provided
         LinkedWord newLinkedWord = null;
         if (wordRequest.linkedWord() != null) {
-            newLinkedWord = getLinkedWord(word, wordRequest.linkedWord());
+            // If the word already has a linked word, update that instance
+            LinkedWord linkedWordEntity = word.getLinkedWord() != null
+                    ? word.getLinkedWord()
+                    : new LinkedWord(); // for POSTs (new words)
+
+            newLinkedWord = wordMapper.toLinkedWordEntity(word, wordRequest.linkedWord(), linkedWordEntity);
         }
 
         // Creates initial mapping of word
         wordMapper.toEntity(word, wordRequest, newTranslationSet, newConjugationSet, newLinkedWord);
-    }
-
-    // This function returns a new LinkedWord object with the linked word's word field set
-    private LinkedWord getLinkedWord(Word word, LinkedWord requestLinkedWord) {
-
-        LinkedWord newLinkedWord = new LinkedWord();
-        newLinkedWord.setTagalog(requestLinkedWord.getTagalog());
-        newLinkedWord.setWord(word);
-        newLinkedWord.setAudioUrl(ServiceUtil.createWordAudioString(newLinkedWord.getTagalog()));
-
-        return newLinkedWord;
     }
 
     // This function returns a new Translation set with the translation's word field set

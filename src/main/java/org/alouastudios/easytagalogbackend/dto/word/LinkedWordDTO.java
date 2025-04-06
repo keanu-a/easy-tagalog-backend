@@ -1,6 +1,6 @@
 package org.alouastudios.easytagalogbackend.dto.word;
 
-public record LinkedWordResponseDTO(
+public record LinkedWordDTO(
         String tagalog,
         String audioUrl
 ) {
