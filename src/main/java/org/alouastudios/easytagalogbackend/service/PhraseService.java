@@ -15,6 +15,7 @@ import org.alouastudios.easytagalogbackend.validator.PhraseValidator;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -103,7 +104,7 @@ public class PhraseService {
                         Word word = wordRepository.findByUuid(pw.wordUuid())
                                 .orElseThrow(() -> new ResourceNotFoundException("Word not found"));
                         phraseWord.setWord(word);
-                        phraseWord.setEnglishMeaning(pw.englishMeaning());
+                        phraseWord.setEnglish(pw.english());
                         phraseWord.setNote(pw.note());
                     }
 
@@ -111,10 +112,8 @@ public class PhraseService {
                     return phraseWord;
                 })
                 .sorted(Comparator.comparingInt(PhraseWord::getPosition))
-                .toList();
+                .collect(Collectors.toCollection(ArrayList::new));
 
         phraseMapper.toEntity(phrase, phraseRequest, phraseWords);
     }
-
-    // TODO: Create getPhraseWords function for the handlePhraseChanges to use
 }

@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public record PhraseWordRequestDTO(
         Integer position,
-        String englishMeaning,
+        String english,
         String note,
         Boolean isProperNoun,
         UUID wordUuid

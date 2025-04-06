@@ -21,7 +21,7 @@ public class PhraseMapper {
                 phrase.getIsQuestion(),
                 phrase.getPhraseWords().stream().map(pw -> new PhraseWordResponseDTO(
                         pw.getPosition(),
-                        pw.getEnglishMeaning(),
+                        pw.getEnglish(),
                         pw.getNote(),
                         pw.getIsProperNoun()
                 )).toList()
@@ -35,7 +35,9 @@ public class PhraseMapper {
             List<PhraseWord> phraseWords) {
         phrase.setTagalog(phraseRequestDTO.tagalog());
         phrase.setEnglish(phraseRequestDTO.english());
-        phrase.setIsQuestion(phraseRequestDTO.isQuestion());
-        phrase.setPhraseWords(phraseWords);
+        phrase.setIsQuestion(Boolean.TRUE.equals(phraseRequestDTO.isQuestion()));
+
+        phrase.getPhraseWords().clear();
+        phrase.getPhraseWords().addAll(phraseWords);
     }
 }
