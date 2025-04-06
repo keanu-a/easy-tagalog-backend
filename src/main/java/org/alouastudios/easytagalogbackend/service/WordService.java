@@ -2,6 +2,7 @@ package org.alouastudios.easytagalogbackend.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.alouastudios.easytagalogbackend.dto.word.ConjugationRequestDTO;
 import org.alouastudios.easytagalogbackend.dto.word.WordRequestDTO;
 import org.alouastudios.easytagalogbackend.dto.word.WordResponseDTO;
 import org.alouastudios.easytagalogbackend.enums.PartOfSpeech;
@@ -62,19 +63,13 @@ public class WordService {
     @Transactional
     public List<WordResponseDTO> addWords(List<WordRequestDTO> words) {
 
-        List<Word> newWords = words.stream()
-                .map(word -> {
-                    Word newWord = new Word();
-                    handleWordChanges(newWord, word);
-                    return newWord;
-                })
-                .toList();
+        List<WordResponseDTO> newWords = new ArrayList<>();
 
-        wordRepository.saveAll(newWords);
+        for (WordRequestDTO wordRequest : words) {
+            newWords.add(addWord(wordRequest));
+        }
 
-        return newWords.stream()
-                .map(wordMapper::toResponseDTO)
-                .toList();
+        return newWords;
     }
 
     // This function handles updating an existing word in the database
@@ -107,6 +102,10 @@ public class WordService {
                 .toList();
     }
 
+    /**
+     * Handles the process of transforming a WordRequestDTO into an updated Word entity.
+     * Includes verb validation, linked word resolution, and setting all core fields.
+     */
     private void handleWordChanges(Word word, WordRequestDTO wordRequest) {
         // Check if word is a verb by checking its translations
         boolean isVerb = wordRequest.translations().stream()
@@ -116,7 +115,7 @@ public class WordService {
         Set<Conjugation> newConjugationSet = null;
         if (isVerb) {
             wordValidator.validateVerb(wordRequest);
-            newConjugationSet = getConjugations(word, wordRequest.conjugations());
+            newConjugationSet = wordMapper.toConjugationEntity(word, wordRequest.conjugations());
         }
 
         // Process and set translations
@@ -155,12 +154,13 @@ public class WordService {
 
         // Creates a set of string english meanings
         Set<String> meanings = translationSet.stream()
-                .flatMap(t -> t.getEnglishMeanings().stream().map(English::getMeaning))
+                .flatMap(t -> t.getEnglishMeanings().stream().map(e -> e.getMeaning().toLowerCase()))
                 .collect(Collectors.toSet());
 
         // Queries for all English with those meanings
         Map<String, English> existingEnglishMap = englishRepository.findByMeaningIn(meanings)
-                .stream().collect(Collectors.toMap(English::getMeaning, Function.identity()));
+                .stream()
+                .collect(Collectors.toMap(e -> e.getMeaning().toLowerCase(), Function.identity()));
 
         // Iterates through translation set and sets the bidirectional relationship between Translation and English
         for (Translation translation : translationSet) {
@@ -171,11 +171,14 @@ public class WordService {
             }
 
             for (English english : translation.getEnglishMeanings()) {
-                English foundEnglish = existingEnglishMap.get(english.getMeaning());
+                String meaningLower = english.getMeaning().toLowerCase();
+                English foundEnglish = existingEnglishMap.get(meaningLower);
 
                 if (foundEnglish == null) {
-                    english.getTranslations().add(translation);
-                    newEnglishSet.add(english);
+                    English newEnglish = new English();
+                    newEnglish.setMeaning(meaningLower);
+                    newEnglish.getTranslations().add(translation);
+                    newEnglishSet.add(newEnglish);
                 } else {
                     foundEnglish.getTranslations().add(translation);
                     newEnglishSet.add(foundEnglish);
@@ -188,12 +191,5 @@ public class WordService {
         }
 
         return newTranslationSet;
-    }
-
-    // This function returns the new conjugation set with the conjugation's word field set
-    private Set<Conjugation> getConjugations(Word word, Set<Conjugation> conjugationSet) {
-        return conjugationSet.stream()
-                .peek(conjugation -> conjugation.setWord(word))
-                .collect(Collectors.toSet());
     }
 }

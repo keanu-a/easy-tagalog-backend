@@ -1,5 +1,6 @@
 package org.alouastudios.easytagalogbackend.validator;
 
+import org.alouastudios.easytagalogbackend.dto.word.ConjugationRequestDTO;
 import org.alouastudios.easytagalogbackend.dto.word.WordRequestDTO;
 import org.alouastudios.easytagalogbackend.enums.Tense;
 import org.alouastudios.easytagalogbackend.model.words.Conjugation;
@@ -34,40 +35,14 @@ public class WordValidator {
         // Check user provided PAST, PRESENT, FUTURE tenses
 
         boolean past = false, present = false, future = false;
-        for (Conjugation c : word.conjugations()) {
-            if (c.getTense() == Tense.PAST) past = true;
-            if (c.getTense() == Tense.PRESENT) present = true;
-            if (c.getTense() == Tense.FUTURE) future = true;
+        for (ConjugationRequestDTO c : word.conjugations()) {
+            if (c.tense() == Tense.PAST) past = true;
+            if (c.tense() == Tense.PRESENT) present = true;
+            if (c.tense() == Tense.FUTURE) future = true;
         }
 
         if (!past) throw new RuntimeException("Verb missing past conjugation");
         if (!present) throw new RuntimeException("Verb missing present conjugation");
         if (!future) throw new RuntimeException("Verb missing future conjugation");
     }
-
-    // TODO: DELETE WHEN ABSOLUTELY DONT NEED
-//    public Set<English> validateEnglish(WordRequestDTO word, Word newWord, EnglishRepository englishRepository) {
-//
-//        Set<English> englishSet = new HashSet<>();
-//
-//        // Check for making sure no duplicate english meaning insertions
-//        for (English english : word.english()) {
-//            English foundEnglish = englishRepository.findByMeaning(english.getMeaning());
-//
-//            // If no english meaning doesn't exist, create it, else add it
-//            if (foundEnglish == null) {
-//
-//                english.getWords().add(newWord);
-//                englishSet.add(englishRepository.save(english));
-//
-//            } else {
-//
-//                foundEnglish.getWords().add(newWord);
-//                englishSet.add(foundEnglish);
-//
-//            }
-//        }
-//
-//        return englishSet;
-//    }
 }
