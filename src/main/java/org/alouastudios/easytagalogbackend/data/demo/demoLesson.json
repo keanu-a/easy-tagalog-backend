@@ -1,0 +1,47 @@
+{
+  "title": "Demo",
+  "questions": [
+    {
+      "prompt": "",
+      "type": "translateWord",
+      "options": ["f8198d71-0883-4adf-b9d6-9c673a35aae6", "de59fa8f-835d-4b0c-825b-b14c9a93f92c", "bf1074ac-3ff7-4150-b98b-995fb2c03986", "9deb5689-8869-4d42-9f7b-3092e51e5750"],
+      "answer": "f8198d71-0883-4adf-b9d6-9c673a35aae6"
+    },
+    {
+      "prompt": "",
+      "type": "translateWord",
+      "options": ["f8198d71-0883-4adf-b9d6-9c673a35aae6", "de59fa8f-835d-4b0c-825b-b14c9a93f92c", "2d861e14-d31e-4f0d-9959-5e637a8724f8", "9deb5689-8869-4d42-9f7b-3092e51e5750"],
+      "answer": "de59fa8f-835d-4b0c-825b-b14c9a93f92c"
+    },
+    {
+      "prompt": "",
+      "type": "translateWord",
+      "options": ["de59fa8f-835d-4b0c-825b-b14c9a93f92c", "0fc5a851-1df4-4ae2-8731-af339ced43ab", "cf60337d-b2bf-4568-a1bd-dcef032b0e55", "2d861e14-d31e-4f0d-9959-5e637a8724f8"],
+      "answer": "0fc5a851-1df4-4ae2-8731-af339ced43ab"
+    },
+    {
+      "prompt": "",
+      "type": "translateWord",
+      "options": ["de59fa8f-835d-4b0c-825b-b14c9a93f92c", "0fc5a851-1df4-4ae2-8731-af339ced43ab", "bf1074ac-3ff7-4150-b98b-995fb2c03986", "cf60337d-b2bf-4568-a1bd-dcef032b0e55"],
+      "answer": "bf1074ac-3ff7-4150-b98b-995fb2c03986"
+    },
+    {
+      "prompt": "",
+      "type": "translatePhrase",
+      "options": ["76d1a9e0-4b74-49c0-bece-d419532f9591", "3a7d889e-faaa-4cd0-80ac-8debbbee12c8", "afc54670-61e6-42a9-acfe-e12a02f3336f", "994ba7b3-61b7-40aa-8709-109fbfb19cca"],
+      "answer": "76d1a9e0-4b74-49c0-bece-d419532f9591"
+    },
+    {
+      "prompt": "",
+      "type": "translatePhrase",
+      "options": ["76da178a-4182-42f8-bb0a-9e8f07c27a7d", "4b1f7fc2-7562-4b31-b863-929393563ff7", "8ca3e63f-4eae-4baa-ba92-d0ea149cba42", "cafd472e-420c-4cc2-84e7-bce3089ad686"],
+      "answer": "76da178a-4182-42f8-bb0a-9e8f07c27a7d"
+    },
+    {
+      "prompt": "",
+      "type": "translateWord",
+      "options": ["f8198d71-0883-4adf-b9d6-9c673a35aae6", "0fc5a851-1df4-4ae2-8731-af339ced43ab", "17cb47a8-0ea8-413b-be1c-018d7bd240f5", "9deb5689-8869-4d42-9f7b-3092e51e5750"],
+      "answer": "9deb5689-8869-4d42-9f7b-3092e51e5750"
+    }
+  ]
+}
