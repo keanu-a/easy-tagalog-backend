@@ -1,9 +1,10 @@
 package org.alouastudios.easytagalogbackend.validator;
 
 import jakarta.validation.ValidationException;
+import org.alouastudios.easytagalogbackend.dto.lesson.LessonQuestionRequestDTO;
 import org.alouastudios.easytagalogbackend.dto.lesson.LessonRequestDTO;
-import org.alouastudios.easytagalogbackend.dto.lesson.QuestionRequestDTO;
-import org.alouastudios.easytagalogbackend.exception.ResourceNotFoundException;
+import org.alouastudios.easytagalogbackend.dto.lesson.TranslatePhraseQuestionRequestDTO;
+import org.alouastudios.easytagalogbackend.dto.lesson.TranslateWordQuestionRequestDTO;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
@@ -11,119 +12,54 @@ import java.util.Set;
 @Component
 public class LessonValidator {
 
-    // This function validates the request object
-    // First it makes sure there is a "title" field
-    // Then it checks the questions field and goes through each question
     public void validateLessonRequest(LessonRequestDTO lessonRequest) {
-
-        if (lessonRequest.title() == null || lessonRequest.title().isEmpty()) {
-            throw new ValidationException("Title is required");
+        if (lessonRequest.title() == null || lessonRequest.title().isBlank()) {
+            throw new ValidationException("Lessons must have a title");
         }
 
-        Set<QuestionRequestDTO> questions = lessonRequest.questions();
-
-        if (questions.isEmpty()) {
+        if (lessonRequest.questions() == null || lessonRequest.questions().isEmpty()) {
             throw new ValidationException("Lesson must have at least one question");
         }
 
-        // Goes through each question to make sure it has all required fields based on the question type
-        for (QuestionRequestDTO question : questions) {
+        for (LessonQuestionRequestDTO question: lessonRequest.questions()) {
 
-            switch (question.questionType()) {
+            if (question instanceof TranslateWordQuestionRequestDTO translateWordQuestion) {
+                validateTranslateWordQuestion(translateWordQuestion);
 
-                case TRANSLATE_WORD:
-                    validateTranslateWordQuestionType(question);
-                    break;
+            } else if (question instanceof TranslatePhraseQuestionRequestDTO translatePhraseQuestion) {
+                validateTranslatePhraseQuestion(translatePhraseQuestion);
 
-                case TRANSLATE_PHRASE:
-                    validateTranslatePhraseQuestionType(question);
-                    break;
-
-                case BUILD_PHRASE:
-                    validateBuildPhraseQuestionType(question);
-                    break;
-
-                default:
-                    throw new ResourceNotFoundException("No question type was provided");
+            } else {
+                throw new ValidationException("Question is of invalid type");
             }
         }
     }
 
-    // This function is to validate a question of QuestionType "TRANSLATE_WORD"
-    // It should have the following:
-    // - Word Id
-    // - Word English Id
-    // - Word Options
-    // - Correct Answer
-    private void validateTranslateWordQuestionType(QuestionRequestDTO questionRequest) {
-
-        String exceptionPrefix = "Question of type " + questionRequest.questionType() + " ";
-
-        if (questionRequest.phraseId() != null || questionRequest.phraseOptions() != null) {
-            throw new ValidationException(exceptionPrefix + "should not have any phrase fields set");
+    private void validateTranslateWordQuestion(TranslateWordQuestionRequestDTO translateWordQuestion) {
+        if (translateWordQuestion.getOptions() == null || translateWordQuestion.getOptions().isEmpty()) {
+            throw new ValidationException("Translate word question must have at least one option");
         }
 
-        if (questionRequest.wordId() == null) {
-            throw new ValidationException(exceptionPrefix + "must have a word UUID");
+        if (translateWordQuestion.getOptions().size() < 2) {
+            throw new ValidationException("Translate word question must have at least two options");
         }
 
-        if (questionRequest.wordEnglishId() == null) {
-            throw new ValidationException(exceptionPrefix + "must have a word english UUID");
-        }
-
-        if (questionRequest.wordOptions() == null ||
-                questionRequest.wordOptions().size() != 4) {
-            throw new ValidationException(exceptionPrefix + "must have four word options");
-        }
-
-        if (questionRequest.correctAnswer() == null) {
-            throw new ValidationException(exceptionPrefix + "must have a correct answer");
-        }
-
-        if (!questionRequest.wordId().equals(questionRequest.correctAnswer())) {
-            throw new ValidationException(exceptionPrefix + "correct answer does not match");
+        if (translateWordQuestion.getAnswer() == null) {
+            throw new ValidationException("Translate word question must have an answer");
         }
     }
 
-    // This function is to validate a question of QuestionType "TRANSLATE_PHRASE"
-    // It should have the following:
-    // - Phrase Id
-    // - Phrase Options
-    // - Correct Answer
-    private void validateTranslatePhraseQuestionType(QuestionRequestDTO questionRequest) {
-
-        String exceptionPrefix = "Question of type " + questionRequest.questionType() + " ";
-
-        if (questionRequest.wordId() != null ||
-                questionRequest.wordOptions() != null ||
-                questionRequest.wordEnglishId() != null
-        ) {
-            throw new ValidationException(exceptionPrefix + "should not have any word fields set");
+    private void validateTranslatePhraseQuestion(TranslatePhraseQuestionRequestDTO translatePhraseQuestion) {
+        if (translatePhraseQuestion.getOptions() == null || translatePhraseQuestion.getOptions().isEmpty()) {
+            throw new ValidationException("Translate phrase question must have at least one option");
         }
 
-        if (questionRequest.phraseId() == null) {
-            throw new ValidationException(exceptionPrefix + "must have a phrase UUID");
+        if (translatePhraseQuestion.getOptions().size() < 2) {
+            throw new ValidationException("Translate phrase question must have at least two options");
         }
 
-        if (questionRequest.phraseOptions() == null || questionRequest.phraseOptions().size() != 2) {
-            throw new ValidationException(exceptionPrefix + "must have 3 phrase options");
+        if (translatePhraseQuestion.getAnswer() == null) {
+            throw new ValidationException("Translate phrase question must have an answer");
         }
-
-        if (questionRequest.correctAnswer() == null) {
-            throw new ValidationException(exceptionPrefix + "must have a correct answer");
-        }
-
-        if (!questionRequest.phraseId().equals(questionRequest.correctAnswer())) {
-            throw new ValidationException(exceptionPrefix + "correct answer does not match");
-        }
-    }
-
-    // This function is to validate a question of QuestionType "TRANSLATE_PHRASE"
-    // It should have the following:
-    // - Phrase Id
-    // - Phrase Options
-    // - Correct Answer Order
-    private void validateBuildPhraseQuestionType(QuestionRequestDTO questionRequest) {
-        String exceptionPrefix = "Question of type " + questionRequest.questionType() + " ";
     }
 }
