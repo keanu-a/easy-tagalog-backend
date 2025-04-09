@@ -4,8 +4,8 @@
 
 ## Visit
 
-Live site: [Easy Tagalog](https://easytagalog.com/)
-Frontend repo: [Frontend Repo](https://github.com/keanu-a/easy-tagalog-frontend)
+- Live site: [Easy Tagalog](https://easytagalog.com/)
+- Frontend repo: [Frontend Repo](https://github.com/keanu-a/easy-tagalog-frontend)
 
 ---
 
