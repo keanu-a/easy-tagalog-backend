@@ -19,11 +19,13 @@ public class PhraseMapper {
                 phrase.getTagalog(),
                 phrase.getEnglish(),
                 phrase.getIsQuestion(),
+                phrase.getAudioUrl(),
                 phrase.getPhraseWords().stream().map(pw -> new PhraseWordResponseDTO(
                         pw.getPosition(),
                         pw.getEnglish(),
                         pw.getNote(),
-                        pw.getIsProperNoun()
+                        pw.getIsProperNoun(),
+                        pw.getAudioUrl()
                 )).toList()
         );
     }
