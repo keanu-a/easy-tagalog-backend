@@ -10,7 +10,6 @@ import org.alouastudios.easytagalogbackend.model.lessons.TranslateWordQuestion;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
@@ -43,7 +42,7 @@ public class LessonMapper {
         if (lessonQuestion instanceof TranslateWordQuestion translateWordQuestion) {
             List<WordResponseDTO> options = translateWordQuestion.getOptions()
                     .stream()
-                    .map(wordMapper::toResponseDTO)
+                    .map(word -> wordMapper.toResponseDTO(word, List.of()))
                     .toList();
 
             return new TranslateWordQuestionResponseDTO(
