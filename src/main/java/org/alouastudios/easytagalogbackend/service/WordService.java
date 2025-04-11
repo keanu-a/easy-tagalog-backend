@@ -10,6 +10,7 @@ import org.alouastudios.easytagalogbackend.mapper.WordMapper;
 import org.alouastudios.easytagalogbackend.model.words.*;
 import org.alouastudios.easytagalogbackend.repository.EnglishRepository;
 import org.alouastudios.easytagalogbackend.repository.WordRepository;
+import org.alouastudios.easytagalogbackend.util.ServiceUtil;
 import org.alouastudios.easytagalogbackend.validator.WordValidator;
 import org.springframework.stereotype.Service;
 
@@ -113,6 +114,13 @@ public class WordService {
         if (isVerb) {
             wordValidator.validateVerb(wordRequest);
             newConjugationSet = wordMapper.toConjugationEntity(word, wordRequest.conjugations());
+
+            // Setting default conjugation audio url
+            for (Conjugation conjugation : newConjugationSet) {
+                if (conjugation.getAudioUrl() == null || conjugation.getAudioUrl().isBlank()) {
+                    conjugation.setAudioUrl(ServiceUtil.createWordAudioString(conjugation.getTagalog()));
+                }
+            }
         }
 
         // Process and set translations
@@ -127,6 +135,16 @@ public class WordService {
                     : new LinkedWord(); // for POSTs (new words)
 
             newLinkedWord = wordMapper.toLinkedWordEntity(word, wordRequest.linkedWord(), linkedWordEntity);
+
+            // Setting default linked word audio url
+            if (newLinkedWord.getAudioUrl() == null || newLinkedWord.getAudioUrl().isBlank()) {
+                newLinkedWord.setAudioUrl(ServiceUtil.createWordAudioString(newLinkedWord.getTagalog()));
+            }
+        }
+
+        // Lastly set word audio url
+        if (wordRequest.audioUrl() == null || wordRequest.audioUrl().isBlank()) {
+            word.setAudioUrl(ServiceUtil.createWordAudioString(wordRequest.tagalog()));
         }
 
         // Creates initial mapping of word

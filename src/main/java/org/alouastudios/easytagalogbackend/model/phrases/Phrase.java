@@ -27,6 +27,9 @@ public class Phrase {
     @Column(nullable = false)
     private Boolean isQuestion = false;
 
+    @Column(unique = true)
+    private String audioUrl;
+
     @OneToMany(mappedBy = "phrase", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("position ASC")
     private List<PhraseWord> phraseWords = new ArrayList<>();
@@ -45,7 +48,8 @@ public class Phrase {
                 ", uuid='" + uuid + '\'' +
                 ", tagalog='" + tagalog + '\'' +
                 ", english='" + english + '\'' +
-                ", isQuestion=" + isQuestion +
+                ", isQuestion=" + isQuestion + '\'' +
+                ", audioUrl=" + audioUrl +
                 '}';
     }
 
@@ -58,11 +62,12 @@ public class Phrase {
                 Objects.equals(uuid, phrase.uuid) &&
                 Objects.equals(tagalog, phrase.tagalog) &&
                 Objects.equals(english, phrase.english) &&
-                Objects.equals(isQuestion, phrase.isQuestion);
+                Objects.equals(isQuestion, phrase.isQuestion) &&
+                Objects.equals(audioUrl, phrase.audioUrl);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, uuid, tagalog, english, isQuestion);
+        return Objects.hash(id, uuid, tagalog, english, isQuestion, audioUrl);
     }
 }

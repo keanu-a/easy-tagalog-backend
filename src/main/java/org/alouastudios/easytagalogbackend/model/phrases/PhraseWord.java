@@ -25,6 +25,8 @@ public class PhraseWord {
     @Column(nullable = false)
     private Boolean isProperNoun = false;
 
+    private String audioUrl;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private Word word;
 

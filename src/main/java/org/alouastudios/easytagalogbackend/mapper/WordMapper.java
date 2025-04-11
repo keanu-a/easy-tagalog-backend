@@ -59,13 +59,6 @@ public class WordMapper {
 
         if (linkedWord != null) word.setLinkedWord(linkedWord);
 
-        // Create or set audio url
-        if (wordRequestDTO.audioUrl() == null) {
-            word.setAudioUrl(ServiceUtil.createWordAudioString(wordRequestDTO.tagalog()));
-        } else {
-            word.setAudioUrl(wordRequestDTO.audioUrl());
-        }
-
         // Change accents array to string
         if (wordRequestDTO.accents() != null) {
             word.setAccents(ServiceUtil.convertAccentArrayToString(wordRequestDTO.accents()));
@@ -82,7 +75,6 @@ public class WordMapper {
                     conjugation.setEnglish(c.english());
                     conjugation.setAccents(ServiceUtil.convertAccentArrayToString(c.accents()));
                     conjugation.setTense(c.tense());
-                    conjugation.setAudioUrl(c.audioUrl());
                     conjugation.setWord(word);
                     return conjugation;
                 })
@@ -91,9 +83,6 @@ public class WordMapper {
 
     public LinkedWord toLinkedWordEntity(Word word, LinkedWordDTO dto, LinkedWord linkedWord) {
         linkedWord.setTagalog(dto.tagalog());
-        linkedWord.setAudioUrl(dto.audioUrl() != null
-                ? dto.audioUrl()
-                : ServiceUtil.createWordAudioString(dto.tagalog()));
         linkedWord.setWord(word);
         return linkedWord;
     }

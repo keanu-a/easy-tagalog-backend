@@ -4,6 +4,7 @@ public record PhraseWordResponseDTO(
         Integer position,
         String english,
         String note,
-        Boolean isProperNoun
+        Boolean isProperNoun,
+        String audioUrl
 ) {
 }

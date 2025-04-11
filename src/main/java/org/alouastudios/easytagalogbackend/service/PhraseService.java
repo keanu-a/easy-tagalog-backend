@@ -8,9 +8,11 @@ import org.alouastudios.easytagalogbackend.exception.ResourceNotFoundException;
 import org.alouastudios.easytagalogbackend.mapper.PhraseMapper;
 import org.alouastudios.easytagalogbackend.model.phrases.Phrase;
 import org.alouastudios.easytagalogbackend.model.phrases.PhraseWord;
+import org.alouastudios.easytagalogbackend.model.words.Conjugation;
 import org.alouastudios.easytagalogbackend.model.words.Word;
 import org.alouastudios.easytagalogbackend.repository.PhraseRepository;
 import org.alouastudios.easytagalogbackend.repository.WordRepository;
+import org.alouastudios.easytagalogbackend.util.ServiceUtil;
 import org.alouastudios.easytagalogbackend.validator.PhraseValidator;
 import org.springframework.stereotype.Service;
 
@@ -102,6 +104,33 @@ public class PhraseService {
                     if (!Boolean.TRUE.equals(pw.isProperNoun())) {
                         Word word = wordRepository.findByUuid(pw.wordUuid())
                                 .orElseThrow(() -> new ResourceNotFoundException("Word not found"));
+
+                        String audioUrl = "";
+
+                        // Use audio url of linked word
+                        if (Boolean.TRUE.equals(pw.useLinkedWord()) && word.getLinkedWord() != null) {
+                            audioUrl = word.getLinkedWord().getAudioUrl();
+
+                        } else if (pw.tense() != null) {
+
+                            // Use audio url of conjugated verb
+                            Conjugation conjugation = word.getConjugations().stream()
+                                    .filter(c -> c.getTense().equals(pw.tense()))
+                                    .findFirst()
+                                    .orElseThrow(() -> new ResourceNotFoundException("Tense not found"));
+                            audioUrl = conjugation.getAudioUrl();
+                        } else {
+
+                            // Else use regular tagalog audio url
+                            audioUrl = word.getAudioUrl();
+
+                            // In case word does not have audio url
+                            if (audioUrl == null || audioUrl.isBlank()) {
+                                audioUrl = ServiceUtil.createWordAudioString(word.getTagalog());
+                            }
+                        }
+
+                        phraseWord.setAudioUrl(audioUrl);
                         phraseWord.setWord(word);
                         phraseWord.setEnglish(pw.english());
                         phraseWord.setNote(pw.note());
@@ -112,6 +141,11 @@ public class PhraseService {
                 })
                 .sorted(Comparator.comparingInt(PhraseWord::getPosition))
                 .collect(Collectors.toCollection(ArrayList::new));
+
+        // Process and set phrase audio url
+        if (phraseRequest.audioUrl() == null || phraseRequest.audioUrl().isEmpty()) {
+            phrase.setAudioUrl(ServiceUtil.createPhraseAudioString(phraseRequest.tagalog()));
+        }
 
         phraseMapper.toEntity(phrase, phraseRequest, phraseWords);
     }
