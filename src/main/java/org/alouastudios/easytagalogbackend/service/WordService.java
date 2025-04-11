@@ -2,16 +2,21 @@ package org.alouastudios.easytagalogbackend.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.alouastudios.easytagalogbackend.dto.phrase.PhraseResponseDTO;
 import org.alouastudios.easytagalogbackend.dto.word.WordRequestDTO;
 import org.alouastudios.easytagalogbackend.dto.word.WordResponseDTO;
 import org.alouastudios.easytagalogbackend.enums.PartOfSpeech;
 import org.alouastudios.easytagalogbackend.exception.ResourceNotFoundException;
+import org.alouastudios.easytagalogbackend.mapper.PhraseMapper;
 import org.alouastudios.easytagalogbackend.mapper.WordMapper;
+import org.alouastudios.easytagalogbackend.model.phrases.Phrase;
 import org.alouastudios.easytagalogbackend.model.words.*;
 import org.alouastudios.easytagalogbackend.repository.EnglishRepository;
+import org.alouastudios.easytagalogbackend.repository.PhraseRepository;
 import org.alouastudios.easytagalogbackend.repository.WordRepository;
 import org.alouastudios.easytagalogbackend.util.ServiceUtil;
 import org.alouastudios.easytagalogbackend.validator.WordValidator;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -24,15 +29,17 @@ public class WordService {
 
     private final WordRepository wordRepository;
     private final EnglishRepository englishRepository;
+    private final PhraseRepository phraseRepository;
 
     private final WordValidator wordValidator;
 
     private final WordMapper wordMapper;
+    private final PhraseMapper phraseMapper;
 
     public List<WordResponseDTO> getAllWords() {
         return wordRepository.findAll()
                 .stream()
-                .map(wordMapper::toResponseDTO)
+                .map(word -> wordMapper.toResponseDTO(word, List.of()))
                 .toList();
     }
 
@@ -41,7 +48,7 @@ public class WordService {
                 .findByUuid(uuid)
                 .orElseThrow(() -> new ResourceNotFoundException("Word not found"));
 
-        return wordMapper.toResponseDTO(foundWord);
+        return wordMapper.toResponseDTO(foundWord, getExamplePhrases(foundWord.getUuid()));
     }
 
     @Transactional
@@ -55,7 +62,7 @@ public class WordService {
         wordRepository.save(newWord);
 
         // Return mapped DTO
-        return wordMapper.toResponseDTO(newWord);
+        return wordMapper.toResponseDTO(newWord, List.of());
     }
 
     @Transactional
@@ -82,7 +89,7 @@ public class WordService {
         // Save updated word to the database
         wordRepository.save(foundWord);
 
-        return wordMapper.toResponseDTO(foundWord);
+        return wordMapper.toResponseDTO(foundWord, List.of());
     }
 
     public void deleteWord(UUID uuid) {
@@ -94,9 +101,17 @@ public class WordService {
     }
 
     public List<WordResponseDTO> getWordsBySearchQuery(String searchQuery) {
-        return wordRepository.findWordsBySearchQuery(searchQuery)
-                .stream()
-                .map(wordMapper::toResponseDTO)
+        List<Word> words = wordRepository.findWordsBySearchQuery(searchQuery);
+
+        return words.stream()
+                .map(word -> {
+                    boolean isExactMatch = word.getTagalog().equalsIgnoreCase(searchQuery);
+                    List<PhraseResponseDTO> examplePhrases = isExactMatch
+                            ? getExamplePhrases(word.getUuid())
+                            : List.of();
+
+                    return wordMapper.toResponseDTO(word, examplePhrases);
+                })
                 .toList();
     }
 
@@ -200,5 +215,13 @@ public class WordService {
         }
 
         return newTranslationSet;
+    }
+
+    // This function gets all phrases that uses the input word (MAX 10)
+    private List<PhraseResponseDTO> getExamplePhrases(UUID wordUuid) {
+        List<Phrase> phrases = phraseRepository.findTop10ByWordUuid(wordUuid, PageRequest.of(0, 10));
+        return phrases.stream()
+                .map(phraseMapper::toResponseDTO)
+                .toList();
     }
 }
