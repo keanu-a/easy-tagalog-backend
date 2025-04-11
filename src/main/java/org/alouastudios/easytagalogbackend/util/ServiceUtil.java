@@ -3,6 +3,7 @@ package org.alouastudios.easytagalogbackend.util;
 import lombok.experimental.UtilityClass;
 import org.alouastudios.easytagalogbackend.enums.Tense;
 
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -35,7 +36,20 @@ public class ServiceUtil {
         return accentIntegers;
     }
 
-    public static String createWordAudioString(String tagalog) {
-        return tagalog.concat(".mp3");
+    public static String createWordAudioString(String tagalogWord) {
+        return "audio/words/" + sanitizeForAudioFilename(tagalogWord) + ".mp3";
+    }
+
+    public static String createPhraseAudioString(String tagalogPhrase) {
+        return "audio/phrases/" + sanitizeForAudioFilename(tagalogPhrase) + ".mp3";
+    }
+
+    private static String sanitizeForAudioFilename(String input) {
+        return Normalizer.normalize(input, Normalizer.Form.NFD)
+                .replaceAll("\\p{M}", "") // Remove accents
+                .replaceAll("[^a-zA-Z0-9 ]", "") // Remove punctuation
+                .trim()
+                .toLowerCase()
+                .replace(" ", "_");
     }
 }

@@ -8,6 +8,7 @@ public record PhraseResponseDTO(
         String tagalog,
         String english,
         Boolean isQuestion,
+        String audioUrl,
         List<PhraseWordResponseDTO> phraseWords
 ) {
 }

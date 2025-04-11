@@ -2,5 +2,6 @@ target/
 .git
 .gitignore
 .env.properties
+data/
 Dockerfile
 README.md
