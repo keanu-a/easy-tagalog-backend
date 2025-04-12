@@ -33,6 +33,7 @@ public class WordMapper {
                 !word.getConjugations().isEmpty()
                         ? word.getConjugations().stream().map(this::toConjugationDTO).collect(Collectors.toSet())
                         : null,
+                word.getFocusType(),
                 word.getLinkedWord() != null ? this.toLinkedWordDTO(word.getLinkedWord()) : null,
                 word.getAudioUrl(),
                 !examplePhrases.isEmpty() ? examplePhrases : null
@@ -51,7 +52,7 @@ public class WordMapper {
         word.setAlternateSpelling(wordRequestDTO.alternateSpelling());
         word.setIsIrregularVerb(wordRequestDTO.isIrregularVerb());
         word.setNote(wordRequestDTO.note());
-
+        word.setFocusType(wordRequestDTO.focusType());
         word.getTranslations().clear();
         word.getTranslations().addAll(translations);
 

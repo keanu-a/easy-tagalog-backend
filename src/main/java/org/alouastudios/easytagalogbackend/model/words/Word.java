@@ -3,6 +3,7 @@ package org.alouastudios.easytagalogbackend.model.words;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.alouastudios.easytagalogbackend.enums.FocusType;
 import org.alouastudios.easytagalogbackend.enums.PartOfSpeech;
 import org.alouastudios.easytagalogbackend.enums.Tense;
 import org.alouastudios.easytagalogbackend.exception.ResourceNotFoundException;
@@ -51,6 +52,8 @@ public class Word {
 
     @OneToMany(mappedBy = "word", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Conjugation> conjugations = new HashSet<>();
+
+    private FocusType focusType;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "linked_word_id", referencedColumnName = "id")

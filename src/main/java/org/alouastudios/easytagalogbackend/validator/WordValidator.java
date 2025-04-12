@@ -22,6 +22,10 @@ public class WordValidator {
             throw new RuntimeException("Verb must have isIrregularVerb");
         }
 
+        if (word.focusType() == null) {
+            throw new RuntimeException("Verb must have focusType");
+        }
+
         // For verbs, check user gave conjugations field
         if (word.conjugations() == null || word.conjugations().isEmpty()) {
             throw new RuntimeException("Verbs must have conjugations");
