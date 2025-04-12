@@ -1,11 +1,14 @@
 package org.alouastudios.easytagalogbackend.mapper;
 
+import org.alouastudios.easytagalogbackend.dto.phrase.PhraseResponseDTO;
+import org.alouastudios.easytagalogbackend.dto.phrase.PhraseWordResponseDTO;
 import org.alouastudios.easytagalogbackend.dto.word.*;
 import org.alouastudios.easytagalogbackend.model.words.*;
 import org.alouastudios.easytagalogbackend.util.ServiceUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -13,7 +16,7 @@ import java.util.stream.Collectors;
 public class WordMapper {
 
     // Maps the Word entity to WordResponseDTO
-    public WordResponseDTO toResponseDTO(Word word) {
+    public WordResponseDTO toResponseDTO(Word word, List<PhraseResponseDTO> examplePhrases) {
         return new WordResponseDTO(
                 word.getUuid(),
                 word.getTagalog(),
@@ -30,8 +33,10 @@ public class WordMapper {
                 !word.getConjugations().isEmpty()
                         ? word.getConjugations().stream().map(this::toConjugationDTO).collect(Collectors.toSet())
                         : null,
+                word.getFocusType(),
                 word.getLinkedWord() != null ? this.toLinkedWordDTO(word.getLinkedWord()) : null,
-                word.getAudioUrl()
+                word.getAudioUrl(),
+                !examplePhrases.isEmpty() ? examplePhrases : null
         );
     }
 
@@ -47,7 +52,7 @@ public class WordMapper {
         word.setAlternateSpelling(wordRequestDTO.alternateSpelling());
         word.setIsIrregularVerb(wordRequestDTO.isIrregularVerb());
         word.setNote(wordRequestDTO.note());
-
+        word.setFocusType(wordRequestDTO.focusType());
         word.getTranslations().clear();
         word.getTranslations().addAll(translations);
 

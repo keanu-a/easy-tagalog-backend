@@ -6,5 +6,4 @@ public record LessonRequestDTO(
     String title,
     Set<LessonQuestionRequestDTO> questions
 ) {
-
 }

@@ -7,5 +7,4 @@ public record EnglishResponseDTO(
         UUID uuid,
         String meaning
 ) {
-
 }

@@ -15,7 +15,7 @@ target/
 .sts4-cache
 
 ### Data JSON ###
-data/prod/
+data/prod
 
 ### IntelliJ IDEA ###
 .idea

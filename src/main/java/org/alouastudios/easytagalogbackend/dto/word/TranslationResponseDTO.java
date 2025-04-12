@@ -7,4 +7,5 @@ import java.util.Set;
 public record TranslationResponseDTO (
    PartOfSpeech partOfSpeech,
    Set<EnglishResponseDTO> englishMeanings
-) {}
+) {
+}
