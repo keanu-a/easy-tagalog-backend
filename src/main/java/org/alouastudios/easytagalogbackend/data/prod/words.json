@@ -1,3 +1,1764 @@
 [
-  {}
+  {
+    "tagalog": "ako",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "I" },
+          { "meaning": "me" }
+        ],
+        "partOfSpeech": "PRONOUN"
+      }
+    ],
+    "root": "ako",
+    "accents": [2],
+    "linkedWord": { "tagalog": "akong" }
+  },
+  {
+    "tagalog": "ikaw",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "you" }
+        ],
+        "partOfSpeech": "PRONOUN"
+      }
+    ],
+    "root": "ikaw",
+    "accents": [2]
+  },
+  {
+    "tagalog": "ka",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "you" }
+        ],
+        "partOfSpeech": "PRONOUN"
+      }
+    ],
+    "root": "ka",
+    "accents": [0]
+  },
+  {
+    "tagalog": "siya",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "he" },
+          { "meaning": "she" },
+          { "meaning": "they (singular)" }
+        ],
+        "partOfSpeech": "PRONOUN"
+      }
+    ],
+    "root": "siya",
+    "accents": [1],
+    "note": "Tagalog doesn't have specific 'he' or 'she' - gender neutral pronoun"
+  },
+  {
+    "tagalog": "kumusta",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "hello" },
+          { "meaning": "how are you" },
+          { "meaning": "how are/is..."}
+        ],
+        "partOfSpeech": "INTERJECTION"
+      }
+    ],
+    "root": "kumusta",
+    "accents": [6],
+    "alternateSpelling": "kamusta"
+  },
+  {
+    "tagalog": "maganda",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "beautiful" },
+          { "meaning": "nice" },
+          { "meaning": "cute" }
+        ],
+        "partOfSpeech": "ADJECTIVE"
+      }
+    ],
+    "root": "ganda",
+    "accents": [6]
+  },
+  {
+    "tagalog": "si",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "[name marker]" }
+        ],
+        "partOfSpeech": "PARTICLE"
+      }
+    ],
+    "root": "si",
+    "accents": [],
+    "note": "Used before names"
+  },
+  {
+    "tagalog": "ano",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "what" }
+        ],
+        "partOfSpeech": "INTERROGATIVE"
+      }
+    ],
+    "root": "ano",
+    "accents": [2]
+  },
+  {
+    "tagalog": "gabi",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "evening" },
+          { "meaning": "night" }
+        ],
+        "partOfSpeech": "NOUN"
+      }
+    ],
+    "root": "gabi",
+    "accents": [3]
+  },
+  {
+    "tagalog": "kanin",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "cooked rice" }
+        ],
+        "partOfSpeech": "NOUN"
+      }
+    ],
+    "root": "kanin",
+    "accents": [1],
+    "note": "Different than the word for uncooked rice - Bigas"
+  },
+  {
+    "tagalog": "gutom",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "hungry" }
+        ],
+        "partOfSpeech": "ADJECTIVE"
+      }
+    ],
+    "root": "gutom",
+    "accents": [3]
+  },
+  {
+    "tagalog": "umaga",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "morning" }
+        ],
+        "partOfSpeech": "NOUN"
+      }
+    ],
+    "root": "umaga",
+    "accents": [2]
+  },
+  {
+    "tagalog": "tubig",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "water" }
+        ],
+        "partOfSpeech": "NOUN"
+      }
+    ],
+    "root": "tubig",
+    "accents": [1]
+  },
+  {
+    "tagalog": "pagkain",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "food" }
+        ],
+        "partOfSpeech": "NOUN"
+      }
+    ],
+    "root": "kain",
+    "accents": [4]
+  },
+  {
+    "tagalog": "mag-aral",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "to study" }
+        ],
+        "partOfSpeech": "VERB"
+      }
+    ],
+    "root": "aral",
+    "accents": [4],
+    "isIrregularVerb": false,
+    "focusType": "ACTOR",
+    "conjugations": [
+      {
+        "tagalog": "nag-aral",
+        "root": "aral",
+        "accents": [4],
+        "english": "(PAST) ~ studied",
+        "tense": "PAST"
+      },
+      {
+        "tagalog": "nag-aaral",
+        "root": "aral",
+        "accents": [5],
+        "english": "(PRESENT) ~ studying",
+        "tense": "PRESENT"
+      },
+      {
+        "tagalog": "mag-aaral",
+        "root": "aral",
+        "accents": [5],
+        "english": "(FUTURE) ~ will study",
+        "tense": "FUTURE"
+      }
+    ]
+  },
+  {
+    "tagalog": "ng",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "of" },
+          { "meaning": "by" },
+          { "meaning": "[linker]" }
+        ],
+        "partOfSpeech": "PARTICLE"
+      }
+    ],
+    "root": "ng",
+    "accents": []
+  },
+  {
+    "tagalog": "salamat",
+    "translations": [
+      {
+        "englishMeanings": [
+          {
+            "meaning": "thank you"
+          }
+        ],
+        "partOfSpeech": "NOUN"
+      }
+    ],
+    "root": "salamat",
+    "accents": [3]
+  },
+  {
+    "tagalog": "bahay",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "house" },
+          { "meaning": "home" }
+        ],
+        "partOfSpeech": "NOUN"
+      }
+    ],
+    "root": "bahay",
+    "accents": [1]
+  },
+  {
+    "tagalog": "trabaho",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "work" },
+          { "meaning": "job" }
+        ],
+        "partOfSpeech": "NOUN"
+      }
+    ],
+    "root": "trabaho",
+    "accents": [4]
+  },
+  {
+    "tagalog": "magtrabaho",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "to work" }
+        ],
+        "partOfSpeech": "VERB"
+      }
+    ],
+    "root": "trabaho",
+    "accents": [7],
+    "isIrregularVerb": false,
+    "focusType": "ACTOR",
+    "conjugations": [
+      {
+        "tagalog": "nagtrabaho",
+        "root": "trabaho",
+        "accents": [7],
+        "english": "(PAST) ~ worked",
+        "tense": "PAST"
+      },
+      {
+        "tagalog": "nagtatrabaho",
+        "root": "trabaho",
+        "accents": [4, 9],
+        "english": "(PRESENT) ~ working",
+        "tense": "PRESENT"
+      },
+      {
+        "tagalog": "magtratrabaho",
+        "root": "trabaho",
+        "accents": [4, 9],
+        "english": "(FUTURE) ~ will work",
+        "tense": "FUTURE"
+      }
+    ]
+  },
+  {
+    "tagalog": "saan",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "where" }
+        ],
+        "partOfSpeech": "INTERROGATIVE"
+      }
+    ],
+    "root": "saan",
+    "accents": [2]
+  },
+  {
+    "tagalog": "bakit",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "why" }
+        ],
+        "partOfSpeech": "INTERROGATIVE"
+      }
+    ],
+    "root": "bakit",
+    "accents": [1]
+  },
+  {
+    "tagalog": "paano",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "how" }
+        ],
+        "partOfSpeech": "INTERROGATIVE"
+      }
+    ],
+    "root": "paano",
+    "accents": [2]
+  },
+  {
+    "tagalog": "ilan",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "how many" },
+          { "meaning": "some" }
+        ],
+        "partOfSpeech": "INTERROGATIVE"
+      }
+    ],
+    "root": "ilan",
+    "accents": [2],
+    "linkedWord": {
+      "tagalog": "ilang"
+    }
+  },
+  {
+    "tagalog": "isa",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "one" }
+        ],
+        "partOfSpeech": "NOUN"
+      },
+      {
+        "englishMeanings": [
+          { "meaning": "a" },
+          { "meaning": "an "}
+        ],
+        "partOfSpeech": "ARTICLE"
+      }
+    ],
+    "root": "isa",
+    "accents": [2]
+  },
+  {
+    "tagalog": "dalawa",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "two" }
+        ],
+        "partOfSpeech": "NOUN"
+      },
+      {
+        "englishMeanings": [
+          { "meaning": "both" }
+        ],
+        "partOfSpeech": "PRONOUN"
+      }
+    ],
+    "root": "dalawa",
+    "accents": [5]
+  },
+  {
+    "tagalog": "tatlo",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "three" }
+        ],
+        "partOfSpeech": "NOUN"
+      }
+    ],
+    "root": "tatlo",
+    "accents": [4]
+  },
+  {
+    "tagalog": "aso",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "dog" }
+        ],
+        "partOfSpeech": "NOUN"
+      }
+    ],
+    "root": "aso",
+    "accents": [1]
+  },
+  {
+    "tagalog": "pusa",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "cat" }
+        ],
+        "partOfSpeech": "NOUN"
+      }
+    ],
+    "root": "pusa",
+    "accents": [1]
+  },
+  {
+    "tagalog": "guro",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "teacher" }
+        ],
+        "partOfSpeech": "NOUN"
+      }
+    ],
+    "root": "guro",
+    "accents": [1]
+  },
+  {
+    "tagalog": "estudyante",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "student" }
+        ],
+        "partOfSpeech": "NOUN"
+      }
+    ],
+    "root": "estudyante",
+    "accents": [6]
+  },
+  {
+    "tagalog": "kumain",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "to eat" }
+        ],
+        "partOfSpeech": "VERB"
+      }
+    ],
+    "root": "kain",
+    "accents": [3],
+    "isIrregularVerb": false,
+    "focusType": "ACTOR",
+    "conjugations": [
+      {
+        "tagalog": "kumain",
+        "root": "kain",
+        "accents": [3],
+        "english": "(PAST) ~ ate",
+        "tense": "PAST"
+      },
+      {
+        "tagalog": "kumakain",
+        "root": "kain",
+        "accents": [5],
+        "english": "(PRESENT) ~ eating",
+        "tense": "PRESENT"
+      },
+      {
+        "tagalog": "kakain",
+        "root": "kain",
+        "accents": [3],
+        "english": "(FUTURE) ~ will eat",
+        "tense": "FUTURE"
+      }
+    ]
+  },
+  {
+    "tagalog": "uminom",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "to drink" }
+        ],
+        "partOfSpeech": "VERB"
+      }
+    ],
+    "root": "inom",
+    "accents": [4],
+    "isIrregularVerb": false,
+    "focusType": "ACTOR",
+    "conjugations": [
+      {
+        "tagalog": "uminom",
+        "root": "inom",
+        "accents": [4],
+        "english": "(PAST) ~ drank",
+        "tense": "PAST"
+      },
+      {
+        "tagalog": "umiinom",
+        "root": "inom",
+        "accents": [2, 5],
+        "english": "(PRESENT) ~ drinking",
+        "tense": "PRESENT"
+      },
+      {
+        "tagalog": "iinom",
+        "root": "inom",
+        "accents": [0, 3],
+        "english": "(FUTURE) ~ will drink",
+        "tense": "FUTURE"
+      }
+    ]
+  },
+  {
+    "tagalog": "lamig",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "cold" }
+        ],
+        "partOfSpeech": "NOUN"
+      }
+    ],
+    "root": "lamig",
+    "accents": [3]
+  },
+  {
+    "tagalog": "init",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "heat" },
+          { "meaning": "hot" }
+        ],
+        "partOfSpeech": "NOUN"
+      }
+    ],
+    "root": "init",
+    "accents": [2]
+  },
+  {
+    "tagalog": "halika",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "come here" },
+          { "meaning": "come" }
+        ],
+        "partOfSpeech": "INTERJECTION"
+      }
+    ],
+    "root": "halika",
+    "accents": [3]
+  },
+  {
+    "tagalog": "lakad",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "walk" },
+          { "meaning": "outing" }
+        ],
+        "partOfSpeech": "NOUN"
+      }
+    ],
+    "root": "lakad",
+    "accents": [1]
+  },
+  {
+    "tagalog": "maglakad",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "to walk" }
+        ],
+        "partOfSpeech": "VERB"
+      }
+    ],
+    "root": "lakad",
+    "accents": [6],
+    "isIrregularVerb": false,
+    "focusType": "ACTOR",
+    "conjugations": [
+      {
+        "tagalog": "naglakad",
+        "root": "lakad",
+        "accents": [6],
+        "english": "(PAST) ~ walked",
+        "tense": "PAST"
+      },
+      {
+        "tagalog": "naglalakad",
+        "root": "lakad",
+        "accents": [4, 8],
+        "english": "(PRESENT) ~ walking",
+        "tense": "PRESENT"
+      },
+      {
+        "tagalog": "maglalakad",
+        "root": "lakad",
+        "accents": [4, 8],
+        "english": "(FUTURE) ~ will walk",
+        "tense": "FUTURE"
+      }
+    ]
+  },
+  {
+    "tagalog": "sulat",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "letter" },
+          { "meaning": "writing" }
+        ],
+        "partOfSpeech": "NOUN"
+      }
+    ],
+    "root": "sulat",
+    "accents": [1]
+  },
+  {
+    "tagalog": "magsulat",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "to write" }
+        ],
+        "partOfSpeech": "VERB"
+      }
+    ],
+    "root": "sulat",
+    "accents": [6],
+    "isIrregularVerb": false,
+    "focusType": "ACTOR",
+    "conjugations": [
+      {
+        "tagalog": "nagsulat",
+        "root": "sulat",
+        "accents": [6],
+        "english": "(PAST) ~ wrote",
+        "tense": "PAST"
+      },
+      {
+        "tagalog": "nagsusulat",
+        "root": "sulat",
+        "accents": [4, 8],
+        "english": "(PRESENT) ~ writing",
+        "tense": "PRESENT"
+      },
+      {
+        "tagalog": "magsusulat",
+        "root": "sulat",
+        "accents": [4, 8],
+        "english": "(FUTURE) ~ will write",
+        "tense": "FUTURE"
+      }
+    ]
+  },
+  {
+    "tagalog": "mesa",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "table" }
+        ],
+        "partOfSpeech": "NOUN"
+      }
+    ],
+    "root": "mesa",
+    "accents": [1]
+  },
+  {
+    "tagalog": "upuan",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "chair" }
+        ],
+        "partOfSpeech": "NOUN"
+      }
+    ],
+    "root": "upo",
+    "accents": [2]
+  },
+  {
+    "tagalog": "kapatid",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "sibling" }
+        ],
+        "partOfSpeech": "NOUN"
+      }
+    ],
+    "root": "kapatid",
+    "accents": [5]
+  },
+  {
+    "tagalog": "nanay",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "mother" }
+        ],
+        "partOfSpeech": "NOUN"
+      }
+    ],
+    "root": "nanay",
+    "accents": [1]
+  },
+  {
+    "tagalog": "tatay",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "father" }
+        ],
+        "partOfSpeech": "NOUN"
+      }
+    ],
+    "root": "tatay",
+    "accents": [1]
+  },
+  {
+    "tagalog": "bata",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "child" },
+          { "meaning": "kid" }
+        ],
+        "partOfSpeech": "NOUN"
+      }
+    ],
+    "root": "bata",
+    "accents": [1]
+  },
+  {
+    "tagalog": "tao",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "person" },
+          { "meaning": "human" }
+        ],
+        "partOfSpeech": "NOUN"
+      }
+    ],
+    "root": "tao",
+    "accents": [1]
+  },
+  {
+    "tagalog": "magluto",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "to cook" }
+        ],
+        "partOfSpeech": "VERB"
+      }
+    ],
+    "root": "luto",
+    "accents": [4],
+    "isIrregularVerb": false,
+    "focusType": "ACTOR",
+    "conjugations": [
+      {
+        "tagalog": "nagluto",
+        "root": "luto",
+        "accents": [4],
+        "english": "(PAST) ~ cooked",
+        "tense": "PAST"
+      },
+      {
+        "tagalog": "nagluluto",
+        "root": "luto",
+        "accents": [6],
+        "english": "(PRESENT) ~ cooking",
+        "tense": "PRESENT"
+      },
+      {
+        "tagalog": "magluluto",
+        "root": "luto",
+        "accents": [6],
+        "english": "(FUTURE) ~ will cook",
+        "tense": "FUTURE"
+      }
+    ]
+  },
+  {
+    "tagalog": "laban",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "fight" },
+          { "meaning": "against" }
+        ],
+        "partOfSpeech": "NOUN"
+      }
+    ],
+    "root": "laban",
+    "accents": [1]
+  },
+  {
+    "tagalog": "laro",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "game" },
+          { "meaning": "play" }
+        ],
+        "partOfSpeech": "NOUN"
+      }
+    ],
+    "root": "laro",
+    "accents": [3]
+  },
+  {
+    "tagalog": "maglaro",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "to play" }
+        ],
+        "partOfSpeech": "VERB"
+      }
+    ],
+    "root": "laro",
+    "accents": [6],
+    "isIrregularVerb": false,
+    "focusType": "ACTOR",
+    "conjugations": [
+      {
+        "tagalog": "naglaro",
+        "root": "laro",
+        "accents": [6],
+        "english": "(PAST) ~ played",
+        "tense": "PAST"
+      },
+      {
+        "tagalog": "naglalaro",
+        "root": "laro",
+        "accents": [4, 8],
+        "english": "(PRESENT) ~ playing",
+        "tense": "PRESENT"
+      },
+      {
+        "tagalog": "maglalaro",
+        "root": "laro",
+        "accents": [4, 8],
+        "english": "(FUTURE) ~ will play",
+        "tense": "FUTURE"
+      }
+    ]
+  },
+  {
+    "tagalog": "gising",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "wake" },
+          { "meaning": "wake up" },
+          { "meaning": "awake" }
+        ],
+        "partOfSpeech": "NOUN"
+      }
+    ],
+    "root": "gising",
+    "accents": [1]
+  },
+  {
+    "tagalog": "gumising",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "to wake up" }
+        ],
+        "partOfSpeech": "VERB"
+      }
+    ],
+    "root": "gising",
+    "accents": [3],
+    "isIrregularVerb": false,
+    "focusType": "ACTOR",
+    "conjugations": [
+      {
+        "tagalog": "gumising",
+        "root": "gising",
+        "accents": [3],
+        "english": "(PAST) ~ woke up",
+        "tense": "PAST"
+      },
+      {
+        "tagalog": "gumigising",
+        "root": "gising",
+        "accents": [5],
+        "english": "(PRESENT) ~ waking up",
+        "tense": "PRESENT"
+      },
+      {
+        "tagalog": "gigising",
+        "root": "gising",
+        "accents": [3],
+        "english": "(FUTURE) ~ will wake up",
+        "tense": "FUTURE"
+      }
+    ]
+  },
+  {
+    "tagalog": "pasok",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "entry" },
+          { "meaning": "enter" },
+          { "meaning": "class" }
+        ],
+        "partOfSpeech": "NOUN"
+      }
+    ],
+    "root": "pasok",
+    "accents": [1]
+  },
+  {
+    "tagalog": "pumasok",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "to enter" },
+          { "meaning": "to go in" }
+        ],
+        "partOfSpeech": "VERB"
+      }
+    ],
+    "root": "pasok",
+    "accents": [3],
+    "isIrregularVerb": false,
+    "focusType": "ACTOR",
+    "conjugations": [
+      {
+        "tagalog": "pumasok",
+        "root": "pasok",
+        "accents": [3],
+        "english": "(PAST) ~ entered",
+        "tense": "PAST"
+      },
+      {
+        "tagalog": "pumapasok",
+        "root": "pasok",
+        "accents": [5],
+        "english": "(PRESENT) ~ entering",
+        "tense": "PRESENT"
+      },
+      {
+        "tagalog": "papasok",
+        "root": "pasok",
+        "accents": [3],
+        "english": "(FUTURE) ~ will enter",
+        "tense": "FUTURE"
+      }
+    ]
+  },
+  {
+    "tagalog": "labas",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "outside" },
+          { "meaning": "exit" }
+        ],
+        "partOfSpeech": "NOUN"
+      }
+    ],
+    "root": "labas",
+    "accents": [3]
+  },
+  {
+    "tagalog": "lumabas",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "to go out" },
+          { "meaning": "to exit" }
+        ],
+        "partOfSpeech": "VERB"
+      }
+    ],
+    "root": "labas",
+    "accents": [5],
+    "isIrregularVerb": false,
+    "focusType": "ACTOR",
+    "conjugations": [
+      {
+        "tagalog": "lumabas",
+        "root": "labas",
+        "accents": [5],
+        "english": "(PAST) ~ went out",
+        "tense": "PAST"
+      },
+      {
+        "tagalog": "lumalabas",
+        "root": "labas",
+        "accents": [3, 7],
+        "english": "(PRESENT) ~ going out",
+        "tense": "PRESENT"
+      },
+      {
+        "tagalog": "lalabas",
+        "root": "labas",
+        "accents": [1, 5],
+        "english": "(FUTURE) ~ will go out",
+        "tense": "FUTURE"
+      }
+    ]
+  },
+  {
+    "tagalog": "maaga",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "early" }
+        ],
+        "partOfSpeech": "ADVERB"
+      }
+    ],
+    "root": "aga",
+    "accents": [2]
+  },
+  {
+    "tagalog": "huli",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "late" },
+          { "meaning": "last" }
+        ],
+        "partOfSpeech": "ADJECTIVE"
+      }
+    ],
+    "root": "huli",
+    "accents": [3]
+  },
+  {
+    "tagalog": "bintana",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "window" }
+        ],
+        "partOfSpeech": "NOUN"
+      }
+    ],
+    "root": "bintana",
+    "accents": [4]
+  },
+  {
+    "tagalog": "pinto",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "door" }
+        ],
+        "partOfSpeech": "NOUN"
+      }
+    ],
+    "root": "pinto",
+    "accents": [4]
+  },
+  {
+    "tagalog": "sahig",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "floor" }
+        ],
+        "partOfSpeech": "NOUN"
+      }
+    ],
+    "root": "sahig",
+    "accents": [3]
+  },
+  {
+    "tagalog": "kisame",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "ceiling" }
+        ],
+        "partOfSpeech": "NOUN"
+      }
+    ],
+    "root": "kisame",
+    "accents": [1]
+  },
+  {
+    "tagalog": "ilaw",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "light" },
+          { "meaning": "light bulb" }
+        ],
+        "partOfSpeech": "NOUN"
+      }
+    ],
+    "root": "ilaw",
+    "accents": [0]
+  },
+  {
+    "tagalog": "bukas",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "tomorrow" }
+        ],
+        "partOfSpeech": "NOUN"
+      }
+    ],
+    "root": "bukas_noun",
+    "accents": [1]
+  },
+  {
+    "tagalog": "bukas",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "open" }
+        ],
+        "partOfSpeech": "ADJECTIVE"
+      }
+    ],
+    "root": "bukas_adjective",
+    "accents": [3]
+  },
+  {
+    "tagalog": "kaibigan",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "friend" }
+        ],
+        "partOfSpeech": "NOUN"
+      }
+    ],
+    "root": "kaibigan",
+    "accents": [4]
+  },
+  {
+    "tagalog": "araw",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "day" },
+          { "meaning": "sun" }
+        ],
+        "partOfSpeech": "NOUN"
+      }
+    ],
+    "root": "araw",
+    "accents": [0]
+  },
+  {
+    "tagalog": "buwan",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "month" },
+          { "meaning": "moon" }
+        ],
+        "partOfSpeech": "NOUN"
+      }
+    ],
+    "root": "buwan",
+    "accents": [1],
+    "note": "Depending on context of the sentence, can mean 'month' or 'moon'"
+  },
+  {
+    "tagalog": "taon",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "year" }
+        ],
+        "partOfSpeech": "NOUN"
+      }
+    ],
+    "root": "taon",
+    "accents": [2]
+  },
+  {
+    "tagalog": "oras",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "hour" },
+          { "meaning": "time" }
+        ],
+        "partOfSpeech": "NOUN"
+      }
+    ],
+    "root": "oras",
+    "accents": [0]
+  },
+  {
+    "tagalog": "minuto",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "minute" }
+        ],
+        "partOfSpeech": "NOUN"
+      }
+    ],
+    "root": "minuto",
+    "accents": [3]
+  },
+  {
+    "tagalog": "segundo",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "second" }
+        ],
+        "partOfSpeech": "NOUN"
+      }
+    ],
+    "root": "segundo",
+    "accents": [4]
+  },
+  {
+    "tagalog": "pangalawa",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "second" }
+        ],
+        "partOfSpeech": "NOUN"
+      }
+    ],
+    "root": "dalawa",
+    "accents": [8]
+  },
+  {
+    "tagalog": "hapon",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "afternoon" }
+        ],
+        "partOfSpeech": "NOUN"
+      }
+    ],
+    "root": "hapon",
+    "accents": [1]
+  },
+  {
+    "tagalog": "pangit",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "ugly" },
+          { "meaning": "unattractive" }
+        ],
+        "partOfSpeech": "ADJECTIVE"
+      }
+    ],
+    "root": "pangit",
+    "accents": [1]
+  },
+  {
+    "tagalog": "maliit",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "small" },
+          { "meaning": "little" },
+          { "meaning": "short" }
+        ],
+        "partOfSpeech": "ADJECTIVE"
+      }
+    ],
+    "root": "liit",
+    "accents": [4]
+  },
+  {
+    "tagalog": "malaki",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "big" },
+          { "meaning": "large" }
+        ],
+        "partOfSpeech": "ADJECTIVE"
+      }
+    ],
+    "root": "laki",
+    "accents": [5]
+  },
+  {
+    "tagalog": "maikli",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "short" }
+        ],
+        "partOfSpeech": "ADJECTIVE"
+      }
+    ],
+    "root": "ikli",
+    "accents": [5]
+  },
+  {
+    "tagalog": "mahaba",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "long" }
+        ],
+        "partOfSpeech": "ADJECTIVE"
+      }
+    ],
+    "root": "haba",
+    "accents": [3]
+  },
+  {
+    "tagalog": "mabilis",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "fast" },
+          { "meaning": "quick" }
+        ],
+        "partOfSpeech": "ADJECTIVE"
+      }
+    ],
+    "root": "bilis",
+    "accents": [5]
+  },
+  {
+    "tagalog": "mabagal",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "slow" }
+        ],
+        "partOfSpeech": "ADJECTIVE"
+      }
+    ],
+    "root": "bagal",
+    "accents": [3]
+  },
+  {
+    "tagalog": "maingay",
+    "translations": [
+      {
+        "englishMeanings": [
+          {
+            "meaning": "noisy"
+          },
+          {
+            "meaning": "loud"
+          }
+        ],
+        "partOfSpeech": "ADJECTIVE"
+      }
+    ],
+    "root": "ingay",
+    "accents": [2]
+  },
+  {
+    "tagalog": "basa",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "wet" }
+        ],
+        "partOfSpeech": "ADJECTIVE"
+      }
+    ],
+    "root": "basa",
+    "accents": [3]
+  },
+  {
+    "tagalog": "magbasa",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "to read" }
+        ],
+        "partOfSpeech": "VERB"
+      }
+    ],
+    "root": "basa",
+    "accents": [6],
+    "isIrregularVerb": false,
+    "focusType": "ACTOR",
+    "conjugations": [
+      {
+        "tagalog": "nagbasa",
+        "root": "basa",
+        "accents": [6],
+        "english": "(PAST) ~ read",
+        "tense": "PAST"
+      },
+      {
+        "tagalog": "nagbabasa",
+        "root": "basa",
+        "accents": [4, 8],
+        "english": "(PRESENT) ~ reading",
+        "tense": "PRESENT"
+      },
+      {
+        "tagalog": "magbabasa",
+        "root": "basa",
+        "accents": [4, 8],
+        "english": "(FUTURE) ~ will read",
+        "tense": "FUTURE"
+      }
+    ]
+  },
+  {
+    "tagalog": "mabasa",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "to read something" },
+          { "meaning": "to be able to read something" }
+        ],
+        "partOfSpeech": "VERB"
+      }
+    ],
+    "root": "basa",
+    "accents": [3],
+    "isIrregularVerb": false,
+    "focusType": "ACTOR",
+    "conjugations": [
+      {
+        "tagalog": "nabasa",
+        "root": "basa",
+        "accents": [3],
+        "english": "(PAST) ~ read",
+        "tense": "PAST"
+      },
+      {
+        "tagalog": "nababasa",
+        "root": "basa",
+        "accents": [5],
+        "english": "(PRESENT) ~ reading",
+        "tense": "PRESENT"
+      },
+      {
+        "tagalog": "mababasa",
+        "root": "basa",
+        "accents": [5],
+        "english": "(FUTURE) ~ will read",
+        "tense": "FUTURE"
+      }
+    ]
+  },
+  {
+    "tagalog": "tulog",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "sleep" }
+        ],
+        "partOfSpeech": "NOUN"
+      }
+    ],
+    "root": "tulog",
+    "accents": [1],
+    "audioUrl": "tulog_noun"
+  },
+  {
+    "tagalog": "tulog",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "asleep" }
+        ],
+        "partOfSpeech": "ADJECTIVE"
+      }
+    ],
+    "root": "tulog",
+    "accents": [3],
+    "audioUrl": "tulog_adjective"
+  },
+  {
+    "tagalog": "matulog",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "to sleep" }
+        ],
+        "partOfSpeech": "VERB"
+      }
+    ],
+    "root": "tulog",
+    "accents": [3],
+    "isIrregularVerb": false,
+    "focusType": "ACTOR",
+    "conjugations": [
+      {
+        "tagalog": "natulog",
+        "root": "tulog",
+        "accents": [3],
+        "english": "(PAST) ~ slept",
+        "tense": "PAST"
+      },
+      {
+        "tagalog": "natutulog",
+        "root": "tulog",
+        "accents": [5],
+        "english": "(PRESENT) ~ sleeping",
+        "tense": "PRESENT"
+      },
+      {
+        "tagalog": "matutulog",
+        "root": "tulog",
+        "accents": [5],
+        "english": "(FUTURE) ~ will sleep",
+        "tense": "FUTURE"
+      }
+    ]
+  },
+  {
+    "tagalog": "makatulog",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "to fall asleep" },
+          { "meaning": "to be able to sleep" }
+        ],
+        "partOfSpeech": "VERB"
+      }
+    ],
+    "root": "tulog",
+    "accents": [5],
+    "isIrregularVerb": false,
+    "focusType": "ACTOR",
+    "conjugations": [
+      {
+        "tagalog": "nakatulog",
+        "root": "tulog",
+        "accents": [5],
+        "english": "(PAST) ~ fell asleep",
+        "tense": "PAST"
+      },
+      {
+        "tagalog": "nakakatulog",
+        "root": "tulog",
+        "accents": [7],
+        "english": "(PRESENT) ~ falling asleep",
+        "tense": "PRESENT"
+      },
+      {
+        "tagalog": "makakatulog",
+        "root": "tulog",
+        "accents": [7],
+        "english": "(FUTURE) ~ will fall asleep",
+        "tense": "FUTURE"
+      }
+    ]
+  },
+  {
+    "tagalog": "bangko",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "bank" }
+        ],
+        "partOfSpeech": "NOUN"
+      }
+    ],
+    "root": "bangko",
+    "accents": [1]
+  },
+  {
+    "tagalog": "pera",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "money" }
+        ],
+        "partOfSpeech": "NOUN"
+      }
+    ],
+    "root": "pera",
+    "accents": [1]
+  },
+  {
+    "tagalog": "sa",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "to" },
+          { "meaning": "at" },
+          { "meaning": "in" },
+          { "meaning": "on" }
+        ],
+        "partOfSpeech": "PARTICLE"
+      }
+    ],
+    "root": "sa",
+    "accents": [],
+    "note": "Used as a preposition or directional marker; can indicate place, direction, or time."
+  },
+  {
+    "tagalog": "ang",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "the" }
+        ],
+        "partOfSpeech": "PARTICLE"
+      }
+    ],
+    "root": "ang",
+    "accents": [],
+    "note": "Marks the subject or topic of the sentence; definite noun marker."
+  },
+  {
+    "tagalog": "mga",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "plural marker" }
+        ],
+        "partOfSpeech": "PARTICLE"
+      }
+    ],
+    "root": "mga",
+    "accents": [],
+    "note": "Precedes nouns to make them plural. Pronounced as /manga/."
+  },
+  {
+    "tagalog": "ko",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "my" },
+          { "meaning": "mine" }
+        ],
+        "partOfSpeech": "PRONOUN"
+      }
+    ],
+    "root": "ko",
+    "accents": [],
+    "note": "Enclitic possessive pronoun; typically follows the noun."
+  },
+  {
+    "tagalog": "ay",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "[inverted linker]" }
+        ],
+        "partOfSpeech": "PARTICLE"
+      }
+    ],
+    "root": "ay",
+    "accents": [],
+    "note": "Used in formal Tagalog for subject-predicate inversion. Common in written/formal speech."
+  },
+  {
+    "tagalog": "lang",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "only" },
+          { "meaning": "just" }
+        ],
+        "partOfSpeech": "PARTICLE"
+      }
+    ],
+    "root": "lamang",
+    "accents": [],
+    "note": "Shortened/informal form of 'lamang'. Common in casual speech."
+  },
+  {
+    "tagalog": "pa",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "still" },
+          { "meaning": "yet" },
+          { "meaning": "even" }
+        ],
+        "partOfSpeech": "PARTICLE"
+      }
+    ],
+    "root": "pa",
+    "accents": [],
+    "note": "Used to express continuation, remaining action/state, or emphasis depending on context."
+  },
+  {
+    "tagalog": "mo",
+    "translations": [
+      {
+        "englishMeanings": [
+          { "meaning": "your" },
+          { "meaning": "you (object)" }
+        ],
+        "partOfSpeech": "PRONOUN"
+      }
+    ],
+    "root": "mo",
+    "accents": [],
+    "note": "Second-person singular possessive or object pronoun"
+  }
 ]

@@ -1,5 +1,6 @@
 package org.alouastudios.easytagalogbackend.dto.word;
 
+import org.alouastudios.easytagalogbackend.enums.FocusType;
 import org.alouastudios.easytagalogbackend.model.words.Conjugation;
 import org.alouastudios.easytagalogbackend.model.words.LinkedWord;
 import org.alouastudios.easytagalogbackend.model.words.Translation;
@@ -16,6 +17,7 @@ public record WordRequestDTO(
         Boolean isIrregularVerb,
         String note,
         Set<ConjugationRequestDTO> conjugations,
+        FocusType focusType,
         LinkedWordDTO linkedWord,
         String audioUrl
 ) {

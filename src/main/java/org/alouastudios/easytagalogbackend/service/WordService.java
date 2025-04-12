@@ -160,6 +160,8 @@ public class WordService {
         // Lastly set word audio url
         if (wordRequest.audioUrl() == null || wordRequest.audioUrl().isBlank()) {
             word.setAudioUrl(ServiceUtil.createWordAudioString(wordRequest.tagalog()));
+        } else {
+            word.setAudioUrl(ServiceUtil.createWordAudioString(wordRequest.audioUrl()));
         }
 
         // Creates initial mapping of word
