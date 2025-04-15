@@ -19,5 +19,4 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public abstract class LessonQuestionRequestDTO {
-    protected String prompt;
 }
