@@ -113,7 +113,6 @@ public class LessonService {
     private TranslateWordQuestion getTranslateWordQuestion(TranslateWordQuestionRequestDTO translateWordQuestionRequestDTO, Lesson lesson) {
         TranslateWordQuestion question = new TranslateWordQuestion();
 
-        question.setPrompt(translateWordQuestionRequestDTO.getPrompt());
         question.setLesson(lesson);
         question.setAnswer(translateWordQuestionRequestDTO.getAnswer());
 
@@ -131,7 +130,6 @@ public class LessonService {
     private TranslatePhraseQuestion getTranslatePhraseQuestion(TranslatePhraseQuestionRequestDTO translatePhraseQuestionRequestDTO, Lesson lesson) {
         TranslatePhraseQuestion question = new TranslatePhraseQuestion();
 
-        question.setPrompt(translatePhraseQuestionRequestDTO.getPrompt());
         question.setLesson(lesson);
         question.setAnswer(translatePhraseQuestionRequestDTO.getAnswer());
 

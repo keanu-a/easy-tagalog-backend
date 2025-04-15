@@ -17,8 +17,6 @@ public abstract class LessonQuestion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String prompt;
-
     @ManyToOne
     @JoinColumn(name = "lesson_id")
     private Lesson lesson;
@@ -29,7 +27,6 @@ public abstract class LessonQuestion {
     public String toString() {
         return "LessonQuestion{" +
                 "id=" + id +
-                ", prompt='" + prompt + '\'' +
                 '}';
     }
 
@@ -38,11 +35,11 @@ public abstract class LessonQuestion {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         LessonQuestion that = (LessonQuestion) o;
-        return Objects.equals(id, that.id) && Objects.equals(prompt, that.prompt);
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, prompt);
+        return Objects.hash(id);
     }
 }

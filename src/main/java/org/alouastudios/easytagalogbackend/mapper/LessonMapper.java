@@ -46,7 +46,6 @@ public class LessonMapper {
                     .toList();
 
             return new TranslateWordQuestionResponseDTO(
-                    translateWordQuestion.getPrompt(),
                     options,
                     translateWordQuestion.getAnswer()
             );
@@ -58,7 +57,6 @@ public class LessonMapper {
                     .toList();
 
             return new TranslatePhraseQuestionResponseDTO(
-                    translatePhraseQuestion.getPrompt(),
                     options,
                     translatePhraseQuestion.getAnswer()
             );
