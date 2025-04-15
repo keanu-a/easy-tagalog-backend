@@ -34,6 +34,10 @@ public class Phrase {
     @OrderBy("position ASC")
     private List<PhraseWord> phraseWords = new ArrayList<>();
 
+    @OneToMany(mappedBy = "phrase", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderBy("position ASC")
+    private List<PhraseGrammarBreakdown> grammarBreakdowns = new ArrayList<>();
+
     @PrePersist
     public void generateUUID() {
         if (uuid == null) {
