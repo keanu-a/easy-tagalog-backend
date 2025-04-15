@@ -1,5 +1,6 @@
 package org.alouastudios.easytagalogbackend.mapper;
 
+import org.alouastudios.easytagalogbackend.dto.phrase.PhraseGrammarBreakdownDTO;
 import org.alouastudios.easytagalogbackend.dto.phrase.PhraseRequestDTO;
 import org.alouastudios.easytagalogbackend.dto.phrase.PhraseResponseDTO;
 import org.alouastudios.easytagalogbackend.dto.phrase.PhraseWordResponseDTO;
@@ -7,6 +8,7 @@ import org.alouastudios.easytagalogbackend.model.phrases.Phrase;
 import org.alouastudios.easytagalogbackend.model.phrases.PhraseWord;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.List;
 
 @Component
@@ -26,7 +28,16 @@ public class PhraseMapper {
                         pw.getNote(),
                         pw.getIsProperNoun(),
                         pw.getAudioUrl()
-                )).toList()
+                )).toList(),
+                phrase.getGrammarBreakdowns() == null
+                        ? Collections.emptyList()
+                        : phrase.getGrammarBreakdowns().stream()
+                        .map(gb -> new PhraseGrammarBreakdownDTO(
+                                gb.getPosition(),
+                                gb.getChunk(),
+                                gb.getRole(),
+                                gb.getExplanation()
+                        )).toList()
         );
     }
 
@@ -42,6 +53,4 @@ public class PhraseMapper {
         phrase.getPhraseWords().clear();
         phrase.getPhraseWords().addAll(phraseWords);
     }
-
-    // TODO: Create toPhraseWordEntity mapper function
 }

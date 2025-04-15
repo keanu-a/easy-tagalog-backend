@@ -2,6 +2,7 @@ package org.alouastudios.easytagalogbackend.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.alouastudios.easytagalogbackend.dto.phrase.PhraseGrammarBreakdownDTO;
 import org.alouastudios.easytagalogbackend.dto.phrase.PhraseRequestDTO;
 import org.alouastudios.easytagalogbackend.dto.phrase.PhraseResponseDTO;
 import org.alouastudios.easytagalogbackend.exception.ResourceNotFoundException;
@@ -15,6 +16,7 @@ import org.alouastudios.easytagalogbackend.repository.WordRepository;
 import org.alouastudios.easytagalogbackend.util.ServiceUtil;
 import org.alouastudios.easytagalogbackend.validator.PhraseValidator;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -88,6 +90,11 @@ public class PhraseService {
                 .orElseThrow(() -> new ResourceNotFoundException("Phrase not found"));
 
         phraseRepository.delete(foundPhrase);
+    }
+
+    // TODO: For OpenAI API
+    @Transactional
+    public void generateGrammarBreakdowns(@PathVariable Long uuid) {
     }
 
     private void handlePhraseChanges(Phrase phrase, PhraseRequestDTO phraseRequest) {

@@ -1,7 +1,5 @@
 package org.alouastudios.easytagalogbackend.dto.phrase;
 
-import org.alouastudios.easytagalogbackend.enums.Tense;
-
 import java.util.List;
 
 public record PhraseRequestDTO(
