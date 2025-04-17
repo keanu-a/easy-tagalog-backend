@@ -24,7 +24,9 @@ public interface WordRepository extends JpaRepository<Word, Long> {
         WHERE LOWER(w.tagalog) = LOWER(:searchQuery)
         OR LOWER(w.root) = LOWER(:searchQuery)
         OR LOWER(e.meaning) = LOWER(:searchQuery)
-        OR LOWER(e.meaning) LIKE LOWER(CONCAT(:searchQuery, '%'))
+        OR LOWER(e.meaning) LIKE LOWER(CONCAT('% ', :searchQuery, ' %'))
+        OR LOWER(e.meaning) LIKE LOWER(CONCAT(:searchQuery, ' %'))
+        OR LOWER(e.meaning) LIKE LOWER(CONCAT('% ', :searchQuery))
     """)
     List<Word> findWordsBySearchQuery(@Param("searchQuery") String searchQuery);
 }
