@@ -9,6 +9,7 @@ public record PhraseResponseDTO(
         String english,
         Boolean isQuestion,
         String audioUrl,
-        List<PhraseWordResponseDTO> phraseWords
+        List<PhraseWordResponseDTO> phraseWords,
+        List<PhraseGrammarBreakdownDTO> grammarBreakdowns
 ) {
 }

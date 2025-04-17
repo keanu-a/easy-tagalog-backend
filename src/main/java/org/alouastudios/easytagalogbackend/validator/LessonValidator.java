@@ -7,8 +7,6 @@ import org.alouastudios.easytagalogbackend.dto.lesson.TranslatePhraseQuestionReq
 import org.alouastudios.easytagalogbackend.dto.lesson.TranslateWordQuestionRequestDTO;
 import org.springframework.stereotype.Component;
 
-import java.util.Set;
-
 @Component
 public class LessonValidator {
 

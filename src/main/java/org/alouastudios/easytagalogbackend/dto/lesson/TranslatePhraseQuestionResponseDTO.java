@@ -13,8 +13,8 @@ public class TranslatePhraseQuestionResponseDTO extends LessonQuestionResponseDT
     private List<PhraseResponseDTO> options;
     private UUID answer;
 
-    public TranslatePhraseQuestionResponseDTO(String prompt, List<PhraseResponseDTO> options, UUID answer) {
-        super(prompt);
+    public TranslatePhraseQuestionResponseDTO(List<PhraseResponseDTO> options, UUID answer) {
+        super();
         this.options = options;
         this.answer = answer;
     }

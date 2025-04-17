@@ -14,8 +14,7 @@ public class TranslateWordQuestionResponseDTO extends LessonQuestionResponseDTO 
     private List<WordResponseDTO> options;
     private UUID answer;
 
-    public TranslateWordQuestionResponseDTO(String prompt, List<WordResponseDTO> options, UUID answer) {
-        super(prompt);
+    public TranslateWordQuestionResponseDTO(List<WordResponseDTO> options, UUID answer) {
         this.options = options;
         this.answer = answer;
     }

@@ -105,7 +105,11 @@ public class WordService {
 
         return words.stream()
                 .map(word -> {
-                    boolean isExactMatch = word.getTagalog().equalsIgnoreCase(searchQuery);
+                    boolean isExactMatch = word.getTagalog().equalsIgnoreCase(searchQuery)
+                            || word.getTranslations().stream()
+                            .flatMap(translation -> translation.getEnglishMeanings().stream())
+                            .anyMatch(englishMeaning -> englishMeaning.getMeaning().equalsIgnoreCase(searchQuery));
+
                     List<PhraseResponseDTO> examplePhrases = isExactMatch
                             ? getExamplePhrases(word.getUuid())
                             : List.of();

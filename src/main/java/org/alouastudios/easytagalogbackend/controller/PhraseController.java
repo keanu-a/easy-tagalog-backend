@@ -1,6 +1,7 @@
 package org.alouastudios.easytagalogbackend.controller;
 
 import jakarta.validation.Valid;
+import org.alouastudios.easytagalogbackend.dto.phrase.PhraseGrammarBreakdownDTO;
 import org.alouastudios.easytagalogbackend.dto.phrase.PhraseRequestDTO;
 import org.alouastudios.easytagalogbackend.dto.phrase.PhraseResponseDTO;
 import org.alouastudios.easytagalogbackend.service.PhraseService;
@@ -48,5 +49,12 @@ public class PhraseController {
     public String deletePhraseById(@PathVariable UUID uuid) {
         phraseService.deletePhraseById(uuid);
         return "Deleted Phrase UUID: " + uuid;
+    }
+
+    // TODO: Endpoint for OpenAI API
+    @PostMapping("/{uuid}/generate-grammar-breakdown")
+    public void generateGrammarBreakdown(@PathVariable UUID uuid) {
+//        List<PhraseGrammarBreakdownDTO> breakdowns = phraseService.generateGrammarBreakdowns(id);
+//        return phraseService.generateGrammarBreakdowns(id);
     }
 }
