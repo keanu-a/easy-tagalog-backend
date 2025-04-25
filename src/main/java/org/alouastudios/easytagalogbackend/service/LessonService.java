@@ -6,9 +6,9 @@ import org.alouastudios.easytagalogbackend.dto.lesson.*;
 import org.alouastudios.easytagalogbackend.exception.ResourceNotFoundException;
 import org.alouastudios.easytagalogbackend.mapper.LessonMapper;
 import org.alouastudios.easytagalogbackend.model.lessons.Lesson;
-import org.alouastudios.easytagalogbackend.model.lessons.LessonQuestion;
-import org.alouastudios.easytagalogbackend.model.lessons.TranslatePhraseQuestion;
-import org.alouastudios.easytagalogbackend.model.lessons.TranslateWordQuestion;
+import org.alouastudios.easytagalogbackend.model.lessons.LessonItem;
+import org.alouastudios.easytagalogbackend.model.lessons.TranslatePhraseItem;
+import org.alouastudios.easytagalogbackend.model.lessons.TranslateWordItem;
 import org.alouastudios.easytagalogbackend.model.phrases.Phrase;
 import org.alouastudios.easytagalogbackend.model.words.Word;
 import org.alouastudios.easytagalogbackend.repository.LessonRepository;
@@ -92,13 +92,13 @@ public class LessonService {
 
         lessonValidator.validateLessonRequest(lessonRequestDTO);
 
-        List<LessonQuestion> questions = new ArrayList<>();
+        List<LessonItem> questions = new ArrayList<>();
 
-        for (LessonQuestionRequestDTO questionDTO : lessonRequestDTO.questions()) {
-            if (questionDTO instanceof TranslateWordQuestionRequestDTO wordDTO) {
+        for (LessonItemRequestDTO questionDTO : lessonRequestDTO.items()) {
+            if (questionDTO instanceof TranslateWordItemRequestDTO wordDTO) {
                 questions.add(getTranslateWordQuestion(wordDTO, lesson));
 
-            } else if (questionDTO instanceof TranslatePhraseQuestionRequestDTO phraseDTO) {
+            } else if (questionDTO instanceof TranslatePhraseItemRequestDTO phraseDTO) {
                 questions.add(getTranslatePhraseQuestion(phraseDTO, lesson));
 
             } else {
@@ -110,8 +110,8 @@ public class LessonService {
     }
 
     // This function returns a TranslateWordQuestion
-    private TranslateWordQuestion getTranslateWordQuestion(TranslateWordQuestionRequestDTO translateWordQuestionRequestDTO, Lesson lesson) {
-        TranslateWordQuestion question = new TranslateWordQuestion();
+    private TranslateWordItem getTranslateWordQuestion(TranslateWordItemRequestDTO translateWordQuestionRequestDTO, Lesson lesson) {
+        TranslateWordItem question = new TranslateWordItem();
 
         question.setLesson(lesson);
         question.setAnswer(translateWordQuestionRequestDTO.getAnswer());
@@ -127,8 +127,8 @@ public class LessonService {
     }
 
     // This function returns a TranslatePhraseQuestion
-    private TranslatePhraseQuestion getTranslatePhraseQuestion(TranslatePhraseQuestionRequestDTO translatePhraseQuestionRequestDTO, Lesson lesson) {
-        TranslatePhraseQuestion question = new TranslatePhraseQuestion();
+    private TranslatePhraseItem getTranslatePhraseQuestion(TranslatePhraseItemRequestDTO translatePhraseQuestionRequestDTO, Lesson lesson) {
+        TranslatePhraseItem question = new TranslatePhraseItem();
 
         question.setLesson(lesson);
         question.setAnswer(translatePhraseQuestionRequestDTO.getAnswer());

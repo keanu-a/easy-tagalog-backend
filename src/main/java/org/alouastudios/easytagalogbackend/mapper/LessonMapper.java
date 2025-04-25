@@ -4,9 +4,9 @@ import org.alouastudios.easytagalogbackend.dto.lesson.*;
 import org.alouastudios.easytagalogbackend.dto.phrase.PhraseResponseDTO;
 import org.alouastudios.easytagalogbackend.dto.word.WordResponseDTO;
 import org.alouastudios.easytagalogbackend.model.lessons.Lesson;
-import org.alouastudios.easytagalogbackend.model.lessons.LessonQuestion;
-import org.alouastudios.easytagalogbackend.model.lessons.TranslatePhraseQuestion;
-import org.alouastudios.easytagalogbackend.model.lessons.TranslateWordQuestion;
+import org.alouastudios.easytagalogbackend.model.lessons.LessonItem;
+import org.alouastudios.easytagalogbackend.model.lessons.TranslatePhraseItem;
+import org.alouastudios.easytagalogbackend.model.lessons.TranslateWordItem;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -27,42 +27,42 @@ public class LessonMapper {
         return new LessonResponseDTO(
                 lesson.getUuid(),
                 lesson.getTitle(),
-                lesson.getQuestions().stream().map(this::toLessonQuestionResponseDTO).collect(Collectors.toSet())
+                lesson.getItems().stream().map(this::toLessonQuestionResponseDTO).collect(Collectors.toList())
         );
     }
 
-    public void toEntity(Lesson lesson, LessonRequestDTO lessonRequestDTO, List<LessonQuestion> lessonQuestions) {
+    public void toEntity(Lesson lesson, LessonRequestDTO lessonRequestDTO, List<LessonItem> lessonItems) {
         lesson.setTitle(lessonRequestDTO.title());
 
-        lesson.getQuestions().clear();
-        lesson.getQuestions().addAll(lessonQuestions);
+        lesson.getItems().clear();
+        lesson.getItems().addAll(lessonItems);
     }
 
-    private LessonQuestionResponseDTO toLessonQuestionResponseDTO(LessonQuestion lessonQuestion) {
-        if (lessonQuestion instanceof TranslateWordQuestion translateWordQuestion) {
+    private LessonItemResponseDTO toLessonQuestionResponseDTO(LessonItem lessonItem) {
+        if (lessonItem instanceof TranslateWordItem translateWordQuestion) {
             List<WordResponseDTO> options = translateWordQuestion.getOptions()
                     .stream()
                     .map(word -> wordMapper.toResponseDTO(word, List.of()))
                     .toList();
 
-            return new TranslateWordQuestionResponseDTO(
+            return new TranslateWordItemResponseDTO(
                     options,
                     translateWordQuestion.getAnswer()
             );
 
-        } else if (lessonQuestion instanceof TranslatePhraseQuestion translatePhraseQuestion) {
+        } else if (lessonItem instanceof TranslatePhraseItem translatePhraseQuestion) {
             List<PhraseResponseDTO> options = translatePhraseQuestion.getOptions()
                     .stream()
                     .map(phraseMapper::toResponseDTO)
                     .toList();
 
-            return new TranslatePhraseQuestionResponseDTO(
+            return new TranslatePhraseItemResponseDTO(
                     options,
                     translatePhraseQuestion.getAnswer()
             );
 
         } else {
-            throw new IllegalArgumentException("Unknown question type: " + lessonQuestion.getClass());
+            throw new IllegalArgumentException("Unknown question type: " + lessonItem.getClass());
         }
     }
 }

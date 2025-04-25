@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Data
 @NoArgsConstructor
-public class TranslatePhraseQuestionRequestDTO extends LessonQuestionRequestDTO {
+public class TranslateWordItemRequestDTO extends LessonItemRequestDTO {
     private List<UUID> options;
     private UUID answer;
 }

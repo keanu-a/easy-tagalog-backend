@@ -9,12 +9,12 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class TranslateWordQuestionResponseDTO extends LessonQuestionResponseDTO {
+public class TranslateWordItemResponseDTO extends LessonItemResponseDTO {
 
     private List<WordResponseDTO> options;
     private UUID answer;
 
-    public TranslateWordQuestionResponseDTO(List<WordResponseDTO> options, UUID answer) {
+    public TranslateWordItemResponseDTO(List<WordResponseDTO> options, UUID answer) {
         this.options = options;
         this.answer = answer;
     }

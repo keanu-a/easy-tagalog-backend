@@ -10,8 +10,8 @@ import java.util.Objects;
 @NoArgsConstructor
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "lesson_questions")
-public abstract class LessonQuestion {
+@Table(name = "lesson_items")
+public abstract class LessonItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,7 +34,7 @@ public abstract class LessonQuestion {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        LessonQuestion that = (LessonQuestion) o;
+        LessonItem that = (LessonItem) o;
         return Objects.equals(id, that.id);
     }
 

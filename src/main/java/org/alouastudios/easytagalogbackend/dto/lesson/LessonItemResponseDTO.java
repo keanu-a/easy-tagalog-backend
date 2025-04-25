@@ -11,10 +11,10 @@ import lombok.Setter;
         property = "type"
 )
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = TranslateWordQuestionResponseDTO.class, name = "translateWord"),
-        @JsonSubTypes.Type(value = TranslatePhraseQuestionResponseDTO.class, name = "translatePhrase")
+        @JsonSubTypes.Type(value = TranslateWordItemResponseDTO.class, name = "translateWord"),
+        @JsonSubTypes.Type(value = TranslatePhraseItemResponseDTO.class, name = "translatePhrase")
 })
 @Getter
 @Setter
-public abstract class LessonQuestionResponseDTO {
+public abstract class LessonItemResponseDTO {
 }

@@ -1,10 +1,10 @@
 package org.alouastudios.easytagalogbackend.validator;
 
 import jakarta.validation.ValidationException;
-import org.alouastudios.easytagalogbackend.dto.lesson.LessonQuestionRequestDTO;
+import org.alouastudios.easytagalogbackend.dto.lesson.LessonItemRequestDTO;
 import org.alouastudios.easytagalogbackend.dto.lesson.LessonRequestDTO;
-import org.alouastudios.easytagalogbackend.dto.lesson.TranslatePhraseQuestionRequestDTO;
-import org.alouastudios.easytagalogbackend.dto.lesson.TranslateWordQuestionRequestDTO;
+import org.alouastudios.easytagalogbackend.dto.lesson.TranslatePhraseItemRequestDTO;
+import org.alouastudios.easytagalogbackend.dto.lesson.TranslateWordItemRequestDTO;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -15,16 +15,16 @@ public class LessonValidator {
             throw new ValidationException("Lessons must have a title");
         }
 
-        if (lessonRequest.questions() == null || lessonRequest.questions().isEmpty()) {
+        if (lessonRequest.items() == null || lessonRequest.items().isEmpty()) {
             throw new ValidationException("Lesson must have at least one question");
         }
 
-        for (LessonQuestionRequestDTO question: lessonRequest.questions()) {
+        for (LessonItemRequestDTO question: lessonRequest.items()) {
 
-            if (question instanceof TranslateWordQuestionRequestDTO translateWordQuestion) {
+            if (question instanceof TranslateWordItemRequestDTO translateWordQuestion) {
                 validateTranslateWordQuestion(translateWordQuestion);
 
-            } else if (question instanceof TranslatePhraseQuestionRequestDTO translatePhraseQuestion) {
+            } else if (question instanceof TranslatePhraseItemRequestDTO translatePhraseQuestion) {
                 validateTranslatePhraseQuestion(translatePhraseQuestion);
 
             } else {
@@ -33,7 +33,7 @@ public class LessonValidator {
         }
     }
 
-    private void validateTranslateWordQuestion(TranslateWordQuestionRequestDTO translateWordQuestion) {
+    private void validateTranslateWordQuestion(TranslateWordItemRequestDTO translateWordQuestion) {
         if (translateWordQuestion.getOptions() == null || translateWordQuestion.getOptions().isEmpty()) {
             throw new ValidationException("Translate word question must have at least one option");
         }
@@ -47,7 +47,7 @@ public class LessonValidator {
         }
     }
 
-    private void validateTranslatePhraseQuestion(TranslatePhraseQuestionRequestDTO translatePhraseQuestion) {
+    private void validateTranslatePhraseQuestion(TranslatePhraseItemRequestDTO translatePhraseQuestion) {
         if (translatePhraseQuestion.getOptions() == null || translatePhraseQuestion.getOptions().isEmpty()) {
             throw new ValidationException("Translate phrase question must have at least one option");
         }

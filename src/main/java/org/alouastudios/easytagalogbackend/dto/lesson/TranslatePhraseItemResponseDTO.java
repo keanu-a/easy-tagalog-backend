@@ -9,11 +9,11 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class TranslatePhraseQuestionResponseDTO extends LessonQuestionResponseDTO {
+public class TranslatePhraseItemResponseDTO extends LessonItemResponseDTO {
     private List<PhraseResponseDTO> options;
     private UUID answer;
 
-    public TranslatePhraseQuestionResponseDTO(List<PhraseResponseDTO> options, UUID answer) {
+    public TranslatePhraseItemResponseDTO(List<PhraseResponseDTO> options, UUID answer) {
         super();
         this.options = options;
         this.answer = answer;

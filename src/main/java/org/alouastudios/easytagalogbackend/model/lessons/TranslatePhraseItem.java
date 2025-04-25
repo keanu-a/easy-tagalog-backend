@@ -3,7 +3,7 @@ package org.alouastudios.easytagalogbackend.model.lessons;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.alouastudios.easytagalogbackend.model.words.Word;
+import org.alouastudios.easytagalogbackend.model.phrases.Phrase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,27 +13,27 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "translate_word_questions")
-public class TranslateWordQuestion extends LessonQuestion {
+@Table(name = "translate_phrase_items")
+public class TranslatePhraseItem extends LessonItem {
 
     @ManyToMany
     @JoinTable(
-            name = "translate_word_question_options",
-            joinColumns = @JoinColumn(name = "question_id"),
-            inverseJoinColumns = @JoinColumn(name = "word_id")
+            name = "translate_phrase_item_options",
+            joinColumns = @JoinColumn(name = "item_id"),
+            inverseJoinColumns = @JoinColumn(name = "phrase_id")
     )
-    private List<Word> options = new ArrayList<>();
+    private List<Phrase> options = new ArrayList<>();
 
     private UUID answer;
 
     @Override
     public String getType() {
-        return "translateWord";
+        return "translatePhrase";
     }
 
     @Override
     public String toString() {
-        return "TranslateWordQuestion{" +
+        return "TranslatePhraseItem{" +
                 "answer=" + answer +
                 '}';
     }
@@ -43,7 +43,7 @@ public class TranslateWordQuestion extends LessonQuestion {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        TranslateWordQuestion that = (TranslateWordQuestion) o;
+        TranslatePhraseItem that = (TranslatePhraseItem) o;
         return Objects.equals(answer, that.answer);
     }
 
