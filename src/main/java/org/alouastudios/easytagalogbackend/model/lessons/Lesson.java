@@ -22,8 +22,8 @@ public class Lesson {
     private String title;
 
     @OneToMany(mappedBy = "lesson", cascade = CascadeType.ALL, orphanRemoval = true)
-    @OrderColumn(name = "question_order")
-    private List<LessonQuestion> questions = new ArrayList<>();
+    @OrderColumn(name = "item_order")
+    private List<LessonItem> items = new ArrayList<>();
 
     @PrePersist
     public void generateUUID() {

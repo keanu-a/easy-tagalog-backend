@@ -1,10 +1,7 @@
 package org.alouastudios.easytagalogbackend.validator;
 
 import jakarta.validation.ValidationException;
-import org.alouastudios.easytagalogbackend.dto.lesson.LessonQuestionRequestDTO;
-import org.alouastudios.easytagalogbackend.dto.lesson.LessonRequestDTO;
-import org.alouastudios.easytagalogbackend.dto.lesson.TranslatePhraseQuestionRequestDTO;
-import org.alouastudios.easytagalogbackend.dto.lesson.TranslateWordQuestionRequestDTO;
+import org.alouastudios.easytagalogbackend.dto.lesson.*;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -15,49 +12,70 @@ public class LessonValidator {
             throw new ValidationException("Lessons must have a title");
         }
 
-        if (lessonRequest.questions() == null || lessonRequest.questions().isEmpty()) {
+        if (lessonRequest.items() == null || lessonRequest.items().isEmpty()) {
             throw new ValidationException("Lesson must have at least one question");
         }
 
-        for (LessonQuestionRequestDTO question: lessonRequest.questions()) {
-
-            if (question instanceof TranslateWordQuestionRequestDTO translateWordQuestion) {
-                validateTranslateWordQuestion(translateWordQuestion);
-
-            } else if (question instanceof TranslatePhraseQuestionRequestDTO translatePhraseQuestion) {
-                validateTranslatePhraseQuestion(translatePhraseQuestion);
-
-            } else {
-                throw new ValidationException("Question is of invalid type");
+        for (LessonItemRequestDTO lessonItem: lessonRequest.items()) {
+            switch (lessonItem) {
+                case TranslateWordItemRequestDTO translateWordItemRequest ->
+                        validateTranslateWordQuestion(translateWordItemRequest);
+                case TranslatePhraseItemRequestDTO translatePhraseItemRequest ->
+                        validateTranslatePhraseQuestion(translatePhraseItemRequest);
+                case ScenarioPromptItemRequestDTO scenarioPromptItemRequest ->
+                        validateScenarioPrompt(scenarioPromptItemRequest);
+                case null, default -> throw new ValidationException("Question is of invalid type");
             }
         }
     }
 
-    private void validateTranslateWordQuestion(TranslateWordQuestionRequestDTO translateWordQuestion) {
-        if (translateWordQuestion.getOptions() == null || translateWordQuestion.getOptions().isEmpty()) {
+    private void validateTranslateWordQuestion(TranslateWordItemRequestDTO translateWordItemRequest) {
+        if (translateWordItemRequest.getEnglishUuid() == null) {
+            throw new ValidationException("Translate word question must have a word");
+        }
+
+        if (translateWordItemRequest.getWordOptionsUuid() == null || translateWordItemRequest.getWordOptionsUuid().isEmpty()) {
             throw new ValidationException("Translate word question must have at least one option");
         }
 
-        if (translateWordQuestion.getOptions().size() < 2) {
+        if (translateWordItemRequest.getWordOptionsUuid().size() < 2) {
             throw new ValidationException("Translate word question must have at least two options");
         }
 
-        if (translateWordQuestion.getAnswer() == null) {
+        if (translateWordItemRequest.getWordAnswerUuid() == null) {
             throw new ValidationException("Translate word question must have an answer");
         }
     }
 
-    private void validateTranslatePhraseQuestion(TranslatePhraseQuestionRequestDTO translatePhraseQuestion) {
-        if (translatePhraseQuestion.getOptions() == null || translatePhraseQuestion.getOptions().isEmpty()) {
+    private void validateTranslatePhraseQuestion(TranslatePhraseItemRequestDTO translatePhraseItemRequest) {
+        if (translatePhraseItemRequest.getPhraseUuid() == null) {
+            throw new ValidationException("Translate phrase question must have a word");
+        }
+
+        if (translatePhraseItemRequest.getPhraseOptionsUuid() == null || translatePhraseItemRequest.getPhraseOptionsUuid().isEmpty()) {
             throw new ValidationException("Translate phrase question must have at least one option");
         }
 
-        if (translatePhraseQuestion.getOptions().size() < 2) {
+        if (translatePhraseItemRequest.getPhraseOptionsUuid().size() < 2) {
             throw new ValidationException("Translate phrase question must have at least two options");
         }
 
-        if (translatePhraseQuestion.getAnswer() == null) {
+        if (translatePhraseItemRequest.getPhraseAnswerUuid() == null) {
             throw new ValidationException("Translate phrase question must have an answer");
+        }
+    }
+
+    private void validateScenarioPrompt(ScenarioPromptItemRequestDTO scenarioPromptItemRequest) {
+        if (scenarioPromptItemRequest.getPromptPhrase() == null) {
+            throw new ValidationException("Translate phrase question must have a word");
+        }
+
+        if (scenarioPromptItemRequest.getOptions() == null || scenarioPromptItemRequest.getOptions().isEmpty()) {
+            throw new ValidationException("Scenario prompt must have at least one option");
+        }
+
+        if (scenarioPromptItemRequest.getOptions().size() < 2) {
+            throw new ValidationException("Scenario prompt must have at least two options");
         }
     }
 }

@@ -5,23 +5,33 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Objects;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "lesson_questions")
-public abstract class LessonQuestion {
+@Table(name = "lesson_items")
+public abstract class LessonItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private UUID uuid;
 
     @ManyToOne
     @JoinColumn(name = "lesson_id")
     private Lesson lesson;
 
     public abstract String getType(); // used to send `type` to frontend
+
+    @PrePersist
+    public void generateUUID() {
+        if (uuid == null) {
+            uuid = UUID.randomUUID();
+        }
+    }
 
     @Override
     public String toString() {
@@ -34,7 +44,7 @@ public abstract class LessonQuestion {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        LessonQuestion that = (LessonQuestion) o;
+        LessonItem that = (LessonItem) o;
         return Objects.equals(id, that.id);
     }
 
