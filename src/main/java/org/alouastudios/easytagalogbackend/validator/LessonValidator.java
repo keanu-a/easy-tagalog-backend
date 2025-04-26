@@ -30,37 +30,37 @@ public class LessonValidator {
     }
 
     private void validateTranslateWordQuestion(TranslateWordItemRequestDTO translateWordItemRequest) {
-        if (translateWordItemRequest.getWord() == null) {
+        if (translateWordItemRequest.getEnglishUuid() == null) {
             throw new ValidationException("Translate word question must have a word");
         }
 
-        if (translateWordItemRequest.getOptions() == null || translateWordItemRequest.getOptions().isEmpty()) {
+        if (translateWordItemRequest.getWordOptionsUuid() == null || translateWordItemRequest.getWordOptionsUuid().isEmpty()) {
             throw new ValidationException("Translate word question must have at least one option");
         }
 
-        if (translateWordItemRequest.getOptions().size() < 2) {
+        if (translateWordItemRequest.getWordOptionsUuid().size() < 2) {
             throw new ValidationException("Translate word question must have at least two options");
         }
 
-        if (translateWordItemRequest.getAnswer() == null) {
+        if (translateWordItemRequest.getWordAnswerUuid() == null) {
             throw new ValidationException("Translate word question must have an answer");
         }
     }
 
     private void validateTranslatePhraseQuestion(TranslatePhraseItemRequestDTO translatePhraseItemRequest) {
-        if (translatePhraseItemRequest.getPhrase() == null) {
+        if (translatePhraseItemRequest.getPhraseUuid() == null) {
             throw new ValidationException("Translate phrase question must have a word");
         }
 
-        if (translatePhraseItemRequest.getOptions() == null || translatePhraseItemRequest.getOptions().isEmpty()) {
+        if (translatePhraseItemRequest.getPhraseOptionsUuid() == null || translatePhraseItemRequest.getPhraseOptionsUuid().isEmpty()) {
             throw new ValidationException("Translate phrase question must have at least one option");
         }
 
-        if (translatePhraseItemRequest.getOptions().size() < 2) {
+        if (translatePhraseItemRequest.getPhraseOptionsUuid().size() < 2) {
             throw new ValidationException("Translate phrase question must have at least two options");
         }
 
-        if (translatePhraseItemRequest.getAnswer() == null) {
+        if (translatePhraseItemRequest.getPhraseAnswerUuid() == null) {
             throw new ValidationException("Translate phrase question must have an answer");
         }
     }
