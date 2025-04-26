@@ -2,7 +2,6 @@ package org.alouastudios.easytagalogbackend.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.alouastudios.easytagalogbackend.dto.phrase.PhraseGrammarBreakdownDTO;
 import org.alouastudios.easytagalogbackend.dto.phrase.PhraseRequestDTO;
 import org.alouastudios.easytagalogbackend.dto.phrase.PhraseResponseDTO;
 import org.alouastudios.easytagalogbackend.exception.ResourceNotFoundException;
@@ -10,7 +9,9 @@ import org.alouastudios.easytagalogbackend.mapper.PhraseMapper;
 import org.alouastudios.easytagalogbackend.model.phrases.Phrase;
 import org.alouastudios.easytagalogbackend.model.phrases.PhraseWord;
 import org.alouastudios.easytagalogbackend.model.words.Conjugation;
+import org.alouastudios.easytagalogbackend.model.words.English;
 import org.alouastudios.easytagalogbackend.model.words.Word;
+import org.alouastudios.easytagalogbackend.repository.EnglishRepository;
 import org.alouastudios.easytagalogbackend.repository.PhraseRepository;
 import org.alouastudios.easytagalogbackend.repository.WordRepository;
 import org.alouastudios.easytagalogbackend.util.ServiceUtil;
@@ -27,6 +28,7 @@ public class PhraseService {
 
     private final PhraseRepository phraseRepository;
     private final WordRepository wordRepository;
+    private final EnglishRepository englishRepository;
 
     private final PhraseValidator phraseValidator;
 
@@ -139,8 +141,10 @@ public class PhraseService {
 
                         phraseWord.setAudioUrl(audioUrl);
                         phraseWord.setWord(word);
-                        phraseWord.setEnglish(pw.english());
                         phraseWord.setNote(pw.note());
+
+                        English english = englishRepository.findByUuid(pw.englishUuid()).orElseThrow(() -> new ResourceNotFoundException("English not found"));
+                        phraseWord.setEnglish(english.getMeaning());
                     }
 
                     phraseWord.setPhrase(phrase);

@@ -182,7 +182,7 @@ public class WordService {
 
         Set<Translation> newTranslationSet = new HashSet<>();
 
-        // Creates a set of string english meanings
+        // Creates a set of string englishUuid meanings
         Set<String> meanings = translationSet.stream()
                 .flatMap(t -> t.getEnglishMeanings().stream().map(e -> e.getMeaning().toLowerCase()))
                 .collect(Collectors.toSet());
@@ -197,7 +197,7 @@ public class WordService {
             Set<English> newEnglishSet = new HashSet<>();
 
             if (translation.getEnglishMeanings() == null || translation.getEnglishMeanings().isEmpty()) {
-                throw new RuntimeException("Translation must have english meanings");
+                throw new RuntimeException("Translation must have englishUuid meanings");
             }
 
             for (English english : translation.getEnglishMeanings()) {

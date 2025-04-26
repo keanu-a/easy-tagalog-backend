@@ -6,17 +6,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
         include = JsonTypeInfo.As.PROPERTY,
         property = "type"
 )
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = TranslateWordQuestionRequestDTO.class, name = "translateWord"),
-        @JsonSubTypes.Type(value = TranslatePhraseQuestionRequestDTO.class, name = "translatePhrase")
+        @JsonSubTypes.Type(value = TranslateWordItemRequestDTO.class, name = "translateWord"),
+        @JsonSubTypes.Type(value = TranslatePhraseItemRequestDTO.class, name = "translatePhrase"),
+        @JsonSubTypes.Type(value = ScenarioPromptItemRequestDTO.class, name = "scenarioPrompt")
 })
-@Getter
-@Setter
-@NoArgsConstructor
-public abstract class LessonQuestionRequestDTO {
+public abstract class LessonItemRequestDTO {
 }

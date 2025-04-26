@@ -1,14 +1,16 @@
 package org.alouastudios.easytagalogbackend.dto.lesson;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 import java.util.UUID;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
-public class TranslatePhraseQuestionRequestDTO extends LessonQuestionRequestDTO {
+public class ScenarioPromptItemRequestDTO extends LessonItemRequestDTO {
+    private UUID promptPhrase;
     private List<UUID> options;
-    private UUID answer;
 }
