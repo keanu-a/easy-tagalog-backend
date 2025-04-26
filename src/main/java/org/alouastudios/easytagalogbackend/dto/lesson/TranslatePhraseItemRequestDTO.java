@@ -11,7 +11,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 public class TranslatePhraseItemRequestDTO extends LessonItemRequestDTO {
-    private UUID phrase;
-    private List<UUID> options;
-    private UUID answer;
+    private UUID phraseUuid;
+    private List<UUID> phraseOptionsUuid;
+    private UUID phraseAnswerUuid;
 }

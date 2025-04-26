@@ -35,7 +35,7 @@ public class Conjugation {
     private String audioUrl;
 
     @Column(nullable = false)
-    private String english; // Not using english entity since verb tense has one meaning
+    private String english; // Not using englishUuid entity since verb tense has one meaning
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

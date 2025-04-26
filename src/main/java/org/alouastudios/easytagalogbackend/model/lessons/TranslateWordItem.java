@@ -19,9 +19,7 @@ import java.util.UUID;
 @ToString(callSuper = true)
 public class TranslateWordItem extends LessonItem {
 
-    @ManyToOne
-    @JoinColumn(name = "word_id")
-    private Word word;
+    private String english;
 
     @ManyToMany
     @JoinTable(

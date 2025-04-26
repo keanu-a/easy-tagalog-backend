@@ -7,7 +7,9 @@ import org.alouastudios.easytagalogbackend.exception.ResourceNotFoundException;
 import org.alouastudios.easytagalogbackend.mapper.LessonMapper;
 import org.alouastudios.easytagalogbackend.model.lessons.*;
 import org.alouastudios.easytagalogbackend.model.phrases.Phrase;
+import org.alouastudios.easytagalogbackend.model.words.English;
 import org.alouastudios.easytagalogbackend.model.words.Word;
+import org.alouastudios.easytagalogbackend.repository.EnglishRepository;
 import org.alouastudios.easytagalogbackend.repository.LessonRepository;
 import org.alouastudios.easytagalogbackend.repository.PhraseRepository;
 import org.alouastudios.easytagalogbackend.repository.WordRepository;
@@ -27,6 +29,7 @@ public class LessonService {
     private final LessonValidator lessonValidator;
 
     private final LessonMapper lessonMapper;
+    private final EnglishRepository englishRepository;
 
     public List<LessonResponseDTO> getAllLessons() {
         return lessonRepository.findAll()
@@ -114,13 +117,13 @@ public class LessonService {
         TranslateWordItem newTranslateWordItem = new TranslateWordItem();
 
         newTranslateWordItem.setLesson(lesson);
-        newTranslateWordItem.setAnswer(translateWordItemRequestDTO.getAnswer());
+        newTranslateWordItem.setAnswer(translateWordItemRequestDTO.getWordAnswerUuid());
 
-        Word word = wordRepository.findByUuid(translateWordItemRequestDTO.getWord()).orElseThrow(() -> new ResourceNotFoundException("Word not found"));
-        newTranslateWordItem.setWord(word);
+        English english = englishRepository.findByUuid(translateWordItemRequestDTO.getEnglishUuid()).orElseThrow(() -> new ResourceNotFoundException("English meaning not found"));
+        newTranslateWordItem.setEnglish(english.getMeaning());
 
         // Fetch and set word options
-        List<Word> options = translateWordItemRequestDTO.getOptions().stream()
+        List<Word> options = translateWordItemRequestDTO.getWordOptionsUuid().stream()
                 .map(uuid -> wordRepository.findByUuid(uuid)
                         .orElseThrow(() -> new ResourceNotFoundException("Word option not found: " + uuid)))
                 .toList();
@@ -134,13 +137,13 @@ public class LessonService {
         TranslatePhraseItem newTranslatePhraseItem = new TranslatePhraseItem();
 
         newTranslatePhraseItem.setLesson(lesson);
-        newTranslatePhraseItem.setAnswer(translatePhraseItemRequestDTO.getAnswer());
+        newTranslatePhraseItem.setAnswer(translatePhraseItemRequestDTO.getPhraseAnswerUuid());
 
-        Phrase phrase = phraseRepository.findByUuid(translatePhraseItemRequestDTO.getPhrase()).orElseThrow(() -> new ResourceNotFoundException("Phrase not found"));
-        newTranslatePhraseItem.setPhrase(phrase);
+        Phrase phrase = phraseRepository.findByUuid(translatePhraseItemRequestDTO.getPhraseUuid()).orElseThrow(() -> new ResourceNotFoundException("Phrase not found"));
+        newTranslatePhraseItem.setEnglish(phrase.getEnglish());
 
         // Fetch and set phrase options
-        List<Phrase> options = translatePhraseItemRequestDTO.getOptions().stream()
+        List<Phrase> options = translatePhraseItemRequestDTO.getPhraseOptionsUuid().stream()
                 .map(uuid -> phraseRepository.findByUuid(uuid)
                         .orElseThrow(() -> new ResourceNotFoundException("Phrase option not found: " + uuid)))
                 .toList();

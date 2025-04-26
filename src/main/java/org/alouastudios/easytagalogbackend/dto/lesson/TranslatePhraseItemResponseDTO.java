@@ -11,10 +11,12 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class TranslatePhraseItemResponseDTO extends LessonItemResponseDTO {
+    private String english;
     private List<PhraseResponseDTO> options;
 
-    public TranslatePhraseItemResponseDTO(List<PhraseResponseDTO> options) {
+    public TranslatePhraseItemResponseDTO(String english, List<PhraseResponseDTO> options) {
         super();
+        this.english = english;
         this.options = options;
     }
 }

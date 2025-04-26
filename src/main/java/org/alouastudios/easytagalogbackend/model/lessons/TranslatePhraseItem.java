@@ -19,9 +19,7 @@ import java.util.UUID;
 @ToString(callSuper = true)
 public class TranslatePhraseItem extends LessonItem {
 
-    @ManyToOne
-    @JoinColumn(name = "phrase_id")
-    private Phrase phrase;
+    private String english;
 
     @ManyToMany
     @JoinTable(

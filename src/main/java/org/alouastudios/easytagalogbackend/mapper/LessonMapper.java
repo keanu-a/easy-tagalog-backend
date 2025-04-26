@@ -44,6 +44,7 @@ public class LessonMapper {
                         .toList();
 
                 return new TranslateWordItemResponseDTO(
+                        translateWordQuestion.getEnglish(),
                         options
                 );
             }
@@ -55,6 +56,7 @@ public class LessonMapper {
                         .toList();
 
                 return new TranslatePhraseItemResponseDTO(
+                        translatePhraseQuestion.getEnglish(),
                         options
                 );
             }
