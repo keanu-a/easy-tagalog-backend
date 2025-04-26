@@ -2,19 +2,26 @@ package org.alouastudios.easytagalogbackend.model.lessons;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.alouastudios.easytagalogbackend.model.words.Word;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 @Entity
 @Table(name = "translate_word_items")
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class TranslateWordItem extends LessonItem {
+
+    @ManyToOne
+    @JoinColumn(name = "word_id")
+    private Word word;
 
     @ManyToMany
     @JoinTable(
@@ -29,26 +36,5 @@ public class TranslateWordItem extends LessonItem {
     @Override
     public String getType() {
         return "translateWord";
-    }
-
-    @Override
-    public String toString() {
-        return "TranslateWordItem{" +
-                "answer=" + answer +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        TranslateWordItem that = (TranslateWordItem) o;
-        return Objects.equals(answer, that.answer);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), answer);
     }
 }

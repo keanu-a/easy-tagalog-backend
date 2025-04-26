@@ -10,8 +10,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
-public class TranslateWordItemRequestDTO extends LessonItemRequestDTO {
-    private UUID word;
+public class ScenarioPromptItemRequestDTO extends LessonItemRequestDTO {
+    private UUID promptPhrase;
     private List<UUID> options;
-    private UUID answer;
 }

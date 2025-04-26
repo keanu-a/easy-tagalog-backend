@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Objects;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
@@ -17,11 +18,20 @@ public abstract class LessonItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private UUID uuid;
+
     @ManyToOne
     @JoinColumn(name = "lesson_id")
     private Lesson lesson;
 
     public abstract String getType(); // used to send `type` to frontend
+
+    @PrePersist
+    public void generateUUID() {
+        if (uuid == null) {
+            uuid = UUID.randomUUID();
+        }
+    }
 
     @Override
     public String toString() {

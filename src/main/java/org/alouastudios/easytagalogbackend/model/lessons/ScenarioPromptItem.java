@@ -1,6 +1,5 @@
 package org.alouastudios.easytagalogbackend.model.lessons;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,13 +15,11 @@ import java.util.List;
 @Entity
 @Table(name = "scenario_prompt_items")
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class ScenarioPromptItem extends LessonItem {
 
     @ManyToOne
     @JoinColumn(name = "phrase_id")
-    @JsonIgnore
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
     private Phrase promptPhrase;
 
     @ManyToMany
@@ -31,8 +28,6 @@ public class ScenarioPromptItem extends LessonItem {
             joinColumns = @JoinColumn(name = "item_id"),
             inverseJoinColumns = @JoinColumn(name = "phrase_id")
     )
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
     private List<Phrase> options = new ArrayList<>();
 
     @Override

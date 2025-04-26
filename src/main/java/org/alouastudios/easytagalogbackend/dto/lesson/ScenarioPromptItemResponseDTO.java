@@ -10,11 +10,13 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class TranslatePhraseItemResponseDTO extends LessonItemResponseDTO {
+public class ScenarioPromptItemResponseDTO extends LessonItemResponseDTO {
+    private PhraseResponseDTO promptPhrase;
     private List<PhraseResponseDTO> options;
 
-    public TranslatePhraseItemResponseDTO(List<PhraseResponseDTO> options) {
+    public ScenarioPromptItemResponseDTO(PhraseResponseDTO promptPhrase, List<PhraseResponseDTO> options) {
         super();
+        this.promptPhrase = promptPhrase;
         this.options = options;
     }
 }

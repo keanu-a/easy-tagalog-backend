@@ -5,10 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.alouastudios.easytagalogbackend.dto.lesson.*;
 import org.alouastudios.easytagalogbackend.exception.ResourceNotFoundException;
 import org.alouastudios.easytagalogbackend.mapper.LessonMapper;
-import org.alouastudios.easytagalogbackend.model.lessons.Lesson;
-import org.alouastudios.easytagalogbackend.model.lessons.LessonItem;
-import org.alouastudios.easytagalogbackend.model.lessons.TranslatePhraseItem;
-import org.alouastudios.easytagalogbackend.model.lessons.TranslateWordItem;
+import org.alouastudios.easytagalogbackend.model.lessons.*;
 import org.alouastudios.easytagalogbackend.model.phrases.Phrase;
 import org.alouastudios.easytagalogbackend.model.words.Word;
 import org.alouastudios.easytagalogbackend.repository.LessonRepository;
@@ -92,54 +89,82 @@ public class LessonService {
 
         lessonValidator.validateLessonRequest(lessonRequestDTO);
 
-        List<LessonItem> questions = new ArrayList<>();
+        List<LessonItem> lessonItems = new ArrayList<>();
 
-        for (LessonItemRequestDTO questionDTO : lessonRequestDTO.items()) {
-            if (questionDTO instanceof TranslateWordItemRequestDTO wordDTO) {
-                questions.add(getTranslateWordQuestion(wordDTO, lesson));
-
-            } else if (questionDTO instanceof TranslatePhraseItemRequestDTO phraseDTO) {
-                questions.add(getTranslatePhraseQuestion(phraseDTO, lesson));
-
-            } else {
-                throw new IllegalArgumentException("Unsupported question type: " + questionDTO.getClass().getSimpleName());
+        for (LessonItemRequestDTO lessonItemRequestDto : lessonRequestDTO.items()) {
+            switch (lessonItemRequestDto) {
+                case TranslateWordItemRequestDTO translateWordItemRequestDTO ->
+                        lessonItems.add(getTranslateWordItem(translateWordItemRequestDTO, lesson));
+                case TranslatePhraseItemRequestDTO translatePhraseItemRequestDTO ->
+                        lessonItems.add(getTranslatePhraseItem(translatePhraseItemRequestDTO, lesson));
+                case ScenarioPromptItemRequestDTO scenarioPromptItemRequestDTO ->
+                        lessonItems.add(getScenarioPromptItem(scenarioPromptItemRequestDTO, lesson));
+                case null, default -> {
+                    assert lessonItemRequestDto != null;
+                    throw new IllegalArgumentException("Unsupported question type: " + lessonItemRequestDto.getClass().getSimpleName());
+                }
             }
         }
 
-        lessonMapper.toEntity(lesson, lessonRequestDTO, questions);
+        lessonMapper.toEntity(lesson, lessonRequestDTO, lessonItems);
     }
 
-    // This function returns a TranslateWordQuestion
-    private TranslateWordItem getTranslateWordQuestion(TranslateWordItemRequestDTO translateWordQuestionRequestDTO, Lesson lesson) {
-        TranslateWordItem question = new TranslateWordItem();
+    // This function returns a TranslateWordItem
+    private TranslateWordItem getTranslateWordItem(TranslateWordItemRequestDTO translateWordItemRequestDTO, Lesson lesson) {
+        TranslateWordItem newTranslateWordItem = new TranslateWordItem();
 
-        question.setLesson(lesson);
-        question.setAnswer(translateWordQuestionRequestDTO.getAnswer());
+        newTranslateWordItem.setLesson(lesson);
+        newTranslateWordItem.setAnswer(translateWordItemRequestDTO.getAnswer());
+
+        Word word = wordRepository.findByUuid(translateWordItemRequestDTO.getWord()).orElseThrow(() -> new ResourceNotFoundException("Word not found"));
+        newTranslateWordItem.setWord(word);
 
         // Fetch and set word options
-        List<Word> options = translateWordQuestionRequestDTO.getOptions().stream()
+        List<Word> options = translateWordItemRequestDTO.getOptions().stream()
                 .map(uuid -> wordRepository.findByUuid(uuid)
                         .orElseThrow(() -> new ResourceNotFoundException("Word option not found: " + uuid)))
                 .toList();
-        question.setOptions(options);
+        newTranslateWordItem.setOptions(options);
 
-        return question;
+        return newTranslateWordItem;
     }
 
-    // This function returns a TranslatePhraseQuestion
-    private TranslatePhraseItem getTranslatePhraseQuestion(TranslatePhraseItemRequestDTO translatePhraseQuestionRequestDTO, Lesson lesson) {
-        TranslatePhraseItem question = new TranslatePhraseItem();
+    // This function returns a TranslatePhraseItem
+    private TranslatePhraseItem getTranslatePhraseItem(TranslatePhraseItemRequestDTO translatePhraseItemRequestDTO, Lesson lesson) {
+        TranslatePhraseItem newTranslatePhraseItem = new TranslatePhraseItem();
 
-        question.setLesson(lesson);
-        question.setAnswer(translatePhraseQuestionRequestDTO.getAnswer());
+        newTranslatePhraseItem.setLesson(lesson);
+        newTranslatePhraseItem.setAnswer(translatePhraseItemRequestDTO.getAnswer());
+
+        Phrase phrase = phraseRepository.findByUuid(translatePhraseItemRequestDTO.getPhrase()).orElseThrow(() -> new ResourceNotFoundException("Phrase not found"));
+        newTranslatePhraseItem.setPhrase(phrase);
 
         // Fetch and set phrase options
-        List<Phrase> options = translatePhraseQuestionRequestDTO.getOptions().stream()
+        List<Phrase> options = translatePhraseItemRequestDTO.getOptions().stream()
                 .map(uuid -> phraseRepository.findByUuid(uuid)
                         .orElseThrow(() -> new ResourceNotFoundException("Phrase option not found: " + uuid)))
                 .toList();
-        question.setOptions(options);
+        newTranslatePhraseItem.setOptions(options);
 
-        return question;
+        return newTranslatePhraseItem;
+    }
+
+    // This function returns a ScenarioPromptItem
+    private ScenarioPromptItem getScenarioPromptItem(ScenarioPromptItemRequestDTO scenarioPromptItemRequestDTO, Lesson lesson) {
+        ScenarioPromptItem newScenarioPromptItem = new ScenarioPromptItem();
+
+        newScenarioPromptItem.setLesson(lesson);
+
+        Phrase phrase = phraseRepository.findByUuid(scenarioPromptItemRequestDTO.getPromptPhrase()).orElseThrow(() -> new ResourceNotFoundException("Phrase not found"));
+        newScenarioPromptItem.setPromptPhrase(phrase);
+
+        // Fetch and set phrase options
+        List<Phrase> options = scenarioPromptItemRequestDTO.getOptions().stream()
+                .map(uuid -> phraseRepository.findByUuid(uuid)
+                        .orElseThrow(() -> new ResourceNotFoundException("Phrase option not found: " + uuid)))
+                .toList();
+        newScenarioPromptItem.setOptions(options);
+
+        return newScenarioPromptItem;
     }
 }

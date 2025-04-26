@@ -1,10 +1,7 @@
 package org.alouastudios.easytagalogbackend.validator;
 
 import jakarta.validation.ValidationException;
-import org.alouastudios.easytagalogbackend.dto.lesson.LessonItemRequestDTO;
-import org.alouastudios.easytagalogbackend.dto.lesson.LessonRequestDTO;
-import org.alouastudios.easytagalogbackend.dto.lesson.TranslatePhraseItemRequestDTO;
-import org.alouastudios.easytagalogbackend.dto.lesson.TranslateWordItemRequestDTO;
+import org.alouastudios.easytagalogbackend.dto.lesson.*;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -19,45 +16,66 @@ public class LessonValidator {
             throw new ValidationException("Lesson must have at least one question");
         }
 
-        for (LessonItemRequestDTO question: lessonRequest.items()) {
-
-            if (question instanceof TranslateWordItemRequestDTO translateWordQuestion) {
-                validateTranslateWordQuestion(translateWordQuestion);
-
-            } else if (question instanceof TranslatePhraseItemRequestDTO translatePhraseQuestion) {
-                validateTranslatePhraseQuestion(translatePhraseQuestion);
-
-            } else {
-                throw new ValidationException("Question is of invalid type");
+        for (LessonItemRequestDTO lessonItem: lessonRequest.items()) {
+            switch (lessonItem) {
+                case TranslateWordItemRequestDTO translateWordItemRequest ->
+                        validateTranslateWordQuestion(translateWordItemRequest);
+                case TranslatePhraseItemRequestDTO translatePhraseItemRequest ->
+                        validateTranslatePhraseQuestion(translatePhraseItemRequest);
+                case ScenarioPromptItemRequestDTO scenarioPromptItemRequest ->
+                        validateScenarioPrompt(scenarioPromptItemRequest);
+                case null, default -> throw new ValidationException("Question is of invalid type");
             }
         }
     }
 
-    private void validateTranslateWordQuestion(TranslateWordItemRequestDTO translateWordQuestion) {
-        if (translateWordQuestion.getOptions() == null || translateWordQuestion.getOptions().isEmpty()) {
+    private void validateTranslateWordQuestion(TranslateWordItemRequestDTO translateWordItemRequest) {
+        if (translateWordItemRequest.getWord() == null) {
+            throw new ValidationException("Translate word question must have a word");
+        }
+
+        if (translateWordItemRequest.getOptions() == null || translateWordItemRequest.getOptions().isEmpty()) {
             throw new ValidationException("Translate word question must have at least one option");
         }
 
-        if (translateWordQuestion.getOptions().size() < 2) {
+        if (translateWordItemRequest.getOptions().size() < 2) {
             throw new ValidationException("Translate word question must have at least two options");
         }
 
-        if (translateWordQuestion.getAnswer() == null) {
+        if (translateWordItemRequest.getAnswer() == null) {
             throw new ValidationException("Translate word question must have an answer");
         }
     }
 
-    private void validateTranslatePhraseQuestion(TranslatePhraseItemRequestDTO translatePhraseQuestion) {
-        if (translatePhraseQuestion.getOptions() == null || translatePhraseQuestion.getOptions().isEmpty()) {
+    private void validateTranslatePhraseQuestion(TranslatePhraseItemRequestDTO translatePhraseItemRequest) {
+        if (translatePhraseItemRequest.getPhrase() == null) {
+            throw new ValidationException("Translate phrase question must have a word");
+        }
+
+        if (translatePhraseItemRequest.getOptions() == null || translatePhraseItemRequest.getOptions().isEmpty()) {
             throw new ValidationException("Translate phrase question must have at least one option");
         }
 
-        if (translatePhraseQuestion.getOptions().size() < 2) {
+        if (translatePhraseItemRequest.getOptions().size() < 2) {
             throw new ValidationException("Translate phrase question must have at least two options");
         }
 
-        if (translatePhraseQuestion.getAnswer() == null) {
+        if (translatePhraseItemRequest.getAnswer() == null) {
             throw new ValidationException("Translate phrase question must have an answer");
+        }
+    }
+
+    private void validateScenarioPrompt(ScenarioPromptItemRequestDTO scenarioPromptItemRequest) {
+        if (scenarioPromptItemRequest.getPromptPhrase() == null) {
+            throw new ValidationException("Translate phrase question must have a word");
+        }
+
+        if (scenarioPromptItemRequest.getOptions() == null || scenarioPromptItemRequest.getOptions().isEmpty()) {
+            throw new ValidationException("Scenario prompt must have at least one option");
+        }
+
+        if (scenarioPromptItemRequest.getOptions().size() < 2) {
+            throw new ValidationException("Scenario prompt must have at least two options");
         }
     }
 }

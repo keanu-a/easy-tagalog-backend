@@ -3,10 +3,7 @@ package org.alouastudios.easytagalogbackend.mapper;
 import org.alouastudios.easytagalogbackend.dto.lesson.*;
 import org.alouastudios.easytagalogbackend.dto.phrase.PhraseResponseDTO;
 import org.alouastudios.easytagalogbackend.dto.word.WordResponseDTO;
-import org.alouastudios.easytagalogbackend.model.lessons.Lesson;
-import org.alouastudios.easytagalogbackend.model.lessons.LessonItem;
-import org.alouastudios.easytagalogbackend.model.lessons.TranslatePhraseItem;
-import org.alouastudios.easytagalogbackend.model.lessons.TranslateWordItem;
+import org.alouastudios.easytagalogbackend.model.lessons.*;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -39,30 +36,47 @@ public class LessonMapper {
     }
 
     private LessonItemResponseDTO toLessonQuestionResponseDTO(LessonItem lessonItem) {
-        if (lessonItem instanceof TranslateWordItem translateWordQuestion) {
-            List<WordResponseDTO> options = translateWordQuestion.getOptions()
-                    .stream()
-                    .map(word -> wordMapper.toResponseDTO(word, List.of()))
-                    .toList();
+        switch (lessonItem) {
+            case TranslateWordItem translateWordQuestion -> {
+                List<WordResponseDTO> options = translateWordQuestion.getOptions()
+                        .stream()
+                        .map(word -> wordMapper.toResponseDTO(word, List.of()))
+                        .toList();
 
-            return new TranslateWordItemResponseDTO(
-                    options,
-                    translateWordQuestion.getAnswer()
-            );
+                return new TranslateWordItemResponseDTO(
+                        options
+                );
+            }
 
-        } else if (lessonItem instanceof TranslatePhraseItem translatePhraseQuestion) {
-            List<PhraseResponseDTO> options = translatePhraseQuestion.getOptions()
-                    .stream()
-                    .map(phraseMapper::toResponseDTO)
-                    .toList();
+            case TranslatePhraseItem translatePhraseQuestion -> {
+                List<PhraseResponseDTO> options = translatePhraseQuestion.getOptions()
+                        .stream()
+                        .map(phraseMapper::toResponseDTO)
+                        .toList();
 
-            return new TranslatePhraseItemResponseDTO(
-                    options,
-                    translatePhraseQuestion.getAnswer()
-            );
+                return new TranslatePhraseItemResponseDTO(
+                        options
+                );
+            }
 
-        } else {
-            throw new IllegalArgumentException("Unknown question type: " + lessonItem.getClass());
+            case ScenarioPromptItem scenarioPrompt -> {
+                List<PhraseResponseDTO> options = scenarioPrompt.getOptions()
+                        .stream()
+                        .map(phraseMapper::toResponseDTO)
+                        .toList();
+
+                PhraseResponseDTO promptPhrase = phraseMapper.toResponseDTO(scenarioPrompt.getPromptPhrase());
+
+                return new ScenarioPromptItemResponseDTO(
+                        promptPhrase,
+                        options
+                );
+            }
+
+            case null, default -> {
+                assert lessonItem != null;
+                throw new IllegalArgumentException("Unknown question type: " + lessonItem.getClass());
+            }
         }
     }
 }
