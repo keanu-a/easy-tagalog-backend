@@ -1,5 +1,7 @@
 package org.alouastudios.easytagalogbackend.controller;
 
+import org.alouastudios.easytagalogbackend.dto.lesson.CheckAnswerRequest;
+import org.alouastudios.easytagalogbackend.dto.lesson.CheckAnswerResponse;
 import org.alouastudios.easytagalogbackend.dto.lesson.LessonRequestDTO;
 import org.alouastudios.easytagalogbackend.dto.lesson.LessonResponseDTO;
 import org.alouastudios.easytagalogbackend.service.LessonService;
@@ -43,5 +45,11 @@ public class LessonController {
     public String deleteLesson(@PathVariable UUID uuid) {
         lessonService.deleteLessonById(uuid);
         return "Deleted Phrase UUID: " + uuid;
+    }
+
+    @PostMapping("/{lessonItemUuid}/check-answer")
+    public CheckAnswerResponse checkAnswer(@PathVariable UUID lessonItemUuid, @RequestBody CheckAnswerRequest checkAnswerRequest) {
+        boolean isCorrect = lessonService.checkAnswer(lessonItemUuid, checkAnswerRequest.uuid());
+        return new CheckAnswerResponse(isCorrect);
     }
 }

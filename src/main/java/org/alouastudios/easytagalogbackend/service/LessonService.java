@@ -9,10 +9,7 @@ import org.alouastudios.easytagalogbackend.model.lessons.*;
 import org.alouastudios.easytagalogbackend.model.phrases.Phrase;
 import org.alouastudios.easytagalogbackend.model.words.English;
 import org.alouastudios.easytagalogbackend.model.words.Word;
-import org.alouastudios.easytagalogbackend.repository.EnglishRepository;
-import org.alouastudios.easytagalogbackend.repository.LessonRepository;
-import org.alouastudios.easytagalogbackend.repository.PhraseRepository;
-import org.alouastudios.easytagalogbackend.repository.WordRepository;
+import org.alouastudios.easytagalogbackend.repository.*;
 import org.alouastudios.easytagalogbackend.validator.LessonValidator;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +27,7 @@ public class LessonService {
 
     private final LessonMapper lessonMapper;
     private final EnglishRepository englishRepository;
+    private final LessonItemRepository lessonItemRepository;
 
     public List<LessonResponseDTO> getAllLessons() {
         return lessonRepository.findAll()
@@ -86,6 +84,18 @@ public class LessonService {
                 .orElseThrow(() -> new ResourceNotFoundException("Lesson not found"));
 
         lessonRepository.delete(foundLesson);
+    }
+
+    public boolean checkAnswer(UUID lessonItemUuid, UUID selectedOptionUuid) {
+        LessonItem lessonItem = lessonItemRepository.findLessonItemByUuid(lessonItemUuid).orElseThrow(() -> new ResourceNotFoundException("LessonItem not found"));
+
+        if (lessonItem instanceof TranslateWordItem translateWordItem) {
+            return translateWordItem.getAnswer() == selectedOptionUuid;
+        } else if (lessonItem instanceof TranslatePhraseItem translatePhraseItem) {
+            return translatePhraseItem.getAnswer() == selectedOptionUuid;
+        } else {
+            throw new UnsupportedOperationException("Unsupported item type for answer checking");
+        }
     }
 
     private void handleLessonChanges(Lesson lesson, LessonRequestDTO lessonRequestDTO) {
