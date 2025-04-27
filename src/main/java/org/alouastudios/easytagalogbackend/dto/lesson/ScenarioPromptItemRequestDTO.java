@@ -11,6 +11,6 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 public class ScenarioPromptItemRequestDTO extends LessonItemRequestDTO {
-    private UUID promptPhrase;
+    private UUID phraseUuid;
     private List<UUID> options;
 }

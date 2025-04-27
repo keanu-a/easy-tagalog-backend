@@ -66,8 +66,8 @@ public class LessonValidator {
     }
 
     private void validateScenarioPrompt(ScenarioPromptItemRequestDTO scenarioPromptItemRequest) {
-        if (scenarioPromptItemRequest.getPromptPhrase() == null) {
-            throw new ValidationException("Translate phrase question must have a word");
+        if (scenarioPromptItemRequest.getPhraseUuid() == null) {
+            throw new ValidationException("Scenario prompt must have a phrase");
         }
 
         if (scenarioPromptItemRequest.getOptions() == null || scenarioPromptItemRequest.getOptions().isEmpty()) {

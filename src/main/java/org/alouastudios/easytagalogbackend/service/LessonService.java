@@ -168,7 +168,7 @@ public class LessonService {
 
         newScenarioPromptItem.setLesson(lesson);
 
-        Phrase phrase = phraseRepository.findByUuid(scenarioPromptItemRequestDTO.getPromptPhrase()).orElseThrow(() -> new ResourceNotFoundException("Phrase not found"));
+        Phrase phrase = phraseRepository.findByUuid(scenarioPromptItemRequestDTO.getPhraseUuid()).orElseThrow(() -> new ResourceNotFoundException("Phrase not found"));
         newScenarioPromptItem.setPromptPhrase(phrase);
 
         // Fetch and set phrase options
