@@ -44,6 +44,7 @@ public class LessonMapper {
                         .toList();
 
                 return new TranslateWordItemResponseDTO(
+                        translateWordQuestion.getUuid(),
                         translateWordQuestion.getEnglish(),
                         options,
                         translateWordQuestion.getAnswer()
@@ -57,6 +58,7 @@ public class LessonMapper {
                         .toList();
 
                 return new TranslatePhraseItemResponseDTO(
+                        translatePhraseQuestion.getUuid(),
                         translatePhraseQuestion.getEnglish(),
                         options,
                         translatePhraseQuestion.getAnswer()
@@ -72,6 +74,7 @@ public class LessonMapper {
                 PhraseResponseDTO promptPhrase = phraseMapper.toResponseDTO(scenarioPrompt.getPromptPhrase());
 
                 return new ScenarioPromptItemResponseDTO(
+                        scenarioPrompt.getUuid(),
                         promptPhrase,
                         options
                 );

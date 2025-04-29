@@ -23,4 +23,8 @@ import java.util.UUID;
 })
 public abstract class LessonItemResponseDTO {
     private UUID uuid;
+
+    public LessonItemResponseDTO(UUID uuid) {
+        this.uuid = uuid;
+    }
 }

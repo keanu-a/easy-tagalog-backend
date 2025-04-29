@@ -16,8 +16,8 @@ public class TranslatePhraseItemResponseDTO extends LessonItemResponseDTO {
     private List<PhraseResponseDTO> options;
     private UUID answer;
 
-    public TranslatePhraseItemResponseDTO(String english, List<PhraseResponseDTO> options, UUID answer) {
-        super();
+    public TranslatePhraseItemResponseDTO(UUID uuid, String english, List<PhraseResponseDTO> options, UUID answer) {
+        super(uuid);
         this.english = english;
         this.options = options;
         this.answer = answer;
