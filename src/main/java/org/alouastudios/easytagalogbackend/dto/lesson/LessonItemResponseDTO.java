@@ -19,8 +19,12 @@ import java.util.UUID;
 @JsonSubTypes({
         @JsonSubTypes.Type(value = TranslateWordItemResponseDTO.class, name = "translateWord"),
         @JsonSubTypes.Type(value = TranslatePhraseItemResponseDTO.class, name = "translatePhrase"),
-        @JsonSubTypes.Type(value = ScenarioPromptItemRequestDTO.class, name = "scenarioPrompt")
+        @JsonSubTypes.Type(value = ScenarioPromptItemResponseDTO.class, name = "scenarioPrompt")
 })
 public abstract class LessonItemResponseDTO {
     private UUID uuid;
+
+    public LessonItemResponseDTO(UUID uuid) {
+        this.uuid = uuid;
+    }
 }

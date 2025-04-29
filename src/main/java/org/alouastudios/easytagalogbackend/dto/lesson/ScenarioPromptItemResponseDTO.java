@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.alouastudios.easytagalogbackend.dto.phrase.PhraseResponseDTO;
 
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -14,8 +15,8 @@ public class ScenarioPromptItemResponseDTO extends LessonItemResponseDTO {
     private PhraseResponseDTO promptPhrase;
     private List<PhraseResponseDTO> options;
 
-    public ScenarioPromptItemResponseDTO(PhraseResponseDTO promptPhrase, List<PhraseResponseDTO> options) {
-        super();
+    public ScenarioPromptItemResponseDTO(UUID uuid, PhraseResponseDTO promptPhrase, List<PhraseResponseDTO> options) {
+        super(uuid);
         this.promptPhrase = promptPhrase;
         this.options = options;
     }
