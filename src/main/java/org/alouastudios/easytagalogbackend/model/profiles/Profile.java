@@ -1,4 +1,4 @@
-package org.alouastudios.easytagalogbackend.model.users;
+package org.alouastudios.easytagalogbackend.model.profiles;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -6,14 +6,13 @@ import lombok.NoArgsConstructor;
 
 import java.time.Instant;
 import java.time.LocalDate;
-import java.util.Objects;
 import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "users")
-public class User {
+@Table(name = "profiles")
+public class Profile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +20,9 @@ public class User {
 
     @Column(unique = true, nullable = false)
     private UUID authId;
+
+    @Column(unique = true, nullable = false)
+    private String username;
 
     @Column(unique = true, nullable = false)
     private String email;
