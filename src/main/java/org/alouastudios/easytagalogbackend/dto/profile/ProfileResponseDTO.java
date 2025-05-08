@@ -6,8 +6,7 @@ public record ProfileResponseDTO(
         UUID authId,
         String username,
         String email,
-        String firstName,
-        String lastName,
+        String name,
         int level,
         int exp,
         int streak
