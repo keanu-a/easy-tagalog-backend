@@ -7,7 +7,6 @@ import java.util.UUID;
 
 public record ProfileRequestDTO(
         @NotNull UUID authId,
-        @NotBlank String username,
         @NotBlank String email,
         @NotBlank String name
 ) {

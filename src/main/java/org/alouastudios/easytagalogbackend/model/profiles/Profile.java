@@ -21,8 +21,8 @@ public class Profile {
     @Column(unique = true, nullable = false)
     private UUID authId;
 
-    @Column(unique = true, nullable = false)
-    private String username;
+//    @Column(unique = true, nullable = false)
+//    private String username;
 
     @Column(unique = true, nullable = false)
     private String email;

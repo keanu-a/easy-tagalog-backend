@@ -4,7 +4,6 @@ import java.util.UUID;
 
 public record ProfileResponseDTO(
         UUID authId,
-        String username,
         String email,
         String name,
         int level,
