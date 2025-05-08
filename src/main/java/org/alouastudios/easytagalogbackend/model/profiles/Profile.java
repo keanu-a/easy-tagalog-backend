@@ -28,10 +28,7 @@ public class Profile {
     private String email;
 
     @Column(nullable = false)
-    private String firstName;
-
-    @Column(nullable = false)
-    private String lastName;
+    private String name;
 
     @Column(nullable = false, updatable = false)
     private Instant createdAt = Instant.now();

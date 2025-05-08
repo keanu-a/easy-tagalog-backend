@@ -13,8 +13,7 @@ public class ProfileMapper {
                 profile.getAuthId(),
                 profile.getUsername(),
                 profile.getEmail(),
-                profile.getFirstName(),
-                profile.getLastName(),
+                profile.getName(),
                 profile.getLevel(),
                 profile.getExp(),
                 profile.getStreak()
@@ -25,7 +24,6 @@ public class ProfileMapper {
         profile.setAuthId(profileResponseDTO.authId());
         profile.setUsername(profileResponseDTO.username());
         profile.setEmail(profileResponseDTO.email());
-        profile.setFirstName(profileResponseDTO.firstName());
-        profile.setLastName(profileResponseDTO.lastName());
+        profile.setName(profileResponseDTO.name());
     }
 }
