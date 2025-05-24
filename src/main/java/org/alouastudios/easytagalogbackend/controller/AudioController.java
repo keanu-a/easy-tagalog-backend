@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/api/audio")
 public class AudioController {
 
+    // TODO: Set up signed urls on fetch and on demand
+
     private final S3SignedUrlService s3SignedUrlService;
 
     public AudioController(S3SignedUrlService s3SignedUrlService) {
