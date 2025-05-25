@@ -1,6 +1,7 @@
 package org.alouastudios.easytagalogbackend.service;
 
 import lombok.RequiredArgsConstructor;
+import org.alouastudios.easytagalogbackend.dto.audio.AudioDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.services.s3.model.GetObjectRequest;
@@ -8,7 +9,6 @@ import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest;
 import software.amazon.awssdk.services.s3.presigner.model.PresignedGetObjectRequest;
 
-import java.nio.file.Paths;
 import java.time.Duration;
 
 @Service
@@ -20,10 +20,10 @@ public class S3SignedUrlService {
     @Value("${aws.s3.bucket}")
     private String bucketName;
 
-    public String generatePresignedUrl(String filePath) {
+    public String generateSignedUrl(AudioDTO audioRequest) {
         GetObjectRequest getObjectRequest = GetObjectRequest.builder()
                 .bucket(bucketName)
-                .key(filePath)
+                .key(audioRequest.audioUrl())
                 .build();
 
         GetObjectPresignRequest getObjectPresignRequest = GetObjectPresignRequest.builder()
