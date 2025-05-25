@@ -29,6 +29,8 @@ public class LessonService {
     private final EnglishRepository englishRepository;
     private final LessonItemRepository lessonItemRepository;
 
+    private final S3SignedUrlService s3SignedUrlService;
+
     public List<LessonResponseDTO> getAllLessons() {
         return lessonRepository.findAll()
                 .stream()
@@ -40,6 +42,11 @@ public class LessonService {
         Lesson foundLesson = lessonRepository
                 .findByUuid(uuid)
                 .orElseThrow(() -> new ResourceNotFoundException("Lesson not found"));
+
+        foundLesson.getItems().forEach(item -> {
+            if (item.getType().equals("scenarioPrompt")) {
+            }
+        });
 
         return lessonMapper.toResponseDTO(foundLesson);
     }
