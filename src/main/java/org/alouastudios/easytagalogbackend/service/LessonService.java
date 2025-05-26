@@ -2,6 +2,7 @@ package org.alouastudios.easytagalogbackend.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.alouastudios.easytagalogbackend.dto.audio.AudioDTO;
 import org.alouastudios.easytagalogbackend.dto.lesson.*;
 import org.alouastudios.easytagalogbackend.exception.ResourceNotFoundException;
 import org.alouastudios.easytagalogbackend.mapper.LessonMapper;
@@ -29,6 +30,8 @@ public class LessonService {
     private final EnglishRepository englishRepository;
     private final LessonItemRepository lessonItemRepository;
 
+    private final S3SignedUrlService s3SignedUrlService;
+
     public List<LessonResponseDTO> getAllLessons() {
         return lessonRepository.findAll()
                 .stream()
@@ -40,6 +43,24 @@ public class LessonService {
         Lesson foundLesson = lessonRepository
                 .findByUuid(uuid)
                 .orElseThrow(() -> new ResourceNotFoundException("Lesson not found"));
+
+        foundLesson.getItems().forEach(item -> {
+            if (item instanceof ScenarioPromptItem scenarioPromptItem) {
+                scenarioPromptItem.getPromptPhrase().setAudioUrl(
+                        s3SignedUrlService.generateSignedUrl(scenarioPromptItem.getPromptPhrase().getAudioUrl()));
+                scenarioPromptItem.getOptions().forEach(option -> option.setAudioUrl(
+                        s3SignedUrlService.generateSignedUrl(option.getAudioUrl())
+                ));
+            } else if (item instanceof TranslateWordItem translateWordItem) {
+                translateWordItem.getOptions().forEach(option -> option.setAudioUrl(
+                        s3SignedUrlService.generateSignedUrl(option.getAudioUrl())
+                ));
+            } else if (item instanceof TranslatePhraseItem translatePhraseItem) {
+                translatePhraseItem.getOptions().forEach(option -> option.setAudioUrl(
+                        s3SignedUrlService.generateSignedUrl(option.getAudioUrl())
+                ));
+            }
+        });
 
         return lessonMapper.toResponseDTO(foundLesson);
     }
