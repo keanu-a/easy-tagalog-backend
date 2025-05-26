@@ -20,10 +20,10 @@ public class S3SignedUrlService {
     @Value("${aws.s3.bucket}")
     private String bucketName;
 
-    public String generateSignedUrl(AudioDTO audioRequest) {
+    public String generateSignedUrl(String audioUrl) {
         GetObjectRequest getObjectRequest = GetObjectRequest.builder()
                 .bucket(bucketName)
-                .key(audioRequest.audioUrl())
+                .key(audioUrl)
                 .build();
 
         GetObjectPresignRequest getObjectPresignRequest = GetObjectPresignRequest.builder()

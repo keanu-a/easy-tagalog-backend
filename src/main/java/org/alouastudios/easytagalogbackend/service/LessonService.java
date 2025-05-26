@@ -2,6 +2,7 @@ package org.alouastudios.easytagalogbackend.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.alouastudios.easytagalogbackend.dto.audio.AudioDTO;
 import org.alouastudios.easytagalogbackend.dto.lesson.*;
 import org.alouastudios.easytagalogbackend.exception.ResourceNotFoundException;
 import org.alouastudios.easytagalogbackend.mapper.LessonMapper;
@@ -44,7 +45,12 @@ public class LessonService {
                 .orElseThrow(() -> new ResourceNotFoundException("Lesson not found"));
 
         foundLesson.getItems().forEach(item -> {
-            if (item.getType().equals("scenarioPrompt")) {
+            if (item instanceof ScenarioPromptItem scenarioPromptItem) {
+                scenarioPromptItem.getPromptPhrase().setAudioUrl(
+                        s3SignedUrlService.generateSignedUrl(scenarioPromptItem.getPromptPhrase().getAudioUrl()));
+//                scenarioPromptItem.getOptions().forEach(option -> option.setAudioUrl(
+//                        s3SignedUrlService.generateSignedUrl(option.getAudioUrl())
+//                ));
             }
         });
 

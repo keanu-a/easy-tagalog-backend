@@ -16,7 +16,7 @@ public class AudioController {
 
     @PostMapping
     public AudioDTO getSignedAudioUrl(@RequestBody AudioDTO audioRequest) {
-        String signedUrl = s3SignedUrlService.generateSignedUrl(audioRequest);
+        String signedUrl = s3SignedUrlService.generateSignedUrl(audioRequest.audioUrl());
         return new AudioDTO(signedUrl);
     }
 }
