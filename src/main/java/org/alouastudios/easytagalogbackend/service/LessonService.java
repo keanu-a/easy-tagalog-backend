@@ -48,9 +48,17 @@ public class LessonService {
             if (item instanceof ScenarioPromptItem scenarioPromptItem) {
                 scenarioPromptItem.getPromptPhrase().setAudioUrl(
                         s3SignedUrlService.generateSignedUrl(scenarioPromptItem.getPromptPhrase().getAudioUrl()));
-//                scenarioPromptItem.getOptions().forEach(option -> option.setAudioUrl(
-//                        s3SignedUrlService.generateSignedUrl(option.getAudioUrl())
-//                ));
+                scenarioPromptItem.getOptions().forEach(option -> option.setAudioUrl(
+                        s3SignedUrlService.generateSignedUrl(option.getAudioUrl())
+                ));
+            } else if (item instanceof TranslateWordItem translateWordItem) {
+                translateWordItem.getOptions().forEach(option -> option.setAudioUrl(
+                        s3SignedUrlService.generateSignedUrl(option.getAudioUrl())
+                ));
+            } else if (item instanceof TranslatePhraseItem translatePhraseItem) {
+                translatePhraseItem.getOptions().forEach(option -> option.setAudioUrl(
+                        s3SignedUrlService.generateSignedUrl(option.getAudioUrl())
+                ));
             }
         });
 
