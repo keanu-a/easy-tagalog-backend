@@ -21,6 +21,8 @@ public class S3SignedUrlService {
     private String bucketName;
 
     public String generateSignedUrl(String audioUrl) {
+        if (audioUrl.startsWith("https://")) { return audioUrl; }
+
         GetObjectRequest getObjectRequest = GetObjectRequest.builder()
                 .bucket(bucketName)
                 .key(audioUrl)
