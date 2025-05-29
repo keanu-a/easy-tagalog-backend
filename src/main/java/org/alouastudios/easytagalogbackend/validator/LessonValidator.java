@@ -73,9 +73,5 @@ public class LessonValidator {
         if (scenarioPromptItemRequest.getOptions() == null || scenarioPromptItemRequest.getOptions().isEmpty()) {
             throw new ValidationException("Scenario prompt must have at least one option");
         }
-
-        if (scenarioPromptItemRequest.getOptions().size() < 2) {
-            throw new ValidationException("Scenario prompt must have at least two options");
-        }
     }
 }
