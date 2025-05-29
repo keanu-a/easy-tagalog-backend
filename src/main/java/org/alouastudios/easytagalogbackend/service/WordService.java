@@ -162,10 +162,14 @@ public class WordService {
         }
 
         // Lastly set word audio url
-        if (wordRequest.audioUrl() == null || wordRequest.audioUrl().isBlank()) {
+        String providedAudioUrl = wordRequest.audioUrl();
+
+        if (providedAudioUrl == null || providedAudioUrl.isBlank()) {
             word.setAudioUrl(ServiceUtil.createWordAudioString(wordRequest.tagalog()));
+        } else if (!providedAudioUrl.startsWith("audio/words/")) {
+            word.setAudioUrl(ServiceUtil.createWordAudioString(providedAudioUrl));
         } else {
-            word.setAudioUrl(ServiceUtil.createWordAudioString(wordRequest.audioUrl()));
+            word.setAudioUrl(providedAudioUrl);
         }
 
         // Creates initial mapping of word

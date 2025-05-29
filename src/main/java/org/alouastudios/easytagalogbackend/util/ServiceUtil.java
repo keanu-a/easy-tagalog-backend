@@ -50,6 +50,6 @@ public class ServiceUtil {
                 .replaceAll("[^a-zA-Z0-9 ]", "") // Remove punctuation
                 .trim()
                 .toLowerCase()
-                .replace(" ", "_");
+                .replace(" ", "-");
     }
 }
