@@ -3,7 +3,7 @@ package org.alouastudios.easytagalogbackend.dto.profile;
 import java.util.UUID;
 
 public record ProfileResponseDTO(
-        UUID authId,
+        UUID id,
         String email,
         String name,
         int level,

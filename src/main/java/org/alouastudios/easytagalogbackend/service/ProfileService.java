@@ -25,29 +25,18 @@ public class ProfileService {
         return profileRepository.findAll().stream().map(profileMapper::toResponseDTO).toList();
     }
 
-    public ProfileResponseDTO getProfileByUUID(UUID uuid) {
-        Profile foundProfile = profileRepository.findByAuthId(uuid).orElseThrow(() -> new ResourceNotFoundException("User not found"));
+    public ProfileResponseDTO getProfileById(UUID id) {
+        Profile foundProfile = profileRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         return profileMapper.toResponseDTO(foundProfile);
     }
 
     @Transactional
-    public ProfileResponseDTO createProfile(ProfileRequestDTO profileRequestDTO) {
-        Profile newProfile = new Profile();
-
-        profileMapper.toEntity(profileRequestDTO, newProfile);
-
-        profileRepository.save(newProfile);
-
-        return profileMapper.toResponseDTO(newProfile);
-    }
-
-    @Transactional
-    public ProfileResponseDTO updateProfile(UUID uuid, ProfileRequestDTO profileRequest) {
-        Profile foundProfile = profileRepository.findByAuthId(uuid).orElseThrow(() -> new ResourceNotFoundException("User not found"));
+    public ProfileResponseDTO updateProfile(UUID id, ProfileRequestDTO profileRequest) {
+        Profile foundProfile = profileRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         // Updating email is done through Supabase, not backend API
-        if (!profileRequest.email().equals(foundProfile.getEmail())) {
+        if (profileRequest.email() != null && !profileRequest.email().equals(foundProfile.getEmail())) {
             throw new IllegalArgumentException("Can not change email");
         }
 
@@ -58,8 +47,8 @@ public class ProfileService {
         return profileMapper.toResponseDTO(foundProfile);
     }
 
-    public void deleteProfile(UUID uuid) {
-        Profile foundProfile = profileRepository.findByAuthId(uuid).orElseThrow(() -> new ResourceNotFoundException("User not found"));
+    public void deleteProfile(UUID id) {
+        Profile foundProfile = profileRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found"));
         profileRepository.delete(foundProfile);
     }
 }

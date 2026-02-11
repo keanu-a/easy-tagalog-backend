@@ -10,7 +10,7 @@ public class ProfileMapper {
 
     public ProfileResponseDTO toResponseDTO(Profile profile) {
         return new ProfileResponseDTO(
-                profile.getAuthId(),
+                profile.getId(),
                 profile.getEmail(),
                 profile.getName(),
                 profile.getLevel(),
@@ -20,7 +20,7 @@ public class ProfileMapper {
     }
 
     public void toEntity(ProfileRequestDTO profileResponseDTO, Profile profile) {
-        profile.setAuthId(profileResponseDTO.authId());
+        profile.setId(profileResponseDTO.id());
         profile.setEmail(profileResponseDTO.email());
         profile.setName(profileResponseDTO.name());
     }

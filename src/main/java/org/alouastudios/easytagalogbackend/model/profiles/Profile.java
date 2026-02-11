@@ -15,11 +15,8 @@ import java.util.UUID;
 public class Profile {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
     @Column(unique = true, nullable = false)
-    private UUID authId;
+    private UUID id;
 
 //    @Column(unique = true, nullable = false)
 //    private String username;

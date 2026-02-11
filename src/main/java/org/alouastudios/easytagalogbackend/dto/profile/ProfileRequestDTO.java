@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import java.util.UUID;
 
 public record ProfileRequestDTO(
-        @NotNull UUID authId,
+        @NotNull UUID id,
         @NotBlank String email,
         @NotBlank String name
 ) {
