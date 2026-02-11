@@ -23,9 +23,9 @@ public class ProfileController {
         return profileService.getAllUsers();
     }
 
-    @PostMapping
-    public ProfileResponseDTO createProfile(@RequestBody ProfileRequestDTO profileRequestDTO) {
-        return profileService.createProfile(profileRequestDTO);
+    @GetMapping("/{uuid}")
+    public ProfileResponseDTO getProfile(@PathVariable UUID uuid) {
+        return profileService.getProfileById(uuid);
     }
 
     @PutMapping("/{uuid}")
