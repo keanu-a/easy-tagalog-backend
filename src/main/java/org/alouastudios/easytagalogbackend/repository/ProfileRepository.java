@@ -7,5 +7,5 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface ProfileRepository extends JpaRepository<Profile, Long> {
-    Optional<Profile> findByAuthId(UUID authId);
+    Optional<Profile> findById(UUID id);
 }
