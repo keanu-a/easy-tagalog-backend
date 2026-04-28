@@ -21,6 +21,9 @@ public class Lesson {
     @Column(unique = true, nullable = false)
     private String title;
 
+    @Column(nullable = false)
+    private boolean isPublished = true;
+
     @OneToMany(mappedBy = "lesson", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderColumn(name = "item_order")
     private List<LessonItem> items = new ArrayList<>();
