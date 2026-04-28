@@ -40,7 +40,7 @@ public class LessonService {
     }
 
     public List<LessonSummaryDTO> getLessonSummaries() {
-        return lessonRepository.findAll()
+        return lessonRepository.findAllByIsPublishedTrue()
                 .stream()
                 .map(lesson -> new LessonSummaryDTO(lesson.getUuid(), lesson.getTitle()))
                 .toList();

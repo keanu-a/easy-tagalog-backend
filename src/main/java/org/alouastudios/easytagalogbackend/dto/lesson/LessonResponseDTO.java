@@ -6,6 +6,7 @@ import java.util.UUID;
 public record LessonResponseDTO(
         UUID uuid,
         String title,
+        boolean isPublished,
         List<LessonItemResponseDTO> items
 ) {
 }

@@ -24,12 +24,14 @@ public class LessonMapper {
         return new LessonResponseDTO(
                 lesson.getUuid(),
                 lesson.getTitle(),
+                lesson.isPublished(),
                 lesson.getItems().stream().map(this::toLessonQuestionResponseDTO).collect(Collectors.toList())
         );
     }
 
     public void toEntity(Lesson lesson, LessonRequestDTO lessonRequestDTO, List<LessonItem> lessonItems) {
         lesson.setTitle(lessonRequestDTO.title());
+        lesson.setPublished(lessonRequestDTO.isPublished() != null ? lessonRequestDTO.isPublished() : true);
 
         lesson.getItems().clear();
         lesson.getItems().addAll(lessonItems);
