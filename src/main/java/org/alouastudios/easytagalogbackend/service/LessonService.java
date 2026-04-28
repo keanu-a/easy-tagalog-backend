@@ -39,6 +39,13 @@ public class LessonService {
                 .toList();
     }
 
+    public List<LessonSummaryDTO> getLessonSummaries() {
+        return lessonRepository.findAll()
+                .stream()
+                .map(lesson -> new LessonSummaryDTO(lesson.getUuid(), lesson.getTitle()))
+                .toList();
+    }
+
     public LessonResponseDTO getLessonByUUID(UUID uuid) {
         Lesson foundLesson = lessonRepository
                 .findByUuid(uuid)

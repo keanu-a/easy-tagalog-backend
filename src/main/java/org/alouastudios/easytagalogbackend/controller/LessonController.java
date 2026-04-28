@@ -4,6 +4,7 @@ import org.alouastudios.easytagalogbackend.dto.lesson.CheckAnswerRequest;
 import org.alouastudios.easytagalogbackend.dto.lesson.CheckAnswerResponse;
 import org.alouastudios.easytagalogbackend.dto.lesson.LessonRequestDTO;
 import org.alouastudios.easytagalogbackend.dto.lesson.LessonResponseDTO;
+import org.alouastudios.easytagalogbackend.dto.lesson.LessonSummaryDTO;
 import org.alouastudios.easytagalogbackend.service.LessonService;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +23,9 @@ public class LessonController {
 
     @GetMapping
     public List<LessonResponseDTO> getAllLessons() { return lessonService.getAllLessons(); }
+
+    @GetMapping("/summary")
+    public List<LessonSummaryDTO> getLessonSummaries() { return lessonService.getLessonSummaries(); }
 
     @GetMapping("/{uuid}")
     public LessonResponseDTO getLessonById(@PathVariable UUID uuid) { return lessonService.getLessonByUUID(uuid); }
